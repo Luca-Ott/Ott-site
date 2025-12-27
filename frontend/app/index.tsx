@@ -205,14 +205,15 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 32,
   },
+  headerGradient: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
   header: {
-    backgroundColor: '#FFF',
     paddingVertical: 24,
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
     gap: 16,
   },
   logo: {
