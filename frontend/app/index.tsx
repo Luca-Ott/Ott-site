@@ -253,7 +253,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     gap: 16,
   },
   headerLeft: {
@@ -290,22 +289,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#0066CC',
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 8,
+    paddingVertical: 12,
     overflow: 'hidden',
-    flex: 1,
-    minWidth: 300,
   },
   breakingNewsLabel: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FF4444',
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    gap: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    gap: 6,
   },
   breakingNewsLabelText: {
     color: '#FFF',
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 'bold',
   },
   breakingNewsScroll: {
@@ -313,11 +310,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   breakingNewsContent: {
-    paddingLeft: 8,
+    paddingLeft: 16,
   },
   breakingNewsText: {
     color: '#FFF',
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '500',
   },
   section: {
