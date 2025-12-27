@@ -85,7 +85,7 @@ async def submit_investor_inquiry(inquiry: InvestorInquiry):
 @app.get("/api/company-info")
 async def get_company_info():
     return {
-        "name": "On Time Technology Ltd",
+        "name": "ON TIME TECHNOLOGY LTD",
         "tagline": "Information Technology Company - SW Engineering - SW Development",
         "address": "The Black Church - St Mary's Place, Dublin, D07 P4AX, Ireland",
         "email": "Info@ott4future.com",
