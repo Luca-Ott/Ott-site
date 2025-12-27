@@ -250,6 +250,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
+  custodiyHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  custodiyLogo: {
+    width: 80,
+    height: 80,
+  },
   statusBadge: {
     backgroundColor: '#FFF4E5',
     paddingHorizontal: 16,
