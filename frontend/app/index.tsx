@@ -12,8 +12,8 @@ export default function HomeScreen() {
   useEffect(() => {
     const animation = Animated.loop(
       Animated.timing(scrollX, {
-        toValue: -1500,
-        duration: 25000,
+        toValue: -3000,
+        duration: 30000,
         useNativeDriver: true,
       })
     );
