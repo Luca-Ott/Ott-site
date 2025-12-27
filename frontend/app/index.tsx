@@ -13,12 +13,20 @@ export default function HomeScreen() {
   const repeatedNews = newsText.repeat(100);
 
   useEffect(() => {
+    scrollX.setValue(0);
     const animation = Animated.loop(
-      Animated.timing(scrollX, {
-        toValue: -50000,
-        duration: 500000,
-        useNativeDriver: true,
-      })
+      Animated.sequence([
+        Animated.timing(scrollX, {
+          toValue: -50000,
+          duration: 500000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(scrollX, {
+          toValue: 0,
+          duration: 0,
+          useNativeDriver: true,
+        }),
+      ])
     );
     animation.start();
     return () => animation.stop();
