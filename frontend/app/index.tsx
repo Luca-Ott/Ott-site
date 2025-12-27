@@ -281,10 +281,11 @@ const styles = StyleSheet.create({
     color: '#0066CC',
     marginBottom: 2,
     fontStyle: 'italic',
+    fontWeight: 'bold',
   },
   subTagline: {
     fontSize: 13,
-    color: '#888',
+    color: '#4A9FD8',
   },
   breakingNewsContainer: {
     backgroundColor: '#0066CC',
