@@ -7,6 +7,19 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const scrollX = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.timing(scrollX, {
+        toValue: -1000,
+        duration: 20000,
+        useNativeDriver: true,
+      })
+    );
+    animation.start();
+    return () => animation.stop();
+  }, []);
 
   const handleCall = () => {
     Linking.openURL('tel:+447775682831');
