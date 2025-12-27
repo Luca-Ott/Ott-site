@@ -64,7 +64,7 @@ export default function HomeScreen() {
                   ON TIME TECHNOLOGY LTD
                 </Text>
                 <Text style={styles.tagline}>Innovating Tomorrow's Solutions Today</Text>
-                <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+                <Text style={styles.subTagline}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
               </View>
             </View>
           </View>
