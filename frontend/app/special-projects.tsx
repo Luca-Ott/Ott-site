@@ -186,9 +186,11 @@ export default function SpecialProjectsScreen() {
 }
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
   },
   scrollContent: {
     paddingBottom: 32,
