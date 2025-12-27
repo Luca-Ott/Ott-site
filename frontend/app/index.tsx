@@ -97,60 +97,62 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Featured Projects</Text>
           
-          <TouchableOpacity 
-            style={styles.projectCard}
-            onPress={() => router.push('/special-projects')}
-          >
-            <View style={styles.projectHeader}>
-              <Text style={styles.projectName}>NoMoreFakeNews</Text>
-              <View style={styles.statusBadge}>
-                <Text style={styles.statusText}>In Development</Text>
+          <View style={styles.projectsRow}>
+            <TouchableOpacity 
+              style={styles.projectCardHalf}
+              onPress={() => router.push('/special-projects')}
+            >
+              <View style={styles.projectHeader}>
+                <Text style={styles.projectName}>NoMoreFakeNews</Text>
+                <View style={styles.statusBadge}>
+                  <Text style={styles.statusText}>In Development</Text>
+                </View>
               </View>
-            </View>
-            <Text style={styles.projectDescription}>
-              An innovative project designed to combat fake news and misinformation. 
-              Our solution aims to identify, flag, and eventually eliminate fake news through advanced AI.
-            </Text>
-            <View style={styles.investorButton}>
-              <Ionicons name="briefcase" size={20} color="#0066CC" />
-              <Text style={styles.investorButtonText}>Investor Inquiries Welcome</Text>
-            </View>
-          </TouchableOpacity>
+              <Text style={styles.projectDescription}>
+                An innovative project designed to combat fake news and misinformation. 
+                Our solution aims to identify, flag, and eventually eliminate fake news through advanced AI.
+              </Text>
+              <View style={styles.investorButton}>
+                <Ionicons name="briefcase" size={20} color="#0066CC" />
+                <Text style={styles.investorButtonText}>Investor Inquiries Welcome</Text>
+              </View>
+            </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={styles.projectCard}
-            onPress={() => handleWebsite('https://custodiy.com')}
-          >
-            <View style={styles.projectHeader}>
-              <View style={styles.projectTitleWithLogo}>
-                <Image
-                  source={require('../assets/custodiy-logo.png')}
-                  style={styles.custodiyLogo}
-                  resizeMode="contain"
-                />
-                <Text style={styles.projectName}>Custodiy</Text>
+            <TouchableOpacity 
+              style={styles.projectCardHalf}
+              onPress={() => handleWebsite('https://custodiy.com')}
+            >
+              <View style={styles.projectHeader}>
+                <View style={styles.projectTitleWithLogo}>
+                  <Image
+                    source={require('../assets/custodiy-logo.png')}
+                    style={styles.custodiyLogo}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.projectName}>Custodiy</Text>
+                </View>
+                <Ionicons name="open-outline" size={20} color="#666" />
               </View>
-              <Ionicons name="open-outline" size={20} color="#666" />
-            </View>
-            <Text style={styles.projectDescription}>
-              A modular platform empowering individuals and businesses with marketplace, 
-              OTC services, and secure document management solutions.
-            </Text>
-            <View style={styles.featuresList}>
-              <View style={styles.featureItem}>
-                <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                <Text style={styles.featureText}>OTC Service</Text>
+              <Text style={styles.projectDescription}>
+                A modular platform empowering individuals and businesses with marketplace, 
+                OTC services, and secure document management solutions.
+              </Text>
+              <View style={styles.featuresList}>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>OTC Service</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Escrow via Smart Contracts</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Marketplace Platform</Text>
+                </View>
               </View>
-              <View style={styles.featureItem}>
-                <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                <Text style={styles.featureText}>Escrow via Smart Contracts</Text>
-              </View>
-              <View style={styles.featureItem}>
-                <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                <Text style={styles.featureText}>Marketplace Platform</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Contact Section */}
