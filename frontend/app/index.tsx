@@ -113,10 +113,9 @@ export default function HomeScreen() {
             <View style={styles.projectHeader}>
               <View style={styles.projectTitleWithLogo}>
                 <Image
-                  source={{ uri: 'https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png' }}
+                  source={require('../assets/custodiy-logo.png')}
                   style={styles.custodiyLogo}
                   resizeMode="contain"
-                  onError={(e) => console.log('Logo load error:', e.nativeEvent.error)}
                 />
                 <Text style={styles.projectName}>Custodiy</Text>
               </View>
