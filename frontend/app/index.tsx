@@ -56,40 +56,44 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Our Services</Text>
           <View style={styles.servicesGrid}>
-            <TouchableOpacity style={styles.serviceCard}>
-              <Ionicons name="code-slash" size={40} color="#0066CC" />
-              <Text style={styles.serviceTitle}>Software Design</Text>
-              <Text style={styles.serviceDescription}>
-                Innovative software design solutions tailored to your business needs
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.servicesRow}>
+              <TouchableOpacity style={styles.serviceCardHalf}>
+                <Ionicons name="code-slash" size={40} color="#0066CC" />
+                <Text style={styles.serviceTitle}>Software Design</Text>
+                <Text style={styles.serviceDescription}>
+                  Innovative software design solutions tailored to your business needs
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.serviceCard}>
-              <Ionicons name="build" size={40} color="#0066CC" />
-              <Text style={styles.serviceTitle}>Software Development</Text>
-              <Text style={styles.serviceDescription}>
-                Custom software development with cutting-edge technologies
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.serviceCardHalf}>
+                <Ionicons name="build" size={40} color="#0066CC" />
+                <Text style={styles.serviceTitle}>Software Development</Text>
+                <Text style={styles.serviceDescription}>
+                  Custom software development with cutting-edge technologies
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity style={styles.serviceCard}>
-              <Ionicons name="flask" size={40} color="#0066CC" />
-              <Text style={styles.serviceTitle}>R&D</Text>
-              <Text style={styles.serviceDescription}>
-                Research and development for next-generation solutions
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.servicesRow}>
+              <TouchableOpacity style={styles.serviceCardHalf}>
+                <Ionicons name="flask" size={40} color="#0066CC" />
+                <Text style={styles.serviceTitle}>R&D</Text>
+                <Text style={styles.serviceDescription}>
+                  Research and development for next-generation solutions
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity 
-              style={styles.serviceCard}
-              onPress={() => router.push('/special-projects')}
-            >
-              <Ionicons name="rocket" size={40} color="#0066CC" />
-              <Text style={styles.serviceTitle}>Special Projects</Text>
-              <Text style={styles.serviceDescription}>
-                Unique and innovative projects tackling real-world challenges
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity 
+                style={styles.serviceCardHalf}
+                onPress={() => router.push('/special-projects')}
+              >
+                <Ionicons name="rocket" size={40} color="#0066CC" />
+                <Text style={styles.serviceTitle}>Special Projects</Text>
+                <Text style={styles.serviceDescription}>
+                  Unique and innovative projects tackling real-world challenges
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
