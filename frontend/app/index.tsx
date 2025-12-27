@@ -65,6 +65,25 @@ export default function HomeScreen() {
           </View>
         </LinearGradient>
 
+        {/* Breaking News Section */}
+        <View style={styles.breakingNewsContainer}>
+          <View style={styles.breakingNewsLabel}>
+            <Ionicons name="newspaper" size={16} color="#FFF" />
+            <Text style={styles.breakingNewsLabelText}>BREAKING NEWS</Text>
+          </View>
+          <View style={styles.breakingNewsScroll}>
+            <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
+              <Text style={styles.breakingNewsText}>
+                🚀 NoMoreFakeNews project launches investment opportunity • 
+                💼 Custodiy platform now live with OTC and Escrow services • 
+                🎉 ON TIME TECHNOLOGY expands R&D division • 
+                ✨ New software development solutions available • 
+                📈 Special projects reaching new milestones
+              </Text>
+            </Animated.View>
+          </View>
+        </View>
+
         {/* Services Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Our Services</Text>
