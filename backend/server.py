@@ -12,7 +12,7 @@ from email.mime.multipart import MIMEMultipart
 
 load_dotenv()
 
-app = FastAPI(title="On Time Technology API")
+app = FastAPI(title="ON TIME TECHNOLOGY API")
 
 # CORS middleware
 app.add_middleware(
