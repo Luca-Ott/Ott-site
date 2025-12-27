@@ -278,6 +278,38 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#888',
   },
+  breakingNewsContainer: {
+    backgroundColor: '#0066CC',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    overflow: 'hidden',
+  },
+  breakingNewsLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FF4444',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    gap: 6,
+  },
+  breakingNewsLabelText: {
+    color: '#FFF',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  breakingNewsScroll: {
+    flex: 1,
+    overflow: 'hidden',
+  },
+  breakingNewsContent: {
+    paddingLeft: 16,
+  },
+  breakingNewsText: {
+    color: '#FFF',
+    fontSize: 14,
+    fontWeight: '500',
+  },
   section: {
     paddingHorizontal: 16,
     marginTop: 24,
