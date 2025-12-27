@@ -31,7 +31,7 @@ export default function HomeScreen() {
         <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <LinearGradient
-          colors={['#FFFFFF', '#F0F8FF', '#E6F2FF']}
+          colors={['#E8F4F8', '#D4E9F7', '#C0E0F5']}
           style={styles.headerGradient}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
