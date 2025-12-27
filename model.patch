@@ -1,107 +1,124 @@
-diff --git a/test_result.md b/test_result.md
-index 187cba4..f0a1948 100644
---- a/test_result.md
-+++ b/test_result.md
-@@ -100,4 +100,99 @@
+diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
+index c2fce86..43da69a 100644
+--- a/frontend/app/index.tsx
++++ b/frontend/app/index.tsx
+@@ -173,6 +173,7 @@ export default function HomeScreen() {
+         </View>
+       </ScrollView>
+     </SafeAreaView>
++    </LinearGradient>
+   );
+ }
  
- #====================================================================================================
- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
--#====================================================================================================
-\ No newline at end of file
-+#====================================================================================================
-+
-+user_problem_statement: "Test the On Time Technology Ltd backend API comprehensively"
-+
-+backend:
-+  - task: "Health Check Endpoint"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "GET /api/health endpoint tested successfully. Returns status 'healthy' with timestamp. Response time good."
-+
-+  - task: "Company Information Endpoint"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "GET /api/company-info endpoint tested successfully. Returns all required company details, 4 services (Software Design, Software Development, R&D, Special Projects), and 2 special projects (NoMoreFakeNews, Custodiy) as expected."
-+
-+  - task: "Contact Form Submission"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "POST /api/contact endpoint tested successfully. Accepts valid data and returns success message with ID. Properly validates required fields (name, email, message, form_type) and rejects invalid email formats. Data persisted to MongoDB correctly."
-+
-+  - task: "Investor Inquiry Submission"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "POST /api/investor-inquiry endpoint tested successfully. Accepts valid data and returns success message with ID and note about contacting at luca@ott4fututre.com. Properly validates all required fields (company_name, name, surname, email, phone, message) and rejects invalid email formats. Data persisted to MongoDB correctly."
-+
-+  - task: "Database Integration"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "MongoDB integration tested successfully. Data from contact forms and investor inquiries is being properly stored and can be retrieved. Database connection stable using MONGO_URL from environment."
-+
-+  - task: "API Validation and Error Handling"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "API validation tested successfully. All endpoints properly validate input data, return appropriate HTTP status codes (200 for success, 422 for validation errors), and handle missing fields and invalid email formats correctly."
-+
-+frontend:
-+  # Frontend testing not performed as per instructions
-+
-+metadata:
-+  created_by: "testing_agent"
-+  version: "1.0"
-+  test_sequence: 1
-+  run_ui: false
-+
-+test_plan:
-+  current_focus:
-+    - "All backend endpoints tested and working"
-+  stuck_tasks: []
-+  test_all: true
-+  test_priority: "high_first"
-+
-+agent_communication:
-+  - agent: "testing"
-+    message: "Comprehensive backend API testing completed successfully. All 8 test cases passed (100% success rate). Tested: health endpoint, company info endpoint, contact form submission with validation, investor inquiry submission with validation, database integration, and error handling. All endpoints are working correctly with proper data validation and MongoDB persistence. Backend is production-ready."
-\ No newline at end of file
+diff --git a/model.patch b/model.patch
+index 6094eae..e69de29 100644
+--- a/model.patch
++++ b/model.patch
+@@ -1,107 +0,0 @@
+-diff --git a/test_result.md b/test_result.md
+-index 187cba4..f0a1948 100644
+---- a/test_result.md
+-+++ b/test_result.md
+-@@ -100,4 +100,99 @@
+- 
+- #====================================================================================================
+- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
+--#====================================================================================================
+-\ No newline at end of file
+-+#====================================================================================================
+-+
+-+user_problem_statement: "Test the On Time Technology Ltd backend API comprehensively"
+-+
+-+backend:
+-+  - task: "Health Check Endpoint"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "GET /api/health endpoint tested successfully. Returns status 'healthy' with timestamp. Response time good."
+-+
+-+  - task: "Company Information Endpoint"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "GET /api/company-info endpoint tested successfully. Returns all required company details, 4 services (Software Design, Software Development, R&D, Special Projects), and 2 special projects (NoMoreFakeNews, Custodiy) as expected."
+-+
+-+  - task: "Contact Form Submission"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "POST /api/contact endpoint tested successfully. Accepts valid data and returns success message with ID. Properly validates required fields (name, email, message, form_type) and rejects invalid email formats. Data persisted to MongoDB correctly."
+-+
+-+  - task: "Investor Inquiry Submission"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "POST /api/investor-inquiry endpoint tested successfully. Accepts valid data and returns success message with ID and note about contacting at luca@ott4fututre.com. Properly validates all required fields (company_name, name, surname, email, phone, message) and rejects invalid email formats. Data persisted to MongoDB correctly."
+-+
+-+  - task: "Database Integration"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "MongoDB integration tested successfully. Data from contact forms and investor inquiries is being properly stored and can be retrieved. Database connection stable using MONGO_URL from environment."
+-+
+-+  - task: "API Validation and Error Handling"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "API validation tested successfully. All endpoints properly validate input data, return appropriate HTTP status codes (200 for success, 422 for validation errors), and handle missing fields and invalid email formats correctly."
+-+
+-+frontend:
+-+  # Frontend testing not performed as per instructions
+-+
+-+metadata:
+-+  created_by: "testing_agent"
+-+  version: "1.0"
+-+  test_sequence: 1
+-+  run_ui: false
+-+
+-+test_plan:
+-+  current_focus:
+-+    - "All backend endpoints tested and working"
+-+  stuck_tasks: []
+-+  test_all: true
+-+  test_priority: "high_first"
+-+
+-+agent_communication:
+-+  - agent: "testing"
+-+    message: "Comprehensive backend API testing completed successfully. All 8 test cases passed (100% success rate). Tested: health endpoint, company info endpoint, contact form submission with validation, investor inquiry submission with validation, database integration, and error handling. All endpoints are working correctly with proper data validation and MongoDB persistence. Backend is production-ready."
+-\ No newline at end of file
