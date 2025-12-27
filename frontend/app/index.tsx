@@ -67,23 +67,23 @@ export default function HomeScreen() {
                 <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
               </View>
             </View>
-            
-            {/* Breaking News in Header Right */}
-            <View style={styles.breakingNewsContainer}>
-              <View style={styles.breakingNewsLabel}>
-                <Ionicons name="newspaper" size={14} color="#FFF" />
-                <Text style={styles.breakingNewsLabelText}>NEWS</Text>
-              </View>
-              <View style={styles.breakingNewsScroll}>
-                <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
-                  <Text style={styles.breakingNewsText} numberOfLines={1}>
-                    {repeatedNews}
-                  </Text>
-                </Animated.View>
-              </View>
-            </View>
           </View>
         </LinearGradient>
+
+        {/* Breaking News Section */}
+        <View style={styles.breakingNewsContainer}>
+          <View style={styles.breakingNewsLabel}>
+            <Ionicons name="newspaper" size={16} color="#FFF" />
+            <Text style={styles.breakingNewsLabelText}>BREAKING NEWS</Text>
+          </View>
+          <View style={styles.breakingNewsScroll}>
+            <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
+              <Text style={styles.breakingNewsText} numberOfLines={1}>
+                {repeatedNews}
+              </Text>
+            </Animated.View>
+          </View>
+        </View>
 
         {/* Services Section */}
         <View style={styles.section}>
