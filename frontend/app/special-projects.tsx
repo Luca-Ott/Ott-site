@@ -181,6 +181,7 @@ export default function SpecialProjectsScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </LinearGradient>
   );
 }
 
