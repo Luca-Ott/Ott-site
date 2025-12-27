@@ -278,8 +278,9 @@ const styles = StyleSheet.create({
   },
   tagline: {
     fontSize: 15,
-    color: '#666',
+    color: '#0066CC',
     marginBottom: 2,
+    fontStyle: 'italic',
   },
   subTagline: {
     fontSize: 13,
