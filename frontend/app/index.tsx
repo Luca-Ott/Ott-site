@@ -173,6 +173,7 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </LinearGradient>
   );
 }
 
