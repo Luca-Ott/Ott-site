@@ -63,7 +63,7 @@ export default function HomeScreen() {
                 <Text style={styles.companyName} numberOfLines={1} adjustsFontSizeToFit>
                   ON TIME TECHNOLOGY LTD
                 </Text>
-                <Text style={styles.tagline}>Information Technology Company</Text>
+                <Text style={styles.tagline}>Innovating Tomorrow's Solutions Today</Text>
                 <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
               </View>
             </View>
