@@ -116,6 +116,7 @@ export default function HomeScreen() {
                   source={{ uri: 'https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png' }}
                   style={styles.custodiyLogo}
                   resizeMode="contain"
+                  onError={(e) => console.log('Logo load error:', e.nativeEvent.error)}
                 />
                 <Text style={styles.projectName}>Custodiy</Text>
               </View>
