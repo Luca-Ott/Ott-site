@@ -289,8 +289,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     overflow: 'hidden',
-    maxWidth: 400,
-    minWidth: 250,
+    flex: 1,
+    minWidth: 300,
   },
   breakingNewsLabel: {
     flexDirection: 'row',
