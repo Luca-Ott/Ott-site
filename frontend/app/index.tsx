@@ -217,10 +217,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   companyName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#1A1A1A',
     marginBottom: 4,
+    flexShrink: 1,
   },
   tagline: {
     fontSize: 14,
