@@ -9,11 +9,14 @@ export default function HomeScreen() {
   const router = useRouter();
   const scrollX = useRef(new Animated.Value(0)).current;
 
+  const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • ';
+  const repeatedNews = newsText.repeat(100);
+
   useEffect(() => {
     const animation = Animated.loop(
       Animated.timing(scrollX, {
-        toValue: -3000,
-        duration: 30000,
+        toValue: -50000,
+        duration: 500000,
         useNativeDriver: true,
       })
     );
