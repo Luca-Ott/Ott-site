@@ -7,18 +7,21 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const scrollX = useRef(new Animated.Value(0)).current;
+  const [currentNewsIndex, setCurrentNewsIndex] = React.useState(0);
+
+  const breakingNews = [
+    '🚀 NoMoreFakeNews project launches investment opportunity',
+    '💼 Custodiy platform now live with OTC and Escrow services',
+    '🎉 ON TIME TECHNOLOGY expands R&D division',
+    '✨ New software development solutions available',
+    '📈 Special projects reaching new milestones'
+  ];
 
   useEffect(() => {
-    const animation = Animated.loop(
-      Animated.timing(scrollX, {
-        toValue: -1000,
-        duration: 20000,
-        useNativeDriver: true,
-      })
-    );
-    animation.start();
-    return () => animation.stop();
+    const interval = setInterval(() => {
+      setCurrentNewsIndex((prevIndex) => (prevIndex + 1) % breakingNews.length);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleCall = () => {
