@@ -74,7 +74,7 @@ export default function HomeScreen() {
               <View style={styles.breakingNewsScroll}>
                 <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
                   <Text style={styles.breakingNewsText}>
-                    🚀 NoMoreFakeNews launches • 💼 Custodiy platform live • 🎉 R&D expansion • ✨ New solutions available • 📈 Projects milestone reached • 
+                    🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • 🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • 
                   </Text>
                 </Animated.View>
               </View>
