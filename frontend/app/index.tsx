@@ -393,11 +393,12 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 14,
-    color: '#666',
+    color: '#FFFFFF',
     marginBottom: 4,
+    fontWeight: '600',
   },
   footerSubText: {
     fontSize: 12,
-    color: '#888',
+    color: '#F0F0F0',
   },
 });
