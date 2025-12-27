@@ -277,6 +277,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
+  projectTitleWithLogo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    flex: 1,
+  },
+  custodiyLogo: {
+    width: 32,
+    height: 32,
+  },
   projectName: {
     fontSize: 20,
     fontWeight: 'bold',
