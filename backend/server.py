@@ -49,7 +49,7 @@ class InvestorInquiry(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "On Time Technology API", "status": "running"}
+    return {"message": "ON TIME TECHNOLOGY API", "status": "running"}
 
 @app.get("/api/health")
 async def health_check():
