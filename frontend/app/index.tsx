@@ -50,33 +50,37 @@ export default function HomeScreen() {
           end={{ x: 1, y: 1 }}
         >
           <View style={styles.header}>
-            <Image
-              source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-            <View style={styles.headerTextContainer}>
-              <Text style={styles.companyName} numberOfLines={1} adjustsFontSizeToFit>
-                ON TIME TECHNOLOGY LTD
-              </Text>
-              <Text style={styles.tagline}>Information Technology Company</Text>
-              <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+            <View style={styles.headerLeft}>
+              <Image
+                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.companyName} numberOfLines={1} adjustsFontSizeToFit>
+                  ON TIME TECHNOLOGY LTD
+                </Text>
+                <Text style={styles.tagline}>Information Technology Company</Text>
+                <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+              </View>
+            </View>
+            
+            {/* Breaking News in Header Right */}
+            <View style={styles.breakingNewsContainer}>
+              <View style={styles.breakingNewsLabel}>
+                <Ionicons name="newspaper" size={14} color="#FFF" />
+                <Text style={styles.breakingNewsLabelText}>NEWS</Text>
+              </View>
+              <View style={styles.breakingNewsScroll}>
+                <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
+                  <Text style={styles.breakingNewsText}>
+                    🚀 NoMoreFakeNews launches • 💼 Custodiy platform live • 🎉 R&D expansion • ✨ New solutions available • 📈 Projects milestone reached • 
+                  </Text>
+                </Animated.View>
+              </View>
             </View>
           </View>
         </LinearGradient>
-
-        {/* Breaking News Section */}
-        <View style={styles.breakingNewsContainer}>
-          <View style={styles.breakingNewsLabel}>
-            <Ionicons name="newspaper" size={16} color="#FFF" />
-            <Text style={styles.breakingNewsLabelText}>BREAKING NEWS</Text>
-          </View>
-          <View style={styles.breakingNewsScroll}>
-            <Text style={styles.breakingNewsText}>
-              {breakingNews[currentNewsIndex]}
-            </Text>
-          </View>
-        </View>
 
         {/* Services Section */}
         <View style={styles.section}>
