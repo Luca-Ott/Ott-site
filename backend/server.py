@@ -125,7 +125,7 @@ async def get_company_info():
                     "Marketplace for products and services",
                     "Secure document storage and management"
                 ],
-                "website": "https://www.custodiy.com",
+                "website": "https://custodiy.com",
                 "logo": "https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png"
             }
         ]
