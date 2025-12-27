@@ -1,75 +1,136 @@
-from fastapi import FastAPI, APIRouter
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, EmailStr
 from motor.motor_asyncio import AsyncIOMotorClient
-import os
-import logging
-from pathlib import Path
-from pydantic import BaseModel, Field
-from typing import List
-import uuid
 from datetime import datetime
+from typing import Optional
+import os
+from dotenv import load_dotenv
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
+load_dotenv()
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+app = FastAPI(title="On Time Technology API")
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-
-# Create the main app without a prefix
-app = FastAPI()
-
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
-
-
-# Define Models
-class StatusCheck(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.dict()
-    status_obj = StatusCheck(**status_dict)
-    _ = await db.status_checks.insert_one(status_obj.dict())
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find().to_list(1000)
-    return [StatusCheck(**status_check) for status_check in status_checks]
-
-# Include the router in the main app
-app.include_router(api_router)
-
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# MongoDB connection
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+client = AsyncIOMotorClient(MONGO_URL)
+db = client.ott_database
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+# Pydantic models
+class ContactForm(BaseModel):
+    name: str
+    email: EmailStr
+    message: str
+    form_type: str = "general"  # general or investor
+    company_name: Optional[str] = None
+    phone: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+class InvestorInquiry(BaseModel):
+    company_name: str
+    name: str
+    surname: str
+    email: EmailStr
+    phone: str
+    message: str
+    created_at: Optional[datetime] = None
+
+@app.get("/")
+async def root():
+    return {"message": "On Time Technology API", "status": "running"}
+
+@app.get("/api/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": datetime.utcnow()}
+
+@app.post("/api/contact")
+async def submit_contact_form(form: ContactForm):
+    try:
+        form.created_at = datetime.utcnow()
+        result = await db.contacts.insert_one(form.dict())
+        return {
+            "message": "Contact form submitted successfully",
+            "id": str(result.inserted_id),
+            "status": "success"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error submitting form: {str(e)}")
+
+@app.post("/api/investor-inquiry")
+async def submit_investor_inquiry(inquiry: InvestorInquiry):
+    try:
+        inquiry.created_at = datetime.utcnow()
+        result = await db.investor_inquiries.insert_one(inquiry.dict())
+        return {
+            "message": "Investor inquiry submitted successfully",
+            "id": str(result.inserted_id),
+            "status": "success",
+            "note": "Our team will contact you shortly at luca@ott4fututre.com"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error submitting inquiry: {str(e)}")
+
+@app.get("/api/company-info")
+async def get_company_info():
+    return {
+        "name": "On Time Technology Ltd",
+        "tagline": "Information Technology Company - SW Engineering - SW Development",
+        "address": "The Black Church - St Mary's Place, Dublin, D07 P4AX, Ireland",
+        "email": "Info@ott4future.com",
+        "phone": "+447775682831",
+        "logo_url": "https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68",
+        "services": [
+            {
+                "title": "Software Design",
+                "description": "Innovative software design solutions tailored to your business needs"
+            },
+            {
+                "title": "Software Development",
+                "description": "Custom software development with cutting-edge technologies"
+            },
+            {
+                "title": "R&D",
+                "description": "Research and development for next-generation solutions"
+            },
+            {
+                "title": "Special Projects",
+                "description": "Unique and innovative projects tackling real-world challenges"
+            }
+        ],
+        "special_projects": [
+            {
+                "name": "NoMoreFakeNews",
+                "description": "An innovative project in development designed to combat fake news and misinformation. Our solution aims to identify, flag, and eventually eliminate fake news through advanced AI and verification technologies.",
+                "status": "In Development",
+                "investor_contact": True
+            },
+            {
+                "name": "Custodiy",
+                "description": "A modular platform designed to empower individuals and businesses. Whether you're an entrepreneur establishing a marketplace, a seller expanding reach, or an organization facilitating OTC transactions and fundraising, Custodiy provides the tools and support needed.",
+                "features": [
+                    "OTC Service for token trading",
+                    "Escrow Service via smart contracts",
+                    "Marketplace for products and services",
+                    "Secure document storage and management"
+                ],
+                "website": "https://www.custodiy.com",
+                "logo": "https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png"
+            }
+        ]
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)
