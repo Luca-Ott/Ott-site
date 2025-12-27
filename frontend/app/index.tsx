@@ -246,6 +246,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginTop: 24,
   },
+  projectsRow: {
+    flexDirection: 'row',
+    gap: 16,
+    flexWrap: 'wrap',
+  },
+  projectCardHalf: {
+    backgroundColor: '#E8F4F8',
+    padding: 20,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    flex: 1,
+    minWidth: 280,
+  },
   sectionTitle: {
     fontSize: 22,
     fontWeight: 'bold',
