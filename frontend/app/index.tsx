@@ -36,9 +36,11 @@ export default function HomeScreen() {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.companyName}>ON TIME TECHNOLOGY LTD</Text>
-          <Text style={styles.tagline}>Information Technology Company</Text>
-          <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.companyName}>ON TIME TECHNOLOGY LTD</Text>
+            <Text style={styles.tagline}>Information Technology Company</Text>
+            <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+          </View>
         </View>
 
         {/* Services Section */}
