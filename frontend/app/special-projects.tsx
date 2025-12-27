@@ -115,7 +115,7 @@ export default function SpecialProjectsScreen() {
             <View style={styles.projectHeader}>
               <View style={styles.custodiyHeader}>
                 <Image
-                  source={{ uri: 'https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png' }}
+                  source={require('../assets/custodiy-logo.png')}
                   style={styles.custodiyLogo}
                   resizeMode="contain"
                 />
