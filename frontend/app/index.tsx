@@ -108,7 +108,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity 
             style={styles.projectCard}
-            onPress={() => handleWebsite('https://www.custodiy.com')}
+            onPress={() => handleWebsite('https://custodiy.com')}
           >
             <View style={styles.projectHeader}>
               <View style={styles.projectTitleWithLogo}>
