@@ -121,7 +121,7 @@ export default function SpecialProjectsScreen() {
                 />
               </View>
               <TouchableOpacity 
-                onPress={() => handleWebsite('https://www.custodiy.com')}
+                onPress={() => handleWebsite('https://custodiy.com')}
               >
                 <Ionicons name="open-outline" size={24} color="#0066CC" />
               </TouchableOpacity>
