@@ -30,20 +30,27 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
-        <View style={styles.header}>
-          <Image
-            source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.companyName} numberOfLines={1} adjustsFontSizeToFit>
-              ON TIME TECHNOLOGY LTD
-            </Text>
-            <Text style={styles.tagline}>Information Technology Company</Text>
-            <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+        <LinearGradient
+          colors={['#FFFFFF', '#F0F8FF', '#E6F2FF']}
+          style={styles.headerGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <View style={styles.header}>
+            <Image
+              source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.companyName} numberOfLines={1} adjustsFontSizeToFit>
+                ON TIME TECHNOLOGY LTD
+              </Text>
+              <Text style={styles.tagline}>Information Technology Company</Text>
+              <Text style={styles.subTagline}>SW Engineering - SW Development</Text>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
 
         {/* Services Section */}
         <View style={styles.section}>
