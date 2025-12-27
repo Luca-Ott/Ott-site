@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   serviceTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1A1A1A',
+    color: '#0066CC',
     marginTop: 12,
     marginBottom: 8,
   },
