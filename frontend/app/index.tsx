@@ -297,10 +297,8 @@ const styles = StyleSheet.create({
   },
   breakingNewsScroll: {
     flex: 1,
-    overflow: 'hidden',
-  },
-  breakingNewsContent: {
-    paddingLeft: 16,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
   },
   breakingNewsText: {
     color: '#FFF',
