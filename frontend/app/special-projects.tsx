@@ -119,7 +119,6 @@ export default function SpecialProjectsScreen() {
                   style={styles.custodiyLogo}
                   resizeMode="contain"
                 />
-                <Ionicons name="cube" size={48} color="#0066CC" />
               </View>
               <TouchableOpacity 
                 onPress={() => handleWebsite('https://www.custodiy.com')}
