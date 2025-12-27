@@ -113,7 +113,14 @@ export default function SpecialProjectsScreen() {
           {/* Custodiy Project */}
           <View style={styles.projectCard}>
             <View style={styles.projectHeader}>
-              <Ionicons name="cube" size={48} color="#0066CC" />
+              <View style={styles.custodiyHeader}>
+                <Image
+                  source={{ uri: 'https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png' }}
+                  style={styles.custodiyLogo}
+                  resizeMode="contain"
+                />
+                <Ionicons name="cube" size={48} color="#0066CC" />
+              </View>
               <TouchableOpacity 
                 onPress={() => handleWebsite('https://www.custodiy.com')}
               >
