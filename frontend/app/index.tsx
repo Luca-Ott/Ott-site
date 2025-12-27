@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   contactCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#E8F4F8',
     padding: 20,
     borderRadius: 12,
     shadowColor: '#000',
