@@ -175,7 +175,7 @@ export default function HomeScreen() {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>© 2025 On Time Technology Ltd</Text>
+          <Text style={styles.footerText}>© 2025 ON TIME TECHNOLOGY LTD</Text>
           <Text style={styles.footerSubText}>All Rights Reserved</Text>
         </View>
       </ScrollView>
