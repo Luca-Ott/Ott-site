@@ -231,19 +231,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   companyName: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: 'bold',
-    color: '#1A1A1A',
+    color: '#0066CC',
     marginBottom: 4,
     flexShrink: 1,
   },
   tagline: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#666',
     marginBottom: 2,
   },
   subTagline: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#888',
   },
   section: {
