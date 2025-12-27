@@ -111,7 +111,14 @@ export default function HomeScreen() {
             onPress={() => handleWebsite('https://www.custodiy.com')}
           >
             <View style={styles.projectHeader}>
-              <Text style={styles.projectName}>Custodiy</Text>
+              <View style={styles.projectTitleWithLogo}>
+                <Image
+                  source={{ uri: 'https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png' }}
+                  style={styles.custodiyLogo}
+                  resizeMode="contain"
+                />
+                <Text style={styles.projectName}>Custodiy</Text>
+              </View>
               <Ionicons name="open-outline" size={20} color="#666" />
             </View>
             <Text style={styles.projectDescription}>
