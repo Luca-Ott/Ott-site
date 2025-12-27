@@ -178,7 +178,7 @@ export default function SpecialProjectsScreen() {
 
             <TouchableOpacity 
               style={styles.visitButton}
-              onPress={() => handleWebsite('https://www.custodiy.com')}
+              onPress={() => handleWebsite('https://custodiy.com')}
             >
               <Text style={styles.visitButtonText}>Visit Custodiy</Text>
               <Ionicons name="arrow-forward" size={20} color="#FFF" />
