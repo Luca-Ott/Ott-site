@@ -100,7 +100,7 @@ export default function HomeScreen() {
                 <Text style={[styles.companyName, isDesktop && styles.companyNameDesktop]}>
                   ON TIME TECHNOLOGY LTD
                 </Text>
-                <Text style={[styles.tagline, isDesktop && styles.taglineDesktop]}>Innovating Tomorrow's Solutions Today</Text>
+                <Text style={[styles.tagline, isDesktop && styles.taglineDesktop]} numberOfLines={1}>Innovating Tomorrow's Solutions Today</Text>
                 <Text style={[styles.subTagline, isDesktop && styles.subTaglineDesktop]}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
               </View>
             </View>
