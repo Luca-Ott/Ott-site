@@ -321,7 +321,6 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
       </Animated.View>
-        </View>
 
           {/* Menu Column - Fixed on right side */}
           {menuVisible && (
