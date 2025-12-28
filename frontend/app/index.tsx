@@ -257,7 +257,7 @@ export default function HomeScreen() {
                   style={styles.footerLogo}
                   resizeMode="contain"
                 />
-                <Text style={styles.footerCompanyName}>On Time Technology Ltd.</Text>
+                <Text style={styles.footerCompanyName}>On Time Technology Ltd</Text>
               </View>
               <Text style={styles.footerTagline}>
                 Delivering innovative software solutions that empower{'\n'}businesses to succeed in the digital age.
