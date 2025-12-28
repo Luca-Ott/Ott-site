@@ -10,7 +10,7 @@ export default function HomeScreen() {
   const scrollX = useRef(new Animated.Value(0)).current;
   const [menuVisible, setMenuVisible] = React.useState(false);
   const menuWidth = 280;
-  const contentAnimation = useRef(new Animated.Value(0)).current;
+  const menuAnimation = useRef(new Animated.Value(0)).current; // 0 = closed, 1 = open
 
   const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • ';
   const repeatedNews = newsText + newsText;
