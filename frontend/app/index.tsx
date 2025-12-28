@@ -100,7 +100,10 @@ export default function HomeScreen() {
           <Text style={styles.sectionTitle}>Our Services</Text>
           <View style={styles.servicesGrid}>
             <View style={styles.servicesRow}>
-              <TouchableOpacity style={styles.serviceCardHalf}>
+              <TouchableOpacity 
+                style={styles.serviceCardHalf}
+                onPress={() => router.push('/software-design')}
+              >
                 <Ionicons name="code-slash" size={40} color="#0066CC" />
                 <Text style={styles.serviceTitle}>Software Design</Text>
                 <Text style={styles.serviceDescription}>
@@ -108,7 +111,10 @@ export default function HomeScreen() {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.serviceCardHalf}>
+              <TouchableOpacity 
+                style={styles.serviceCardHalf}
+                onPress={() => router.push('/software-development')}
+              >
                 <Ionicons name="build" size={40} color="#0066CC" />
                 <Text style={styles.serviceTitle}>Software Development</Text>
                 <Text style={styles.serviceDescription}>
@@ -118,7 +124,10 @@ export default function HomeScreen() {
             </View>
 
             <View style={styles.servicesRow}>
-              <TouchableOpacity style={styles.serviceCardHalf}>
+              <TouchableOpacity 
+                style={styles.serviceCardHalf}
+                onPress={() => router.push('/research-development')}
+              >
                 <Ionicons name="flask" size={40} color="#0066CC" />
                 <Text style={styles.serviceTitle}>R&D</Text>
                 <Text style={styles.serviceDescription}>
