@@ -432,11 +432,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 16,
   },
   menuButton: {
     padding: 8,
-    marginRight: 8,
   },
   headerLeft: {
     flexDirection: 'row',
