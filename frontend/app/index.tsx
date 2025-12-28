@@ -137,8 +137,8 @@ export default function HomeScreen() {
         {/* News Section */}
         <View style={styles.breakingNewsContainer}>
           <View style={styles.breakingNewsLabel}>
-            <Ionicons name="newspaper" size={14} color="#FFF" />
-            <Text style={styles.breakingNewsLabelText}>NEWS</Text>
+            <Ionicons name="newspaper" size={isDesktop ? 16 : 14} color="#FFF" />
+            <Text style={styles.breakingNewsLabelText}>{isDesktop ? 'BREAKING NEWS' : 'NEWS'}</Text>
           </View>
           <View style={styles.breakingNewsScroll}>
             <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
