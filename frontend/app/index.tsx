@@ -733,15 +733,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   menuColumn: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    width: 280,
-    height: '100%',
     backgroundColor: 'rgba(0, 102, 204, 0.95)',
     paddingTop: 50,
     paddingHorizontal: 20,
-    zIndex: 1000,
+    overflow: 'hidden',
   },
   menuHeader: {
     flexDirection: 'row',
