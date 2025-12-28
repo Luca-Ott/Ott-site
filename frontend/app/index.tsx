@@ -187,6 +187,10 @@ export default function HomeScreen() {
               <View style={styles.featuresList}>
                 <View style={styles.featureItem}>
                   <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Custodial Wallets</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
                   <Text style={styles.featureText}>OTC Service</Text>
                 </View>
                 <View style={styles.featureItem}>
