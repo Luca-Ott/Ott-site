@@ -567,7 +567,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 24,
     flexWrap: 'wrap',
-    gap: 24,
+    gap: 48,
+    paddingHorizontal: 24,
   },
   footerLeft: {
     flex: 1,
