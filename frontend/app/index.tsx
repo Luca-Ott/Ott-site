@@ -143,65 +143,6 @@ export default function HomeScreen() {
           </View>
         </LinearGradient>
 
-        {/* Menu Modal */}
-        <Modal
-          visible={menuVisible}
-          animationType="fade"
-          transparent={true}
-          onRequestClose={() => setMenuVisible(false)}
-        >
-          <TouchableOpacity 
-            style={styles.modalOverlay}
-            activeOpacity={1}
-            onPress={() => setMenuVisible(false)}
-          >
-            <TouchableOpacity 
-              activeOpacity={1}
-              style={styles.menuContainer}
-            >
-              <View style={styles.menuHeader}>
-                <Text style={styles.menuTitle}>Menu</Text>
-                <TouchableOpacity onPress={() => setMenuVisible(false)}>
-                  <Ionicons name="close" size={32} color="#0066CC" />
-                </TouchableOpacity>
-              </View>
-
-              <TouchableOpacity 
-                style={styles.menuItem}
-                onPress={() => {
-                  setMenuVisible(false);
-                  router.push('/about');
-                }}
-              >
-                <Ionicons name="information-circle-outline" size={24} color="#0066CC" />
-                <Text style={styles.menuItemText}>About Us</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={styles.menuItem}
-                onPress={() => {
-                  setMenuVisible(false);
-                  router.push('/software-design');
-                }}
-              >
-                <Ionicons name="briefcase-outline" size={24} color="#0066CC" />
-                <Text style={styles.menuItemText}>Our Services</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={styles.menuItem}
-                onPress={() => {
-                  setMenuVisible(false);
-                  router.push('/contact');
-                }}
-              >
-                <Ionicons name="mail-outline" size={24} color="#0066CC" />
-                <Text style={styles.menuItemText}>Contact</Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          </TouchableOpacity>
-        </Modal>
-
         {/* Breaking News Section */}
         <View style={styles.breakingNewsContainer}>
           <View style={styles.breakingNewsLabel}>
