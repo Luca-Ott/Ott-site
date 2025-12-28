@@ -444,12 +444,21 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 12,
     flex: 1,
   },
   logo: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
+  },
+  headerMobile: {
+    flex: 1,
+  },
+  headerTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 4,
   },
   headerTextContainer: {
     flex: 1,
