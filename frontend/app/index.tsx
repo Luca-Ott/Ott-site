@@ -66,51 +66,9 @@ export default function HomeScreen() {
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
-          {/* Drawer Menu */}
-          <Animated.View style={[styles.drawerMenu, { right: drawerAnimation }]}>
-            <View style={styles.drawerHeader}>
-              <Text style={styles.drawerTitle}>Menu</Text>
-              <TouchableOpacity onPress={() => setMenuVisible(false)}>
-                <Ionicons name="close" size={28} color="#0066CC" />
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity 
-              style={styles.drawerItem}
-              onPress={() => {
-                setMenuVisible(false);
-                router.push('/about');
-              }}
-            >
-              <Ionicons name="information-circle-outline" size={24} color="#0066CC" />
-              <Text style={styles.drawerItemText}>About Us</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.drawerItem}
-              onPress={() => {
-                setMenuVisible(false);
-                router.push('/software-design');
-              }}
-            >
-              <Ionicons name="briefcase-outline" size={24} color="#0066CC" />
-              <Text style={styles.drawerItemText}>Our Services</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.drawerItem}
-              onPress={() => {
-                setMenuVisible(false);
-                router.push('/contact');
-              }}
-            >
-              <Ionicons name="mail-outline" size={24} color="#0066CC" />
-              <Text style={styles.drawerItemText}>Contact</Text>
-            </TouchableOpacity>
-          </Animated.View>
-
-          {/* Main Content */}
-          <ScrollView style={styles.mainContent} contentContainerStyle={styles.scrollContent}>
+          {/* Main Content - animated to push left */}
+          <Animated.View style={[styles.mainContent, { marginRight: contentAnimation }]}>
+            <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <LinearGradient
           colors={['#E8F4F8', '#D4E9F7', '#C0E0F5']}
