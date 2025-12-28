@@ -490,12 +490,19 @@ const styles = StyleSheet.create({
   },
   companyNameDesktop: {
     fontSize: 22,
+    fontWeight: 'bold',
+    color: '#0066CC',
   },
   taglineDesktop: {
     fontSize: 16,
+    color: '#0066CC',
+    marginBottom: 2,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
   },
   subTaglineDesktop: {
     fontSize: 14,
+    color: '#4A9FD8',
   },
   breakingNewsContainer: {
     backgroundColor: '#0066CC',
