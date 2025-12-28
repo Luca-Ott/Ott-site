@@ -465,14 +465,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   companyName: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#0066CC',
-    marginBottom: 2,
-    flexShrink: 1,
   },
   tagline: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#0066CC',
     marginBottom: 2,
     fontStyle: 'italic',
