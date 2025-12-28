@@ -391,10 +391,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    alignItems: 'center',
   },
   mainContainer: {
     flex: 1,
     flexDirection: 'row',
+    width: '100%',
+    maxWidth: 1400,
   },
   mainContent: {
     flex: 1,
