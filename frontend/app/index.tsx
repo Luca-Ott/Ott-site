@@ -270,7 +270,7 @@ export default function HomeScreen() {
               <TouchableOpacity onPress={() => router.push('/software-design')}>
                 <Text style={styles.footerLink}>Services</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/special-projects')}>
+              <TouchableOpacity onPress={() => router.push('/about')}>
                 <Text style={styles.footerLink}>About</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => router.push('/contact')}>
