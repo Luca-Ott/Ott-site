@@ -454,6 +454,20 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#4A9FD8',
   },
+  // Desktop styles
+  logoDesktop: {
+    width: 70,
+    height: 70,
+  },
+  companyNameDesktop: {
+    fontSize: 22,
+  },
+  taglineDesktop: {
+    fontSize: 16,
+  },
+  subTaglineDesktop: {
+    fontSize: 14,
+  },
   breakingNewsContainer: {
     backgroundColor: '#0066CC',
     flexDirection: 'row',
