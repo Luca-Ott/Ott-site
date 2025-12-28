@@ -95,7 +95,7 @@ export default function HomeScreen() {
                 resizeMode="contain"
               />
               <View style={styles.headerTextContainer}>
-                <Text style={styles.companyName} numberOfLines={1} adjustsFontSizeToFit>
+                <Text style={styles.companyName}>
                   ON TIME TECHNOLOGY LTD
                 </Text>
                 <Text style={styles.tagline}>Innovating Tomorrow's Solutions Today</Text>
