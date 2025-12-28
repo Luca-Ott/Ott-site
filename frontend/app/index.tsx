@@ -412,15 +412,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E0E0E0',
   },
   header: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 8,
   },
   menuButton: {
-    padding: 8,
+    padding: 4,
   },
   headerLeft: {
     flexDirection: 'row',
