@@ -248,8 +248,40 @@ export default function HomeScreen() {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>© 2025 ON TIME TECHNOLOGY LTD</Text>
-          <Text style={styles.footerSubText}>All Rights Reserved</Text>
+          <View style={styles.footerContent}>
+            {/* Left Side - Logo and Company Info */}
+            <View style={styles.footerLeft}>
+              <Image
+                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                style={styles.footerLogo}
+                resizeMode="contain"
+              />
+              <Text style={styles.footerCompanyName}>ON TIME TECHNOLOGY</Text>
+              <Text style={styles.footerTagline}>
+                Delivering innovative software solutions that empower businesses to succeed in the digital age.
+              </Text>
+            </View>
+
+            {/* Right Side - Quick Links */}
+            <View style={styles.footerRight}>
+              <Text style={styles.footerLinksTitle}>Quick Links</Text>
+              <TouchableOpacity onPress={() => router.push('/software-design')}>
+                <Text style={styles.footerLink}>Services</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push('/special-projects')}>
+                <Text style={styles.footerLink}>About</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push('/contact')}>
+                <Text style={styles.footerLink}>Contact</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Bottom Line and Copyright */}
+          <View style={styles.footerDivider} />
+          <Text style={styles.footerCopyright}>
+            © 2025 On Time Technology. All rights reserved.
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
