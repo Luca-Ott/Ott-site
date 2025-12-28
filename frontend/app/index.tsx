@@ -780,6 +780,12 @@ const styles = StyleSheet.create({
     color: '#E0E0E0',
     textAlign: 'center',
   },
+  footerRelease: {
+    fontSize: 11,
+    color: '#B0B0B0',
+    textAlign: 'center',
+    marginTop: 8,
+  },
   menuColumn: {
     backgroundColor: 'rgba(0, 102, 204, 0.95)',
     paddingTop: 50,
