@@ -609,8 +609,13 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   footerRight: {
+    flexDirection: 'row',
+    gap: 48,
     alignItems: 'flex-start',
     minWidth: 120,
+  },
+  footerLinksColumn: {
+    minWidth: 150,
   },
   footerLinksTitle: {
     fontSize: 16,
