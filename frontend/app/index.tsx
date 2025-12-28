@@ -93,15 +93,15 @@ export default function HomeScreen() {
             <View style={styles.headerLeft}>
               <Image
                 source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                style={styles.logo}
+                style={[styles.logo, isDesktop && styles.logoDesktop]}
                 resizeMode="contain"
               />
               <View style={styles.headerTextContainer}>
-                <Text style={styles.companyName}>
+                <Text style={[styles.companyName, isDesktop && styles.companyNameDesktop]}>
                   ON TIME TECHNOLOGY LTD
                 </Text>
-                <Text style={styles.tagline}>Innovating Tomorrow's Solutions Today</Text>
-                <Text style={styles.subTagline}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
+                <Text style={[styles.tagline, isDesktop && styles.taglineDesktop]}>Innovating Tomorrow's Solutions Today</Text>
+                <Text style={[styles.subTagline, isDesktop && styles.subTaglineDesktop]}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
               </View>
             </View>
             
