@@ -420,7 +420,8 @@ export default function HomeScreen() {
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+        </View>
+      </SafeAreaView>
     </LinearGradient>
   );
 }
