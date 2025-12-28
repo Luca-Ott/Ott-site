@@ -318,7 +318,6 @@ export default function HomeScreen() {
           <Text style={styles.footerCopyright}>
             © 2025 On Time Technology. All rights reserved.
           </Text>
-        </View>
       </ScrollView>
       </Animated.View>
 
