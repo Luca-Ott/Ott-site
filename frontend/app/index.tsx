@@ -387,6 +387,7 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     paddingTop: 50,
     paddingHorizontal: 20,
+    right: drawerAnimation,
   },
   drawerHeader: {
     flexDirection: 'row',
