@@ -251,14 +251,16 @@ export default function HomeScreen() {
           <View style={styles.footerContent}>
             {/* Left Side - Logo and Company Info */}
             <View style={styles.footerLeft}>
-              <Image
-                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                style={styles.footerLogo}
-                resizeMode="contain"
-              />
-              <Text style={styles.footerCompanyName}>ON TIME TECHNOLOGY</Text>
+              <View style={styles.footerLogoRow}>
+                <Image
+                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                  style={styles.footerLogo}
+                  resizeMode="contain"
+                />
+                <Text style={styles.footerCompanyName}>ON TIME TECHNOLOGY</Text>
+              </View>
               <Text style={styles.footerTagline}>
-                Delivering innovative software solutions that empower businesses to succeed in the digital age.
+                Delivering innovative software solutions that empower{'\n'}businesses to succeed in the digital age.
               </Text>
             </View>
 
