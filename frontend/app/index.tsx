@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    position: 'relative',
+    flexDirection: 'row',
   },
   mainContent: {
     flex: 1,
