@@ -267,9 +267,6 @@ export default function HomeScreen() {
             {/* Right Side - Quick Links */}
             <View style={styles.footerRight}>
               <Text style={styles.footerLinksTitle}>Quick Links</Text>
-              <TouchableOpacity onPress={() => router.push('/software-design')}>
-                <Text style={styles.footerLink}>Services</Text>
-              </TouchableOpacity>
               <TouchableOpacity onPress={() => router.push('/about')}>
                 <Text style={styles.footerLink}>About</Text>
               </TouchableOpacity>
