@@ -92,7 +92,7 @@ export default function HomeScreen() {
         {/* Menu Modal */}
         <Modal
           visible={menuVisible}
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           onRequestClose={() => setMenuVisible(false)}
         >
@@ -101,7 +101,10 @@ export default function HomeScreen() {
             activeOpacity={1}
             onPress={() => setMenuVisible(false)}
           >
-            <View style={styles.menuContainer}>
+            <TouchableOpacity 
+              activeOpacity={1}
+              style={styles.menuContainer}
+            >
               <View style={styles.menuHeader}>
                 <Text style={styles.menuTitle}>Menu</Text>
                 <TouchableOpacity onPress={() => setMenuVisible(false)}>
@@ -141,7 +144,7 @@ export default function HomeScreen() {
                 <Ionicons name="mail-outline" size={24} color="#0066CC" />
                 <Text style={styles.menuItemText}>Contact</Text>
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
 
