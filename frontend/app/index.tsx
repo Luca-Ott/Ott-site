@@ -442,14 +442,14 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   tagline: {
-    fontSize: 15,
+    fontSize: 12,
     color: '#0066CC',
     marginBottom: 2,
     fontStyle: 'italic',
     fontWeight: 'bold',
   },
   subTagline: {
-    fontSize: 13,
+    fontSize: 10,
     color: '#4A9FD8',
   },
   breakingNewsContainer: {
