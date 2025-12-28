@@ -264,15 +264,30 @@ export default function HomeScreen() {
               </Text>
             </View>
 
-            {/* Right Side - Quick Links */}
+            {/* Right Side - Quick Links and Services */}
             <View style={styles.footerRight}>
-              <Text style={styles.footerLinksTitle}>Quick Links</Text>
-              <TouchableOpacity onPress={() => router.push('/about')}>
-                <Text style={styles.footerLink}>About</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/contact')}>
-                <Text style={styles.footerLink}>Contact</Text>
-              </TouchableOpacity>
+              <View style={styles.footerLinksColumn}>
+                <Text style={styles.footerLinksTitle}>Quick Links</Text>
+                <TouchableOpacity onPress={() => router.push('/about')}>
+                  <Text style={styles.footerLink}>About</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/contact')}>
+                  <Text style={styles.footerLink}>Contact</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.footerLinksColumn}>
+                <Text style={styles.footerLinksTitle}>Services</Text>
+                <TouchableOpacity onPress={() => router.push('/software-design')}>
+                  <Text style={styles.footerLink}>Software Design</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/software-development')}>
+                  <Text style={styles.footerLink}>Software Development</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/research-development')}>
+                  <Text style={styles.footerLink}>R&D</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
 
