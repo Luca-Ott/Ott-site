@@ -574,16 +574,20 @@ const styles = StyleSheet.create({
     minWidth: 200,
     alignItems: 'flex-start',
   },
-  footerLogo: {
-    width: 60,
-    height: 60,
+  footerLogoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
     marginBottom: 12,
+  },
+  footerLogo: {
+    width: 45,
+    height: 45,
   },
   footerCompanyName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    marginBottom: 8,
   },
   footerTagline: {
     fontSize: 14,
