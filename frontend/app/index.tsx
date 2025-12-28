@@ -435,10 +435,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   companyName: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 'bold',
     color: '#0066CC',
-    marginBottom: 4,
+    marginBottom: 2,
     flexShrink: 1,
   },
   tagline: {
