@@ -90,20 +90,39 @@ export default function HomeScreen() {
           end={{ x: 1, y: 1 }}
         >
           <View style={styles.header}>
-            <View style={styles.headerLeft}>
-              <Image
-                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                style={[styles.logo, isDesktop && styles.logoDesktop]}
-                resizeMode="contain"
-              />
-              <View style={styles.headerTextContainer}>
-                <Text style={[styles.companyName, isDesktop && styles.companyNameDesktop]}>
-                  ON TIME TECHNOLOGY LTD
-                </Text>
-                <Text style={[styles.tagline, isDesktop && styles.taglineDesktop]} numberOfLines={1}>Innovating Tomorrow's Solutions Today</Text>
-                <Text style={[styles.subTagline, isDesktop && styles.subTaglineDesktop]}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
+            {isDesktop ? (
+              // Desktop Layout - tutto su una riga
+              <View style={styles.headerLeft}>
+                <Image
+                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                  style={styles.logoDesktop}
+                  resizeMode="contain"
+                />
+                <View style={styles.headerTextContainer}>
+                  <Text style={styles.companyNameDesktop}>
+                    ON TIME TECHNOLOGY LTD
+                  </Text>
+                  <Text style={styles.taglineDesktop}>Innovating Tomorrow's Solutions Today</Text>
+                  <Text style={styles.subTaglineDesktop}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
+                </View>
               </View>
-            </View>
+            ) : (
+              // Mobile Layout - logo e nome in alto, tagline sotto
+              <View style={styles.headerMobile}>
+                <View style={styles.headerTopRow}>
+                  <Image
+                    source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                    style={styles.logo}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.companyName}>
+                    ON TIME TECHNOLOGY LTD
+                  </Text>
+                </View>
+                <Text style={styles.tagline}>Innovating Tomorrow's Solutions Today</Text>
+                <Text style={styles.subTagline}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
+              </View>
+            )}
             
             {/* Hamburger Menu Icon on Right */}
             <TouchableOpacity 
