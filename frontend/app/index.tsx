@@ -78,8 +78,72 @@ export default function HomeScreen() {
                 <Text style={styles.subTagline}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
               </View>
             </View>
+            
+            {/* Hamburger Menu Icon */}
+            <TouchableOpacity 
+              style={styles.menuButton}
+              onPress={() => setMenuVisible(true)}
+            >
+              <Ionicons name="menu" size={32} color="#0066CC" />
+            </TouchableOpacity>
           </View>
         </LinearGradient>
+
+        {/* Menu Modal */}
+        <Modal
+          visible={menuVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setMenuVisible(false)}
+        >
+          <TouchableOpacity 
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPress={() => setMenuVisible(false)}
+          >
+            <View style={styles.menuContainer}>
+              <View style={styles.menuHeader}>
+                <Text style={styles.menuTitle}>Menu</Text>
+                <TouchableOpacity onPress={() => setMenuVisible(false)}>
+                  <Ionicons name="close" size={32} color="#0066CC" />
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity 
+                style={styles.menuItem}
+                onPress={() => {
+                  setMenuVisible(false);
+                  router.push('/about');
+                }}
+              >
+                <Ionicons name="information-circle-outline" size={24} color="#0066CC" />
+                <Text style={styles.menuItemText}>About Us</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.menuItem}
+                onPress={() => {
+                  setMenuVisible(false);
+                  router.push('/software-design');
+                }}
+              >
+                <Ionicons name="briefcase-outline" size={24} color="#0066CC" />
+                <Text style={styles.menuItemText}>Our Services</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.menuItem}
+                onPress={() => {
+                  setMenuVisible(false);
+                  router.push('/contact');
+                }}
+              >
+                <Ionicons name="mail-outline" size={24} color="#0066CC" />
+                <Text style={styles.menuItemText}>Contact</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </Modal>
 
         {/* Breaking News Section */}
         <View style={styles.breakingNewsContainer}>
