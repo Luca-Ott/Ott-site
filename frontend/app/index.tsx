@@ -118,14 +118,6 @@ export default function HomeScreen() {
           end={{ x: 1, y: 1 }}
         >
           <View style={styles.header}>
-            {/* Hamburger Menu Icon on Left */}
-            <TouchableOpacity 
-              style={styles.menuButton}
-              onPress={() => setMenuVisible(!menuVisible)}
-            >
-              <Ionicons name="menu" size={32} color="#0066CC" />
-            </TouchableOpacity>
-            
             <View style={styles.headerLeft}>
               <Image
                 source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
@@ -140,6 +132,14 @@ export default function HomeScreen() {
                 <Text style={styles.subTagline}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
               </View>
             </View>
+            
+            {/* Hamburger Menu Icon on Right */}
+            <TouchableOpacity 
+              style={styles.menuButton}
+              onPress={() => setMenuVisible(!menuVisible)}
+            >
+              <Ionicons name="menu" size={32} color="#0066CC" />
+            </TouchableOpacity>
           </View>
         </LinearGradient>
 
