@@ -387,6 +387,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 16,
   },
   headerLeft: {
@@ -394,6 +395,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
     flex: 1,
+  },
+  menuButton: {
+    padding: 8,
   },
   logo: {
     width: 70,
