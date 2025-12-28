@@ -134,11 +134,11 @@ export default function HomeScreen() {
           </View>
         </LinearGradient>
 
-        {/* Breaking News Section */}
+        {/* News Section */}
         <View style={styles.breakingNewsContainer}>
           <View style={styles.breakingNewsLabel}>
-            <Ionicons name="newspaper" size={16} color="#FFF" />
-            <Text style={styles.breakingNewsLabelText}>BREAKING NEWS</Text>
+            <Ionicons name="newspaper" size={14} color="#FFF" />
+            <Text style={styles.breakingNewsLabelText}>NEWS</Text>
           </View>
           <View style={styles.breakingNewsScroll}>
             <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
