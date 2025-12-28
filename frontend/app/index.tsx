@@ -66,7 +66,7 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           {/* Drawer Menu */}
-          <Animated.View style={[styles.drawerMenu, { left: drawerAnimation }]}>
+          <Animated.View style={[styles.drawerMenu, { right: drawerAnimation }]}>
             <View style={styles.drawerHeader}>
               <Text style={styles.drawerTitle}>Menu</Text>
               <TouchableOpacity onPress={() => setMenuVisible(false)}>
