@@ -9,9 +9,18 @@ export default function HomeScreen() {
   const router = useRouter();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [menuVisible, setMenuVisible] = React.useState(false);
+  const drawerAnimation = useRef(new Animated.Value(-280)).current;
 
   const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • ';
   const repeatedNews = newsText + newsText;
+
+  useEffect(() => {
+    Animated.timing(drawerAnimation, {
+      toValue: menuVisible ? 0 : -280,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [menuVisible]);
 
   useEffect(() => {
     scrollX.setValue(0);
