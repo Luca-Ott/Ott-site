@@ -423,19 +423,19 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 10,
     flex: 1,
   },
   logo: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
   },
   headerTextContainer: {
     flex: 1,
     justifyContent: 'center',
   },
   companyName: {
-    fontSize: 19,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#0066CC',
     marginBottom: 4,
