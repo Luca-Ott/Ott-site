@@ -511,6 +511,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     overflow: 'hidden',
   },
+  breakingNewsContainerDesktop: {
+    marginTop: 12,
+  },
   breakingNewsLabel: {
     flexDirection: 'row',
     alignItems: 'center',
