@@ -331,52 +331,54 @@ export default function HomeScreen() {
           </Text>
         </View>
       </ScrollView>
-      </Animated.View>
+          </View>
 
-          {/* Menu Column - Fixed on right side */}
-          {menuVisible && (
-            <View style={styles.menuColumn}>
-              <View style={styles.menuHeader}>
-                <Text style={styles.menuTitle}>Menu</Text>
-                <TouchableOpacity onPress={() => setMenuVisible(false)}>
-                  <Ionicons name="close" size={28} color="#FFF" />
+          {/* Menu Column - Push style from right */}
+          <Animated.View style={[styles.menuColumn, { width: menuWidthAnimated }]}>
+            {menuVisible && (
+              <>
+                <View style={styles.menuHeader}>
+                  <Text style={styles.menuTitle}>Menu</Text>
+                  <TouchableOpacity onPress={() => setMenuVisible(false)}>
+                    <Ionicons name="close" size={28} color="#FFF" />
+                  </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity 
+                  style={styles.menuItem}
+                  onPress={() => {
+                    setMenuVisible(false);
+                    router.push('/about');
+                  }}
+                >
+                  <Ionicons name="information-circle-outline" size={24} color="#FFF" />
+                  <Text style={styles.menuItemText}>About Us</Text>
                 </TouchableOpacity>
-              </View>
 
-              <TouchableOpacity 
-                style={styles.menuItem}
-                onPress={() => {
-                  setMenuVisible(false);
-                  router.push('/about');
-                }}
-              >
-                <Ionicons name="information-circle-outline" size={24} color="#FFF" />
-                <Text style={styles.menuItemText}>About Us</Text>
-              </TouchableOpacity>
+                <TouchableOpacity 
+                  style={styles.menuItem}
+                  onPress={() => {
+                    setMenuVisible(false);
+                    router.push('/software-design');
+                  }}
+                >
+                  <Ionicons name="briefcase-outline" size={24} color="#FFF" />
+                  <Text style={styles.menuItemText}>Our Services</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity 
-                style={styles.menuItem}
-                onPress={() => {
-                  setMenuVisible(false);
-                  router.push('/software-design');
-                }}
-              >
-                <Ionicons name="briefcase-outline" size={24} color="#FFF" />
-                <Text style={styles.menuItemText}>Our Services</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={styles.menuItem}
-                onPress={() => {
-                  setMenuVisible(false);
-                  router.push('/contact');
-                }}
-              >
-                <Ionicons name="mail-outline" size={24} color="#FFF" />
-                <Text style={styles.menuItemText}>Contact</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+                <TouchableOpacity 
+                  style={styles.menuItem}
+                  onPress={() => {
+                    setMenuVisible(false);
+                    router.push('/contact');
+                  }}
+                >
+                  <Ionicons name="mail-outline" size={24} color="#FFF" />
+                  <Text style={styles.menuItemText}>Contact</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </Animated.View>
         </View>
       </SafeAreaView>
     </LinearGradient>
