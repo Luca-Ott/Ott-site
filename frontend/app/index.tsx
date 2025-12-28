@@ -16,8 +16,8 @@ export default function HomeScreen() {
   const repeatedNews = newsText + newsText;
 
   useEffect(() => {
-    Animated.timing(contentAnimation, {
-      toValue: menuVisible ? -menuWidth : 0,
+    Animated.timing(menuAnimation, {
+      toValue: menuVisible ? 1 : 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
