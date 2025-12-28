@@ -1,571 +1,573 @@
 diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
-index 52e7f42..755e094 100644
+index 1c253a1..fcca885 100644
 --- a/frontend/app/index.tsx
 +++ b/frontend/app/index.tsx
-@@ -609,9 +609,14 @@ const styles = StyleSheet.create({
-     textAlign: 'left',
-   },
-   footerRight: {
-+    flexDirection: 'row',
-+    gap: 48,
-     alignItems: 'flex-start',
-     minWidth: 120,
-   },
-+  footerLinksColumn: {
-+    minWidth: 150,
-+  },
-   footerLinksTitle: {
-     fontSize: 16,
-     fontWeight: 'bold',
+@@ -420,7 +420,8 @@ export default function HomeScreen() {
+           </Text>
+         </View>
+       </ScrollView>
+-    </SafeAreaView>
++        </View>
++      </SafeAreaView>
+     </LinearGradient>
+   );
+ }
 diff --git a/model.patch b/model.patch
-index 922fe89..e69de29 100644
+index 581b6db..e69de29 100644
 --- a/model.patch
 +++ b/model.patch
-@@ -1,663 +0,0 @@
+@@ -1,687 +0,0 @@
 -diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
--index ecaf049..097cfc4 100644
+-index 52e7f42..755e094 100644
 ---- a/frontend/app/index.tsx
 -+++ b/frontend/app/index.tsx
--@@ -248,8 +248,40 @@ export default function HomeScreen() {
-- 
--         {/* Footer */}
--         <View style={styles.footer}>
---          <Text style={styles.footerText}>© 2025 ON TIME TECHNOLOGY LTD</Text>
---          <Text style={styles.footerSubText}>All Rights Reserved</Text>
--+          <View style={styles.footerContent}>
--+            {/* Left Side - Logo and Company Info */}
--+            <View style={styles.footerLeft}>
--+              <Image
--+                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
--+                style={styles.footerLogo}
--+                resizeMode="contain"
--+              />
--+              <Text style={styles.footerCompanyName}>ON TIME TECHNOLOGY</Text>
--+              <Text style={styles.footerTagline}>
--+                Delivering innovative software solutions that empower businesses to succeed in the digital age.
--+              </Text>
--+            </View>
--+
--+            {/* Right Side - Quick Links */}
--+            <View style={styles.footerRight}>
--+              <Text style={styles.footerLinksTitle}>Quick Links</Text>
--+              <TouchableOpacity onPress={() => router.push('/software-design')}>
--+                <Text style={styles.footerLink}>Services</Text>
--+              </TouchableOpacity>
--+              <TouchableOpacity onPress={() => router.push('/special-projects')}>
--+                <Text style={styles.footerLink}>About</Text>
--+              </TouchableOpacity>
--+              <TouchableOpacity onPress={() => router.push('/contact')}>
--+                <Text style={styles.footerLink}>Contact</Text>
--+              </TouchableOpacity>
--+            </View>
--+          </View>
--+
--+          {/* Bottom Line and Copyright */}
--+          <View style={styles.footerDivider} />
--+          <Text style={styles.footerCopyright}>
--+            © 2025 On Time Technology. All rights reserved.
--+          </Text>
--         </View>
--       </ScrollView>
--     </SafeAreaView>
--@@ -523,18 +555,64 @@ const styles = StyleSheet.create({
--     color: '#FFF',
+-@@ -609,9 +609,14 @@ const styles = StyleSheet.create({
+-     textAlign: 'left',
 -   },
--   footer: {
---    paddingVertical: 24,
---    alignItems: 'center',
--+    paddingVertical: 32,
--+    paddingHorizontal: 16,
--     marginTop: 32,
--   },
---  footerText: {
--+  footerContent: {
+-   footerRight: {
 -+    flexDirection: 'row',
--+    justifyContent: 'space-between',
--+    alignItems: 'flex-start',
--+    marginBottom: 24,
--+    flexWrap: 'wrap',
--+    gap: 24,
--+  },
--+  footerLeft: {
--+    flex: 1,
--+    minWidth: 200,
--+    alignItems: 'flex-start',
--+  },
--+  footerLogo: {
--+    width: 60,
--+    height: 60,
--+    marginBottom: 12,
--+  },
--+  footerCompanyName: {
--+    fontSize: 18,
--+    fontWeight: 'bold',
--+    color: '#FFFFFF',
--+    marginBottom: 8,
--+  },
--+  footerTagline: {
--     fontSize: 14,
--+    color: '#E0E0E0',
--+    lineHeight: 20,
--+    textAlign: 'left',
--+  },
--+  footerRight: {
--+    alignItems: 'flex-start',
--+    minWidth: 120,
--+  },
--+  footerLinksTitle: {
--+    fontSize: 16,
--+    fontWeight: 'bold',
--     color: '#FFFFFF',
---    marginBottom: 4,
---    fontWeight: '600',
--+    marginBottom: 12,
--+  },
--+  footerLink: {
--+    fontSize: 14,
--+    color: '#B0D4F1',
--+    marginBottom: 8,
--+    textDecorationLine: 'underline',
--+  },
--+  footerDivider: {
--+    height: 1,
--+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
--+    marginBottom: 16,
+-+    gap: 48,
+-     alignItems: 'flex-start',
+-     minWidth: 120,
 -   },
---  footerSubText: {
--+  footerCopyright: {
--     fontSize: 12,
---    color: '#F0F0F0',
--+    color: '#E0E0E0',
--+    textAlign: 'center',
--   },
-- });
--\ No newline at end of file
+-+  footerLinksColumn: {
+-+    minWidth: 150,
+-+  },
+-   footerLinksTitle: {
+-     fontSize: 16,
+-     fontWeight: 'bold',
 -diff --git a/model.patch b/model.patch
--index b1fb69c..e69de29 100644
+-index 922fe89..e69de29 100644
 ---- a/model.patch
 -+++ b/model.patch
--@@ -1,538 +0,0 @@
---diff --git a/frontend/app/special-projects.tsx b/frontend/app/special-projects.tsx
---index de446bd..d5dee36 100644
------ a/frontend/app/special-projects.tsx
---+++ b/frontend/app/special-projects.tsx
---@@ -315,6 +315,329 @@ export default function SpecialProjectsScreen() {
---               </View>
---             </View>
---           </View>
---+
---+          {/* Software Design Projects */}
---+          <View style={styles.projectCard}>
---+            <View style={styles.projectHeader}>
---+              <Ionicons name="color-palette-outline" size={48} color="#0066CC" />
---+            </View>
---+
---+            <Text style={styles.projectName}>Software Design Projects</Text>
---+            
---+            <Text style={styles.projectDescription}>
---+              Our Software Design division specializes in creating intuitive, user-centered digital experiences 
---+              that seamlessly blend functionality with aesthetic appeal. We believe that exceptional design 
---+              is not just about how something looks, but how it works and feels for the end user.
---+            </Text>
---+
---+            <View style={styles.divider} />
---+
---+            <Text style={styles.subheading}>Our Design Philosophy</Text>
---+            <Text style={styles.bodyText}>
---+              We approach every project with a human-centered design methodology, ensuring that user needs 
---+              and business objectives are perfectly aligned. Our team combines creative vision with technical 
---+              expertise to deliver solutions that are not only visually stunning but also highly functional 
---+              and accessible across all platforms and devices.
---+            </Text>
---+
---+            <Text style={styles.subheading}>Core Design Services</Text>
---+            
---+            <View style={styles.featureCard}>
---+              <Ionicons name="phone-portrait-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Mobile App Design</Text>
---+              <Text style={styles.featureDescription}>
---+                Creating native and cross-platform mobile experiences that engage users and drive business 
---+                results. From wireframing to final UI implementation, we ensure every interaction is 
---+                purposeful and delightful across iOS and Android platforms.
+-@@ -1,663 +0,0 @@
+--diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
+--index ecaf049..097cfc4 100644
+----- a/frontend/app/index.tsx
+--+++ b/frontend/app/index.tsx
+--@@ -248,8 +248,40 @@ export default function HomeScreen() {
+-- 
+--         {/* Footer */}
+--         <View style={styles.footer}>
+---          <Text style={styles.footerText}>© 2025 ON TIME TECHNOLOGY LTD</Text>
+---          <Text style={styles.footerSubText}>All Rights Reserved</Text>
+--+          <View style={styles.footerContent}>
+--+            {/* Left Side - Logo and Company Info */}
+--+            <View style={styles.footerLeft}>
+--+              <Image
+--+                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+--+                style={styles.footerLogo}
+--+                resizeMode="contain"
+--+              />
+--+              <Text style={styles.footerCompanyName}>ON TIME TECHNOLOGY</Text>
+--+              <Text style={styles.footerTagline}>
+--+                Delivering innovative software solutions that empower businesses to succeed in the digital age.
 --+              </Text>
 --+            </View>
 --+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="desktop-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Web Application Design</Text>
---+              <Text style={styles.featureDescription}>
---+                Responsive web applications that work flawlessly across all devices and browsers. We focus 
---+                on creating scalable design systems that maintain consistency while allowing for future 
---+                growth and feature expansion.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="people-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>User Experience (UX) Research</Text>
---+              <Text style={styles.featureDescription}>
---+                In-depth user research, persona development, and journey mapping to understand your audience 
---+                and create experiences that truly resonate. We use data-driven insights to inform every 
---+                design decision and validate our solutions through user testing.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="brush-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Brand Identity & Visual Design</Text>
---+              <Text style={styles.featureDescription}>
---+                Comprehensive brand identity development including logo design, color palettes, typography, 
---+                and visual guidelines that create memorable and cohesive brand experiences across all 
---+                digital touchpoints.
---+              </Text>
---+            </View>
---+
---+            <Text style={styles.subheading}>Design Process Excellence</Text>
---+            <View style={styles.objectivesList}>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Discovery and research phase to understand user needs and business goals
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Iterative design process with regular stakeholder feedback and validation
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Accessibility-first approach ensuring WCAG 2.1 AA compliance
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Comprehensive design systems and documentation for seamless handoff
---+                </Text>
---+              </View>
+--+            {/* Right Side - Quick Links */}
+--+            <View style={styles.footerRight}>
+--+              <Text style={styles.footerLinksTitle}>Quick Links</Text>
+--+              <TouchableOpacity onPress={() => router.push('/software-design')}>
+--+                <Text style={styles.footerLink}>Services</Text>
+--+              </TouchableOpacity>
+--+              <TouchableOpacity onPress={() => router.push('/special-projects')}>
+--+                <Text style={styles.footerLink}>About</Text>
+--+              </TouchableOpacity>
+--+              <TouchableOpacity onPress={() => router.push('/contact')}>
+--+                <Text style={styles.footerLink}>Contact</Text>
+--+              </TouchableOpacity>
 --+            </View>
 --+          </View>
 --+
---+          {/* Software Development Projects */}
---+          <View style={styles.projectCard}>
---+            <View style={styles.projectHeader}>
---+              <Ionicons name="code-slash-outline" size={48} color="#0066CC" />
---+            </View>
---+
---+            <Text style={styles.projectName}>Software Development Projects</Text>
---+            
---+            <Text style={styles.projectDescription}>
---+              Our Software Development team transforms innovative ideas into robust, scalable, and 
---+              high-performance applications. We leverage cutting-edge technologies and industry 
---+              best practices to deliver solutions that drive business growth and exceed user expectations.
---+            </Text>
---+
---+            <View style={styles.divider} />
---+
---+            <Text style={styles.subheading}>Development Excellence</Text>
---+            <Text style={styles.bodyText}>
---+              With expertise spanning multiple programming languages, frameworks, and platforms, our 
---+              development team is equipped to handle projects of any complexity. We follow agile 
---+              methodologies, implement comprehensive testing strategies, and maintain the highest 
---+              standards of code quality to ensure reliable, maintainable, and secure applications.
---+            </Text>
---+
---+            <Text style={styles.subheading}>Technology Stack & Services</Text>
---+            
---+            <View style={styles.featureCard}>
---+              <Ionicons name="phone-portrait" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Mobile Application Development</Text>
---+              <Text style={styles.featureDescription}>
---+                Native iOS and Android development using Swift, Kotlin, and cross-platform solutions 
---+                with React Native and Flutter. We create high-performance mobile apps that leverage 
---+                device capabilities while maintaining excellent user experience across all screen sizes.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="globe-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Web Application Development</Text>
---+              <Text style={styles.featureDescription}>
---+                Full-stack web development using modern frameworks like React, Vue.js, Angular for 
---+                frontend and Node.js, Python (Django/Flask), and .NET for backend. We build scalable 
---+                web applications with responsive design and optimal performance.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="server-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Backend & API Development</Text>
---+              <Text style={styles.featureDescription}>
---+                Robust backend systems with RESTful and GraphQL APIs, microservices architecture, 
---+                and cloud-native solutions. We ensure scalability, security, and performance while 
---+                maintaining clean, well-documented code that's easy to maintain and extend.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="cloud-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Cloud Solutions & DevOps</Text>
---+              <Text style={styles.featureDescription}>
---+                Cloud infrastructure setup and management on AWS, Google Cloud, and Azure. Implementing 
---+                CI/CD pipelines, containerization with Docker and Kubernetes, and automated deployment 
---+                strategies for reliable and efficient software delivery.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="analytics-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Data Analytics & AI Integration</Text>
---+              <Text style={styles.featureDescription}>
---+                Integration of machine learning models, data analytics platforms, and AI-powered features 
---+                into applications. We help businesses leverage their data to gain insights and create 
---+                intelligent, adaptive software solutions.
---+              </Text>
---+            </View>
---+
---+            <Text style={styles.subheading}>Development Methodology</Text>
---+            <View style={styles.objectivesList}>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Agile development with regular sprints and continuous client collaboration
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Test-driven development (TDD) with comprehensive automated testing suites
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Code reviews and pair programming to ensure quality and knowledge sharing
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Continuous integration and deployment for rapid, reliable software delivery
---+                </Text>
---+              </View>
---+            </View>
---+          </View>
---+
---+          {/* Research & Development Projects */}
---+          <View style={styles.projectCard}>
---+            <View style={styles.projectHeader}>
---+              <Ionicons name="flask-outline" size={48} color="#0066CC" />
---+            </View>
---+
---+            <Text style={styles.projectName}>Research & Development Projects</Text>
---+            
---+            <Text style={styles.projectDescription}>
---+              Our Research & Development division is at the forefront of technological innovation, 
---+              exploring emerging technologies and developing breakthrough solutions that shape the 
---+              future of digital experiences. We invest in tomorrow's technologies today.
---+            </Text>
---+
---+            <View style={styles.divider} />
---+
---+            <Text style={styles.subheading}>Innovation Focus</Text>
---+            <Text style={styles.bodyText}>
---+              Our R&D team consists of researchers, engineers, and visionaries who are passionate 
---+              about pushing the boundaries of what's possible. We collaborate with academic institutions, 
---+              technology partners, and industry leaders to stay ahead of technological trends and 
---+              develop solutions that address future challenges.
---+            </Text>
---+
---+            <Text style={styles.subheading}>Research Areas</Text>
---+            
---+            <View style={styles.featureCard}>
---+              <Ionicons name="brain-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Artificial Intelligence & Machine Learning</Text>
---+              <Text style={styles.featureDescription}>
---+                Advanced AI research including natural language processing, computer vision, predictive 
---+                analytics, and autonomous systems. We develop custom AI models and explore applications 
---+                of generative AI, reinforcement learning, and neural network architectures.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="cube-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Blockchain & Distributed Systems</Text>
---+              <Text style={styles.featureDescription}>
---+                Research into blockchain technologies, smart contracts, decentralized applications (DApps), 
---+                and distributed ledger systems. We explore consensus mechanisms, scalability solutions, 
---+                and the integration of blockchain with traditional business systems.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="glasses-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Extended Reality (XR) Technologies</Text>
---+              <Text style={styles.featureDescription}>
---+                Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) research and 
---+                development. We create immersive experiences for training, education, entertainment, 
---+                and enterprise applications using cutting-edge XR technologies.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="cellular-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Internet of Things (IoT) & Edge Computing</Text>
---+              <Text style={styles.featureDescription}>
---+                Development of IoT ecosystems, edge computing solutions, and smart device integration. 
---+                We research sensor technologies, real-time data processing, and the convergence of 
---+                physical and digital systems in smart cities and Industry 4.0 applications.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="speedometer-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Quantum Computing Applications</Text>
---+              <Text style={styles.featureDescription}>
---+                Exploring quantum computing algorithms and their practical applications in cryptography, 
---+                optimization, and complex problem-solving. We research quantum-safe security measures 
---+                and prepare for the quantum computing era.
---+              </Text>
---+            </View>
---+
---+            <View style={styles.featureCard}>
---+              <Ionicons name="leaf-outline" size={32} color="#0066CC" />
---+              <Text style={styles.featureTitle}>Sustainable Technology Solutions</Text>
---+              <Text style={styles.featureDescription}>
---+                Research into green computing, energy-efficient algorithms, and sustainable software 
---+                development practices. We focus on reducing the environmental impact of technology 
---+                while maintaining high performance and user experience.
---+              </Text>
---+            </View>
---+
---+            <Text style={styles.subheading}>Research Methodology</Text>
---+            <View style={styles.objectivesList}>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Collaborative research partnerships with leading universities and research institutions
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Open-source contributions and active participation in technology communities
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Rapid prototyping and proof-of-concept development for emerging technologies
---+                </Text>
---+              </View>
---+              <View style={styles.objectiveItem}>
---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
---+                <Text style={styles.objectiveText}>
---+                  Regular publication of research findings and participation in industry conferences
---+                </Text>
---+              </View>
---+            </View>
---+
---+            <Text style={styles.subheading}>Innovation Pipeline</Text>
---+            <Text style={styles.bodyText}>
---+              Our R&D projects follow a structured innovation pipeline from initial research and 
---+              experimentation to prototype development and eventual commercialization. We maintain 
---+              a portfolio of projects at various stages, ensuring a continuous flow of innovative 
---+              solutions that can be integrated into our client projects and internal products.
---+            </Text>
---+          </View>
+--+          {/* Bottom Line and Copyright */}
+--+          <View style={styles.footerDivider} />
+--+          <Text style={styles.footerCopyright}>
+--+            © 2025 On Time Technology. All rights reserved.
+--+          </Text>
 --         </View>
 --       </ScrollView>
 --     </SafeAreaView>
+--@@ -523,18 +555,64 @@ const styles = StyleSheet.create({
+--     color: '#FFF',
+--   },
+--   footer: {
+---    paddingVertical: 24,
+---    alignItems: 'center',
+--+    paddingVertical: 32,
+--+    paddingHorizontal: 16,
+--     marginTop: 32,
+--   },
+---  footerText: {
+--+  footerContent: {
+--+    flexDirection: 'row',
+--+    justifyContent: 'space-between',
+--+    alignItems: 'flex-start',
+--+    marginBottom: 24,
+--+    flexWrap: 'wrap',
+--+    gap: 24,
+--+  },
+--+  footerLeft: {
+--+    flex: 1,
+--+    minWidth: 200,
+--+    alignItems: 'flex-start',
+--+  },
+--+  footerLogo: {
+--+    width: 60,
+--+    height: 60,
+--+    marginBottom: 12,
+--+  },
+--+  footerCompanyName: {
+--+    fontSize: 18,
+--+    fontWeight: 'bold',
+--+    color: '#FFFFFF',
+--+    marginBottom: 8,
+--+  },
+--+  footerTagline: {
+--     fontSize: 14,
+--+    color: '#E0E0E0',
+--+    lineHeight: 20,
+--+    textAlign: 'left',
+--+  },
+--+  footerRight: {
+--+    alignItems: 'flex-start',
+--+    minWidth: 120,
+--+  },
+--+  footerLinksTitle: {
+--+    fontSize: 16,
+--+    fontWeight: 'bold',
+--     color: '#FFFFFF',
+---    marginBottom: 4,
+---    fontWeight: '600',
+--+    marginBottom: 12,
+--+  },
+--+  footerLink: {
+--+    fontSize: 14,
+--+    color: '#B0D4F1',
+--+    marginBottom: 8,
+--+    textDecorationLine: 'underline',
+--+  },
+--+  footerDivider: {
+--+    height: 1,
+--+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+--+    marginBottom: 16,
+--   },
+---  footerSubText: {
+--+  footerCopyright: {
+--     fontSize: 12,
+---    color: '#F0F0F0',
+--+    color: '#E0E0E0',
+--+    textAlign: 'center',
+--   },
+-- });
+--\ No newline at end of file
 --diff --git a/model.patch b/model.patch
---index 9a9481f..680ebdc 100644
+--index b1fb69c..e69de29 100644
 ----- a/model.patch
 --+++ b/model.patch
---@@ -1,199 +0,0 @@
+--@@ -1,538 +0,0 @@
+---diff --git a/frontend/app/special-projects.tsx b/frontend/app/special-projects.tsx
+---index de446bd..d5dee36 100644
+------ a/frontend/app/special-projects.tsx
+---+++ b/frontend/app/special-projects.tsx
+---@@ -315,6 +315,329 @@ export default function SpecialProjectsScreen() {
+---               </View>
+---             </View>
+---           </View>
+---+
+---+          {/* Software Design Projects */}
+---+          <View style={styles.projectCard}>
+---+            <View style={styles.projectHeader}>
+---+              <Ionicons name="color-palette-outline" size={48} color="#0066CC" />
+---+            </View>
+---+
+---+            <Text style={styles.projectName}>Software Design Projects</Text>
+---+            
+---+            <Text style={styles.projectDescription}>
+---+              Our Software Design division specializes in creating intuitive, user-centered digital experiences 
+---+              that seamlessly blend functionality with aesthetic appeal. We believe that exceptional design 
+---+              is not just about how something looks, but how it works and feels for the end user.
+---+            </Text>
+---+
+---+            <View style={styles.divider} />
+---+
+---+            <Text style={styles.subheading}>Our Design Philosophy</Text>
+---+            <Text style={styles.bodyText}>
+---+              We approach every project with a human-centered design methodology, ensuring that user needs 
+---+              and business objectives are perfectly aligned. Our team combines creative vision with technical 
+---+              expertise to deliver solutions that are not only visually stunning but also highly functional 
+---+              and accessible across all platforms and devices.
+---+            </Text>
+---+
+---+            <Text style={styles.subheading}>Core Design Services</Text>
+---+            
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="phone-portrait-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Mobile App Design</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Creating native and cross-platform mobile experiences that engage users and drive business 
+---+                results. From wireframing to final UI implementation, we ensure every interaction is 
+---+                purposeful and delightful across iOS and Android platforms.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="desktop-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Web Application Design</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Responsive web applications that work flawlessly across all devices and browsers. We focus 
+---+                on creating scalable design systems that maintain consistency while allowing for future 
+---+                growth and feature expansion.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="people-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>User Experience (UX) Research</Text>
+---+              <Text style={styles.featureDescription}>
+---+                In-depth user research, persona development, and journey mapping to understand your audience 
+---+                and create experiences that truly resonate. We use data-driven insights to inform every 
+---+                design decision and validate our solutions through user testing.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="brush-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Brand Identity & Visual Design</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Comprehensive brand identity development including logo design, color palettes, typography, 
+---+                and visual guidelines that create memorable and cohesive brand experiences across all 
+---+                digital touchpoints.
+---+              </Text>
+---+            </View>
+---+
+---+            <Text style={styles.subheading}>Design Process Excellence</Text>
+---+            <View style={styles.objectivesList}>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Discovery and research phase to understand user needs and business goals
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Iterative design process with regular stakeholder feedback and validation
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Accessibility-first approach ensuring WCAG 2.1 AA compliance
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Comprehensive design systems and documentation for seamless handoff
+---+                </Text>
+---+              </View>
+---+            </View>
+---+          </View>
+---+
+---+          {/* Software Development Projects */}
+---+          <View style={styles.projectCard}>
+---+            <View style={styles.projectHeader}>
+---+              <Ionicons name="code-slash-outline" size={48} color="#0066CC" />
+---+            </View>
+---+
+---+            <Text style={styles.projectName}>Software Development Projects</Text>
+---+            
+---+            <Text style={styles.projectDescription}>
+---+              Our Software Development team transforms innovative ideas into robust, scalable, and 
+---+              high-performance applications. We leverage cutting-edge technologies and industry 
+---+              best practices to deliver solutions that drive business growth and exceed user expectations.
+---+            </Text>
+---+
+---+            <View style={styles.divider} />
+---+
+---+            <Text style={styles.subheading}>Development Excellence</Text>
+---+            <Text style={styles.bodyText}>
+---+              With expertise spanning multiple programming languages, frameworks, and platforms, our 
+---+              development team is equipped to handle projects of any complexity. We follow agile 
+---+              methodologies, implement comprehensive testing strategies, and maintain the highest 
+---+              standards of code quality to ensure reliable, maintainable, and secure applications.
+---+            </Text>
+---+
+---+            <Text style={styles.subheading}>Technology Stack & Services</Text>
+---+            
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="phone-portrait" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Mobile Application Development</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Native iOS and Android development using Swift, Kotlin, and cross-platform solutions 
+---+                with React Native and Flutter. We create high-performance mobile apps that leverage 
+---+                device capabilities while maintaining excellent user experience across all screen sizes.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="globe-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Web Application Development</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Full-stack web development using modern frameworks like React, Vue.js, Angular for 
+---+                frontend and Node.js, Python (Django/Flask), and .NET for backend. We build scalable 
+---+                web applications with responsive design and optimal performance.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="server-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Backend & API Development</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Robust backend systems with RESTful and GraphQL APIs, microservices architecture, 
+---+                and cloud-native solutions. We ensure scalability, security, and performance while 
+---+                maintaining clean, well-documented code that's easy to maintain and extend.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="cloud-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Cloud Solutions & DevOps</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Cloud infrastructure setup and management on AWS, Google Cloud, and Azure. Implementing 
+---+                CI/CD pipelines, containerization with Docker and Kubernetes, and automated deployment 
+---+                strategies for reliable and efficient software delivery.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="analytics-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Data Analytics & AI Integration</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Integration of machine learning models, data analytics platforms, and AI-powered features 
+---+                into applications. We help businesses leverage their data to gain insights and create 
+---+                intelligent, adaptive software solutions.
+---+              </Text>
+---+            </View>
+---+
+---+            <Text style={styles.subheading}>Development Methodology</Text>
+---+            <View style={styles.objectivesList}>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Agile development with regular sprints and continuous client collaboration
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Test-driven development (TDD) with comprehensive automated testing suites
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Code reviews and pair programming to ensure quality and knowledge sharing
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Continuous integration and deployment for rapid, reliable software delivery
+---+                </Text>
+---+              </View>
+---+            </View>
+---+          </View>
+---+
+---+          {/* Research & Development Projects */}
+---+          <View style={styles.projectCard}>
+---+            <View style={styles.projectHeader}>
+---+              <Ionicons name="flask-outline" size={48} color="#0066CC" />
+---+            </View>
+---+
+---+            <Text style={styles.projectName}>Research & Development Projects</Text>
+---+            
+---+            <Text style={styles.projectDescription}>
+---+              Our Research & Development division is at the forefront of technological innovation, 
+---+              exploring emerging technologies and developing breakthrough solutions that shape the 
+---+              future of digital experiences. We invest in tomorrow's technologies today.
+---+            </Text>
+---+
+---+            <View style={styles.divider} />
+---+
+---+            <Text style={styles.subheading}>Innovation Focus</Text>
+---+            <Text style={styles.bodyText}>
+---+              Our R&D team consists of researchers, engineers, and visionaries who are passionate 
+---+              about pushing the boundaries of what's possible. We collaborate with academic institutions, 
+---+              technology partners, and industry leaders to stay ahead of technological trends and 
+---+              develop solutions that address future challenges.
+---+            </Text>
+---+
+---+            <Text style={styles.subheading}>Research Areas</Text>
+---+            
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="brain-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Artificial Intelligence & Machine Learning</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Advanced AI research including natural language processing, computer vision, predictive 
+---+                analytics, and autonomous systems. We develop custom AI models and explore applications 
+---+                of generative AI, reinforcement learning, and neural network architectures.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="cube-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Blockchain & Distributed Systems</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Research into blockchain technologies, smart contracts, decentralized applications (DApps), 
+---+                and distributed ledger systems. We explore consensus mechanisms, scalability solutions, 
+---+                and the integration of blockchain with traditional business systems.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="glasses-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Extended Reality (XR) Technologies</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) research and 
+---+                development. We create immersive experiences for training, education, entertainment, 
+---+                and enterprise applications using cutting-edge XR technologies.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="cellular-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Internet of Things (IoT) & Edge Computing</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Development of IoT ecosystems, edge computing solutions, and smart device integration. 
+---+                We research sensor technologies, real-time data processing, and the convergence of 
+---+                physical and digital systems in smart cities and Industry 4.0 applications.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="speedometer-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Quantum Computing Applications</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Exploring quantum computing algorithms and their practical applications in cryptography, 
+---+                optimization, and complex problem-solving. We research quantum-safe security measures 
+---+                and prepare for the quantum computing era.
+---+              </Text>
+---+            </View>
+---+
+---+            <View style={styles.featureCard}>
+---+              <Ionicons name="leaf-outline" size={32} color="#0066CC" />
+---+              <Text style={styles.featureTitle}>Sustainable Technology Solutions</Text>
+---+              <Text style={styles.featureDescription}>
+---+                Research into green computing, energy-efficient algorithms, and sustainable software 
+---+                development practices. We focus on reducing the environmental impact of technology 
+---+                while maintaining high performance and user experience.
+---+              </Text>
+---+            </View>
+---+
+---+            <Text style={styles.subheading}>Research Methodology</Text>
+---+            <View style={styles.objectivesList}>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Collaborative research partnerships with leading universities and research institutions
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Open-source contributions and active participation in technology communities
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Rapid prototyping and proof-of-concept development for emerging technologies
+---+                </Text>
+---+              </View>
+---+              <View style={styles.objectiveItem}>
+---+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+---+                <Text style={styles.objectiveText}>
+---+                  Regular publication of research findings and participation in industry conferences
+---+                </Text>
+---+              </View>
+---+            </View>
+---+
+---+            <Text style={styles.subheading}>Innovation Pipeline</Text>
+---+            <Text style={styles.bodyText}>
+---+              Our R&D projects follow a structured innovation pipeline from initial research and 
+---+              experimentation to prototype development and eventual commercialization. We maintain 
+---+              a portfolio of projects at various stages, ensuring a continuous flow of innovative 
+---+              solutions that can be integrated into our client projects and internal products.
+---+            </Text>
+---+          </View>
+---         </View>
+---       </ScrollView>
+---     </SafeAreaView>
 ---diff --git a/model.patch b/model.patch
----index 9d398a3..e69de29 100644
+---index 9a9481f..680ebdc 100644
 ------ a/model.patch
 ---+++ b/model.patch
----@@ -1,194 +0,0 @@
-----diff --git a/backend/server.py b/backend/server.py
-----index 80a9e03..1471722 100644
-------- a/backend/server.py
-----+++ b/backend/server.py
-----@@ -125,7 +125,7 @@ async def get_company_info():
-----                     "Marketplace for products and services",
-----                     "Secure document storage and management"
-----                 ],
------                "website": "https://www.custodiy.com",
-----+                "website": "https://custodiy.com",
-----                 "logo": "https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png"
-----             }
-----         ]
-----diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
-----index e0e92ba..db001d2 100644
-------- a/frontend/app/index.tsx
-----+++ b/frontend/app/index.tsx
-----@@ -108,7 +108,7 @@ export default function HomeScreen() {
----- 
-----           <TouchableOpacity 
-----             style={styles.projectCard}
------            onPress={() => handleWebsite('https://www.custodiy.com')}
-----+            onPress={() => handleWebsite('https://custodiy.com')}
-----           >
-----             <View style={styles.projectHeader}>
-----               <View style={styles.projectTitleWithLogo}>
-----diff --git a/frontend/app/special-projects.tsx b/frontend/app/special-projects.tsx
-----index 25e33c1..383033c 100644
-------- a/frontend/app/special-projects.tsx
-----+++ b/frontend/app/special-projects.tsx
-----@@ -121,7 +121,7 @@ export default function SpecialProjectsScreen() {
-----                 />
-----               </View>
-----               <TouchableOpacity 
------                onPress={() => handleWebsite('https://www.custodiy.com')}
-----+                onPress={() => handleWebsite('https://custodiy.com')}
-----               >
-----                 <Ionicons name="open-outline" size={24} color="#0066CC" />
-----               </TouchableOpacity>
-----@@ -178,7 +178,7 @@ export default function SpecialProjectsScreen() {
----- 
-----             <TouchableOpacity 
-----               style={styles.visitButton}
------              onPress={() => handleWebsite('https://www.custodiy.com')}
-----+              onPress={() => handleWebsite('https://custodiy.com')}
-----             >
-----               <Text style={styles.visitButtonText}>Visit Custodiy</Text>
-----               <Ionicons name="arrow-forward" size={20} color="#FFF" />
+---@@ -1,199 +0,0 @@
 ----diff --git a/model.patch b/model.patch
-----index b148418..e69de29 100644
+----index 9d398a3..e69de29 100644
 ------- a/model.patch
 ----+++ b/model.patch
-----@@ -1,141 +0,0 @@
+----@@ -1,194 +0,0 @@
+-----diff --git a/backend/server.py b/backend/server.py
+-----index 80a9e03..1471722 100644
+-------- a/backend/server.py
+-----+++ b/backend/server.py
+-----@@ -125,7 +125,7 @@ async def get_company_info():
+-----                     "Marketplace for products and services",
+-----                     "Secure document storage and management"
+-----                 ],
+------                "website": "https://www.custodiy.com",
+-----+                "website": "https://custodiy.com",
+-----                 "logo": "https://custodiy.com/static/media/custodiy.cf5be9dd4c6daac32193.png"
+-----             }
+-----         ]
+-----diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
+-----index e0e92ba..db001d2 100644
+-------- a/frontend/app/index.tsx
+-----+++ b/frontend/app/index.tsx
+-----@@ -108,7 +108,7 @@ export default function HomeScreen() {
+----- 
+-----           <TouchableOpacity 
+-----             style={styles.projectCard}
+------            onPress={() => handleWebsite('https://www.custodiy.com')}
+-----+            onPress={() => handleWebsite('https://custodiy.com')}
+-----           >
+-----             <View style={styles.projectHeader}>
+-----               <View style={styles.projectTitleWithLogo}>
 -----diff --git a/frontend/app/special-projects.tsx b/frontend/app/special-projects.tsx
------index 1c2f4b4..9c4de7e 100644
+-----index 25e33c1..383033c 100644
 -------- a/frontend/app/special-projects.tsx
 -----+++ b/frontend/app/special-projects.tsx
------@@ -181,6 +181,7 @@ export default function SpecialProjectsScreen() {
------         </View>
------       </ScrollView>
------     </SafeAreaView>
------+    </LinearGradient>
------   );
------ }
+-----@@ -121,7 +121,7 @@ export default function SpecialProjectsScreen() {
+-----                 />
+-----               </View>
+-----               <TouchableOpacity 
+------                onPress={() => handleWebsite('https://www.custodiy.com')}
+-----+                onPress={() => handleWebsite('https://custodiy.com')}
+-----               >
+-----                 <Ionicons name="open-outline" size={24} color="#0066CC" />
+-----               </TouchableOpacity>
+-----@@ -178,7 +178,7 @@ export default function SpecialProjectsScreen() {
 ----- 
+-----             <TouchableOpacity 
+-----               style={styles.visitButton}
+------              onPress={() => handleWebsite('https://www.custodiy.com')}
+-----+              onPress={() => handleWebsite('https://custodiy.com')}
+-----             >
+-----               <Text style={styles.visitButtonText}>Visit Custodiy</Text>
+-----               <Ionicons name="arrow-forward" size={20} color="#FFF" />
 -----diff --git a/model.patch b/model.patch
------index 10a0770..e69de29 100644
+-----index b148418..e69de29 100644
 -------- a/model.patch
 -----+++ b/model.patch
------@@ -1,124 +0,0 @@
-------diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
-------index c2fce86..43da69a 100644
---------- a/frontend/app/index.tsx
-------+++ b/frontend/app/index.tsx
-------@@ -173,6 +173,7 @@ export default function HomeScreen() {
+-----@@ -1,141 +0,0 @@
+------diff --git a/frontend/app/special-projects.tsx b/frontend/app/special-projects.tsx
+------index 1c2f4b4..9c4de7e 100644
+--------- a/frontend/app/special-projects.tsx
+------+++ b/frontend/app/special-projects.tsx
+------@@ -181,6 +181,7 @@ export default function SpecialProjectsScreen() {
 ------         </View>
 ------       </ScrollView>
 ------     </SafeAreaView>
@@ -574,114 +576,131 @@ index 922fe89..e69de29 100644
 ------ }
 ------ 
 ------diff --git a/model.patch b/model.patch
-------index 6094eae..e69de29 100644
+------index 10a0770..e69de29 100644
 --------- a/model.patch
 ------+++ b/model.patch
-------@@ -1,107 +0,0 @@
--------diff --git a/test_result.md b/test_result.md
--------index 187cba4..f0a1948 100644
----------- a/test_result.md
--------+++ b/test_result.md
--------@@ -100,4 +100,99 @@
+------@@ -1,124 +0,0 @@
+-------diff --git a/frontend/app/index.tsx b/frontend/app/index.tsx
+-------index c2fce86..43da69a 100644
+---------- a/frontend/app/index.tsx
+-------+++ b/frontend/app/index.tsx
+-------@@ -173,6 +173,7 @@ export default function HomeScreen() {
+-------         </View>
+-------       </ScrollView>
+-------     </SafeAreaView>
+-------+    </LinearGradient>
+-------   );
+------- }
 ------- 
-------- #====================================================================================================
-------- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
---------#====================================================================================================
--------\ No newline at end of file
--------+#====================================================================================================
--------+
--------+user_problem_statement: "Test the On Time Technology Ltd backend API comprehensively"
--------+
--------+backend:
--------+  - task: "Health Check Endpoint"
--------+    implemented: true
--------+    working: true
--------+    file: "/app/backend/server.py"
--------+    stuck_count: 0
--------+    priority: "high"
--------+    needs_retesting: false
--------+    status_history:
--------+      - working: true
--------+        agent: "testing"
--------+        comment: "GET /api/health endpoint tested successfully. Returns status 'healthy' with timestamp. Response time good."
--------+
--------+  - task: "Company Information Endpoint"
--------+    implemented: true
--------+    working: true
--------+    file: "/app/backend/server.py"
--------+    stuck_count: 0
--------+    priority: "high"
--------+    needs_retesting: false
--------+    status_history:
--------+      - working: true
--------+        agent: "testing"
--------+        comment: "GET /api/company-info endpoint tested successfully. Returns all required company details, 4 services (Software Design, Software Development, R&D, Special Projects), and 2 special projects (NoMoreFakeNews, Custodiy) as expected."
--------+
--------+  - task: "Contact Form Submission"
--------+    implemented: true
--------+    working: true
--------+    file: "/app/backend/server.py"
--------+    stuck_count: 0
--------+    priority: "high"
--------+    needs_retesting: false
--------+    status_history:
--------+      - working: true
--------+        agent: "testing"
--------+        comment: "POST /api/contact endpoint tested successfully. Accepts valid data and returns success message with ID. Properly validates required fields (name, email, message, form_type) and rejects invalid email formats. Data persisted to MongoDB correctly."
--------+
--------+  - task: "Investor Inquiry Submission"
--------+    implemented: true
--------+    working: true
--------+    file: "/app/backend/server.py"
--------+    stuck_count: 0
--------+    priority: "high"
--------+    needs_retesting: false
--------+    status_history:
--------+      - working: true
--------+        agent: "testing"
--------+        comment: "POST /api/investor-inquiry endpoint tested successfully. Accepts valid data and returns success message with ID and note about contacting at luca@ott4fututre.com. Properly validates all required fields (company_name, name, surname, email, phone, message) and rejects invalid email formats. Data persisted to MongoDB correctly."
--------+
--------+  - task: "Database Integration"
--------+    implemented: true
--------+    working: true
--------+    file: "/app/backend/server.py"
--------+    stuck_count: 0
--------+    priority: "high"
--------+    needs_retesting: false
--------+    status_history:
--------+      - working: true
--------+        agent: "testing"
--------+        comment: "MongoDB integration tested successfully. Data from contact forms and investor inquiries is being properly stored and can be retrieved. Database connection stable using MONGO_URL from environment."
--------+
--------+  - task: "API Validation and Error Handling"
--------+    implemented: true
--------+    working: true
--------+    file: "/app/backend/server.py"
--------+    stuck_count: 0
--------+    priority: "medium"
--------+    needs_retesting: false
--------+    status_history:
--------+      - working: true
--------+        agent: "testing"
--------+        comment: "API validation tested successfully. All endpoints properly validate input data, return appropriate HTTP status codes (200 for success, 422 for validation errors), and handle missing fields and invalid email formats correctly."
--------+
--------+frontend:
--------+  # Frontend testing not performed as per instructions
--------+
--------+metadata:
--------+  created_by: "testing_agent"
--------+  version: "1.0"
--------+  test_sequence: 1
--------+  run_ui: false
--------+
--------+test_plan:
--------+  current_focus:
--------+    - "All backend endpoints tested and working"
--------+  stuck_tasks: []
--------+  test_all: true
--------+  test_priority: "high_first"
--------+
--------+agent_communication:
--------+  - agent: "testing"
--------+    message: "Comprehensive backend API testing completed successfully. All 8 test cases passed (100% success rate). Tested: health endpoint, company info endpoint, contact form submission with validation, investor inquiry submission with validation, database integration, and error handling. All endpoints are working correctly with proper data validation and MongoDB persistence. Backend is production-ready."
--------\ No newline at end of file
+-------diff --git a/model.patch b/model.patch
+-------index 6094eae..e69de29 100644
+---------- a/model.patch
+-------+++ b/model.patch
+-------@@ -1,107 +0,0 @@
+--------diff --git a/test_result.md b/test_result.md
+--------index 187cba4..f0a1948 100644
+----------- a/test_result.md
+--------+++ b/test_result.md
+--------@@ -100,4 +100,99 @@
+-------- 
+-------- #====================================================================================================
+-------- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
+---------#====================================================================================================
+--------\ No newline at end of file
+--------+#====================================================================================================
+--------+
+--------+user_problem_statement: "Test the On Time Technology Ltd backend API comprehensively"
+--------+
+--------+backend:
+--------+  - task: "Health Check Endpoint"
+--------+    implemented: true
+--------+    working: true
+--------+    file: "/app/backend/server.py"
+--------+    stuck_count: 0
+--------+    priority: "high"
+--------+    needs_retesting: false
+--------+    status_history:
+--------+      - working: true
+--------+        agent: "testing"
+--------+        comment: "GET /api/health endpoint tested successfully. Returns status 'healthy' with timestamp. Response time good."
+--------+
+--------+  - task: "Company Information Endpoint"
+--------+    implemented: true
+--------+    working: true
+--------+    file: "/app/backend/server.py"
+--------+    stuck_count: 0
+--------+    priority: "high"
+--------+    needs_retesting: false
+--------+    status_history:
+--------+      - working: true
+--------+        agent: "testing"
+--------+        comment: "GET /api/company-info endpoint tested successfully. Returns all required company details, 4 services (Software Design, Software Development, R&D, Special Projects), and 2 special projects (NoMoreFakeNews, Custodiy) as expected."
+--------+
+--------+  - task: "Contact Form Submission"
+--------+    implemented: true
+--------+    working: true
+--------+    file: "/app/backend/server.py"
+--------+    stuck_count: 0
+--------+    priority: "high"
+--------+    needs_retesting: false
+--------+    status_history:
+--------+      - working: true
+--------+        agent: "testing"
+--------+        comment: "POST /api/contact endpoint tested successfully. Accepts valid data and returns success message with ID. Properly validates required fields (name, email, message, form_type) and rejects invalid email formats. Data persisted to MongoDB correctly."
+--------+
+--------+  - task: "Investor Inquiry Submission"
+--------+    implemented: true
+--------+    working: true
+--------+    file: "/app/backend/server.py"
+--------+    stuck_count: 0
+--------+    priority: "high"
+--------+    needs_retesting: false
+--------+    status_history:
+--------+      - working: true
+--------+        agent: "testing"
+--------+        comment: "POST /api/investor-inquiry endpoint tested successfully. Accepts valid data and returns success message with ID and note about contacting at luca@ott4fututre.com. Properly validates all required fields (company_name, name, surname, email, phone, message) and rejects invalid email formats. Data persisted to MongoDB correctly."
+--------+
+--------+  - task: "Database Integration"
+--------+    implemented: true
+--------+    working: true
+--------+    file: "/app/backend/server.py"
+--------+    stuck_count: 0
+--------+    priority: "high"
+--------+    needs_retesting: false
+--------+    status_history:
+--------+      - working: true
+--------+        agent: "testing"
+--------+        comment: "MongoDB integration tested successfully. Data from contact forms and investor inquiries is being properly stored and can be retrieved. Database connection stable using MONGO_URL from environment."
+--------+
+--------+  - task: "API Validation and Error Handling"
+--------+    implemented: true
+--------+    working: true
+--------+    file: "/app/backend/server.py"
+--------+    stuck_count: 0
+--------+    priority: "medium"
+--------+    needs_retesting: false
+--------+    status_history:
+--------+      - working: true
+--------+        agent: "testing"
+--------+        comment: "API validation tested successfully. All endpoints properly validate input data, return appropriate HTTP status codes (200 for success, 422 for validation errors), and handle missing fields and invalid email formats correctly."
+--------+
+--------+frontend:
+--------+  # Frontend testing not performed as per instructions
+--------+
+--------+metadata:
+--------+  created_by: "testing_agent"
+--------+  version: "1.0"
+--------+  test_sequence: 1
+--------+  run_ui: false
+--------+
+--------+test_plan:
+--------+  current_focus:
+--------+    - "All backend endpoints tested and working"
+--------+  stuck_tasks: []
+--------+  test_all: true
+--------+  test_priority: "high_first"
+--------+
+--------+agent_communication:
+--------+  - agent: "testing"
+--------+    message: "Comprehensive backend API testing completed successfully. All 8 test cases passed (100% success rate). Tested: health endpoint, company info endpoint, contact form submission with validation, investor inquiry submission with validation, database integration, and error handling. All endpoints are working correctly with proper data validation and MongoDB persistence. Backend is production-ready."
+--------\ No newline at end of file
