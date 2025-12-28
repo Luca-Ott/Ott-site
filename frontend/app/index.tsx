@@ -423,12 +423,12 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 8,
     flex: 1,
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
   },
   headerTextContainer: {
     flex: 1,
