@@ -523,18 +523,64 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   footer: {
-    paddingVertical: 24,
-    alignItems: 'center',
+    paddingVertical: 32,
+    paddingHorizontal: 16,
     marginTop: 32,
   },
-  footerText: {
-    fontSize: 14,
-    color: '#FFFFFF',
-    marginBottom: 4,
-    fontWeight: '600',
+  footerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 24,
+    flexWrap: 'wrap',
+    gap: 24,
   },
-  footerSubText: {
+  footerLeft: {
+    flex: 1,
+    minWidth: 200,
+    alignItems: 'flex-start',
+  },
+  footerLogo: {
+    width: 60,
+    height: 60,
+    marginBottom: 12,
+  },
+  footerCompanyName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 8,
+  },
+  footerTagline: {
+    fontSize: 14,
+    color: '#E0E0E0',
+    lineHeight: 20,
+    textAlign: 'left',
+  },
+  footerRight: {
+    alignItems: 'flex-start',
+    minWidth: 120,
+  },
+  footerLinksTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 12,
+  },
+  footerLink: {
+    fontSize: 14,
+    color: '#B0D4F1',
+    marginBottom: 8,
+    textDecorationLine: 'underline',
+  },
+  footerDivider: {
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    marginBottom: 16,
+  },
+  footerCopyright: {
     fontSize: 12,
-    color: '#F0F0F0',
+    color: '#E0E0E0',
+    textAlign: 'center',
   },
 });
