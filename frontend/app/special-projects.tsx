@@ -184,6 +184,137 @@ export default function SpecialProjectsScreen() {
               <Ionicons name="arrow-forward" size={20} color="#FFF" />
             </TouchableOpacity>
           </View>
+
+          {/* Cyber Security Projects */}
+          <View style={styles.projectCard}>
+            <View style={styles.projectHeader}>
+              <Ionicons name="shield-checkmark-outline" size={48} color="#0066CC" />
+            </View>
+
+            <Text style={styles.projectName}>Cyber Security Projects</Text>
+            
+            <Text style={styles.projectDescription}>
+              In today's interconnected digital landscape, cybersecurity has become paramount. 
+              Our Cyber Security Projects division focuses on developing cutting-edge solutions 
+              to protect businesses, organizations, and individuals from evolving cyber threats.
+            </Text>
+
+            <View style={styles.divider} />
+
+            <Text style={styles.subheading}>Our Mission</Text>
+            <Text style={styles.bodyText}>
+              We are committed to creating a safer digital environment by developing innovative 
+              cybersecurity solutions that anticipate and neutralize threats before they impact 
+              our clients. Our team of security experts combines deep technical knowledge with 
+              real-world experience to deliver comprehensive protection across all digital touchpoints.
+            </Text>
+
+            <Text style={styles.subheading}>Core Focus Areas</Text>
+            
+            <View style={styles.featureCard}>
+              <Ionicons name="lock-closed" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Advanced Threat Detection</Text>
+              <Text style={styles.featureDescription}>
+                Utilizing artificial intelligence and machine learning algorithms to identify and 
+                respond to sophisticated cyber threats in real-time. Our systems continuously monitor 
+                network traffic, user behavior, and system anomalies to detect potential security breaches 
+                before they cause damage.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="shield" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Data Protection & Encryption</Text>
+              <Text style={styles.featureDescription}>
+                Implementing state-of-the-art encryption technologies to safeguard sensitive data both 
+                at rest and in transit. We develop custom encryption solutions tailored to specific 
+                industry requirements, ensuring compliance with international data protection regulations 
+                including GDPR, HIPAA, and PCI-DSS.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="bug" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Vulnerability Assessment & Penetration Testing</Text>
+              <Text style={styles.featureDescription}>
+                Comprehensive security audits that identify weaknesses in your infrastructure before 
+                malicious actors can exploit them. Our ethical hacking teams simulate real-world attack 
+                scenarios to test your defenses and provide actionable recommendations for improvement.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="eye" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Security Monitoring & Incident Response</Text>
+              <Text style={styles.featureDescription}>
+                24/7 security operations center (SOC) services providing continuous monitoring and rapid 
+                response to security incidents. Our incident response team is equipped to contain threats, 
+                minimize damage, and restore normal operations with minimal downtime.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="people" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Security Awareness Training</Text>
+              <Text style={styles.featureDescription}>
+                Human error remains one of the largest security vulnerabilities. We provide comprehensive 
+                training programs to educate employees about cybersecurity best practices, phishing 
+                awareness, and safe online behavior, creating a culture of security within your organization.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="cloud-done" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Cloud Security Solutions</Text>
+              <Text style={styles.featureDescription}>
+                As businesses migrate to cloud infrastructure, we ensure seamless security integration 
+                across hybrid and multi-cloud environments. Our solutions include secure cloud 
+                architecture design, identity and access management, and continuous compliance monitoring.
+              </Text>
+            </View>
+
+            <Text style={styles.subheading}>Industries We Serve</Text>
+            <Text style={styles.bodyText}>
+              Our cybersecurity solutions are trusted by organizations across various sectors including 
+              financial services, healthcare, government, retail, technology, and critical infrastructure. 
+              We understand that each industry faces unique security challenges and regulatory requirements, 
+              and we tailor our solutions accordingly.
+            </Text>
+
+            <Text style={styles.subheading}>Why Choose Our Cyber Security Solutions</Text>
+            <View style={styles.objectivesList}>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Proven track record with zero successful breaches across protected clients
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  ISO 27001 certified security practices and methodologies
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Dedicated security team with extensive industry certifications (CISSP, CEH, CISM)
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Rapid response times with average incident containment under 2 hours
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Continuous innovation with regular updates to address emerging threats
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
