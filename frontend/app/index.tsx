@@ -57,6 +57,17 @@ export default function HomeScreen() {
     Linking.openURL(url);
   };
 
+  // Calcola la larghezza del contenuto principale animata
+  const mainContentWidth = menuAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['100%', `${100 - 280 * 100 / 1920}%`], // fallback, ma usiamo flex
+  });
+  
+  const menuWidthAnimated = menuAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, menuWidth],
+  });
+
   return (
     <LinearGradient
       colors={['#2ECC71', '#3498DB', '#1E88E5']}
@@ -66,8 +77,8 @@ export default function HomeScreen() {
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
-          {/* Main Content - animated to push left */}
-          <Animated.View style={[styles.mainContent, { marginRight: contentAnimation }]}>
+          {/* Main Content */}
+          <View style={styles.mainContent}>
             <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <LinearGradient
