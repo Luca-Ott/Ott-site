@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Backend URL from environment
-BACKEND_URL = "https://ontimetech-app.preview.emergentagent.com/api"
+BACKEND_URL = "https://tech4future.preview.emergentagent.com/api"
 
 def test_health_endpoint():
     """Test GET /api/health endpoint"""
