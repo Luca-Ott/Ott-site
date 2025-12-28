@@ -135,7 +135,7 @@ export default function HomeScreen() {
         </LinearGradient>
 
         {/* News Section */}
-        <View style={styles.breakingNewsContainer}>
+        <View style={[styles.breakingNewsContainer, isDesktop && styles.breakingNewsContainerDesktop]}>
           <View style={styles.breakingNewsLabel}>
             <Ionicons name="newspaper" size={isDesktop ? 16 : 14} color="#FFF" />
             <Text style={styles.breakingNewsLabelText}>{isDesktop ? 'BREAKING NEWS' : 'NEWS'}</Text>
