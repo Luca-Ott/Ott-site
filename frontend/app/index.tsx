@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   tagline: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#0066CC',
     marginBottom: 2,
     fontStyle: 'italic',
