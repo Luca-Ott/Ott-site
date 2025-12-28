@@ -315,6 +315,329 @@ export default function SpecialProjectsScreen() {
               </View>
             </View>
           </View>
+
+          {/* Software Design Projects */}
+          <View style={styles.projectCard}>
+            <View style={styles.projectHeader}>
+              <Ionicons name="color-palette-outline" size={48} color="#0066CC" />
+            </View>
+
+            <Text style={styles.projectName}>Software Design Projects</Text>
+            
+            <Text style={styles.projectDescription}>
+              Our Software Design division specializes in creating intuitive, user-centered digital experiences 
+              that seamlessly blend functionality with aesthetic appeal. We believe that exceptional design 
+              is not just about how something looks, but how it works and feels for the end user.
+            </Text>
+
+            <View style={styles.divider} />
+
+            <Text style={styles.subheading}>Our Design Philosophy</Text>
+            <Text style={styles.bodyText}>
+              We approach every project with a human-centered design methodology, ensuring that user needs 
+              and business objectives are perfectly aligned. Our team combines creative vision with technical 
+              expertise to deliver solutions that are not only visually stunning but also highly functional 
+              and accessible across all platforms and devices.
+            </Text>
+
+            <Text style={styles.subheading}>Core Design Services</Text>
+            
+            <View style={styles.featureCard}>
+              <Ionicons name="phone-portrait-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Mobile App Design</Text>
+              <Text style={styles.featureDescription}>
+                Creating native and cross-platform mobile experiences that engage users and drive business 
+                results. From wireframing to final UI implementation, we ensure every interaction is 
+                purposeful and delightful across iOS and Android platforms.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="desktop-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Web Application Design</Text>
+              <Text style={styles.featureDescription}>
+                Responsive web applications that work flawlessly across all devices and browsers. We focus 
+                on creating scalable design systems that maintain consistency while allowing for future 
+                growth and feature expansion.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="people-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>User Experience (UX) Research</Text>
+              <Text style={styles.featureDescription}>
+                In-depth user research, persona development, and journey mapping to understand your audience 
+                and create experiences that truly resonate. We use data-driven insights to inform every 
+                design decision and validate our solutions through user testing.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="brush-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Brand Identity & Visual Design</Text>
+              <Text style={styles.featureDescription}>
+                Comprehensive brand identity development including logo design, color palettes, typography, 
+                and visual guidelines that create memorable and cohesive brand experiences across all 
+                digital touchpoints.
+              </Text>
+            </View>
+
+            <Text style={styles.subheading}>Design Process Excellence</Text>
+            <View style={styles.objectivesList}>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Discovery and research phase to understand user needs and business goals
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Iterative design process with regular stakeholder feedback and validation
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Accessibility-first approach ensuring WCAG 2.1 AA compliance
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Comprehensive design systems and documentation for seamless handoff
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Software Development Projects */}
+          <View style={styles.projectCard}>
+            <View style={styles.projectHeader}>
+              <Ionicons name="code-slash-outline" size={48} color="#0066CC" />
+            </View>
+
+            <Text style={styles.projectName}>Software Development Projects</Text>
+            
+            <Text style={styles.projectDescription}>
+              Our Software Development team transforms innovative ideas into robust, scalable, and 
+              high-performance applications. We leverage cutting-edge technologies and industry 
+              best practices to deliver solutions that drive business growth and exceed user expectations.
+            </Text>
+
+            <View style={styles.divider} />
+
+            <Text style={styles.subheading}>Development Excellence</Text>
+            <Text style={styles.bodyText}>
+              With expertise spanning multiple programming languages, frameworks, and platforms, our 
+              development team is equipped to handle projects of any complexity. We follow agile 
+              methodologies, implement comprehensive testing strategies, and maintain the highest 
+              standards of code quality to ensure reliable, maintainable, and secure applications.
+            </Text>
+
+            <Text style={styles.subheading}>Technology Stack & Services</Text>
+            
+            <View style={styles.featureCard}>
+              <Ionicons name="phone-portrait" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Mobile Application Development</Text>
+              <Text style={styles.featureDescription}>
+                Native iOS and Android development using Swift, Kotlin, and cross-platform solutions 
+                with React Native and Flutter. We create high-performance mobile apps that leverage 
+                device capabilities while maintaining excellent user experience across all screen sizes.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="globe-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Web Application Development</Text>
+              <Text style={styles.featureDescription}>
+                Full-stack web development using modern frameworks like React, Vue.js, Angular for 
+                frontend and Node.js, Python (Django/Flask), and .NET for backend. We build scalable 
+                web applications with responsive design and optimal performance.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="server-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Backend & API Development</Text>
+              <Text style={styles.featureDescription}>
+                Robust backend systems with RESTful and GraphQL APIs, microservices architecture, 
+                and cloud-native solutions. We ensure scalability, security, and performance while 
+                maintaining clean, well-documented code that's easy to maintain and extend.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="cloud-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Cloud Solutions & DevOps</Text>
+              <Text style={styles.featureDescription}>
+                Cloud infrastructure setup and management on AWS, Google Cloud, and Azure. Implementing 
+                CI/CD pipelines, containerization with Docker and Kubernetes, and automated deployment 
+                strategies for reliable and efficient software delivery.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="analytics-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Data Analytics & AI Integration</Text>
+              <Text style={styles.featureDescription}>
+                Integration of machine learning models, data analytics platforms, and AI-powered features 
+                into applications. We help businesses leverage their data to gain insights and create 
+                intelligent, adaptive software solutions.
+              </Text>
+            </View>
+
+            <Text style={styles.subheading}>Development Methodology</Text>
+            <View style={styles.objectivesList}>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Agile development with regular sprints and continuous client collaboration
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Test-driven development (TDD) with comprehensive automated testing suites
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Code reviews and pair programming to ensure quality and knowledge sharing
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Continuous integration and deployment for rapid, reliable software delivery
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Research & Development Projects */}
+          <View style={styles.projectCard}>
+            <View style={styles.projectHeader}>
+              <Ionicons name="flask-outline" size={48} color="#0066CC" />
+            </View>
+
+            <Text style={styles.projectName}>Research & Development Projects</Text>
+            
+            <Text style={styles.projectDescription}>
+              Our Research & Development division is at the forefront of technological innovation, 
+              exploring emerging technologies and developing breakthrough solutions that shape the 
+              future of digital experiences. We invest in tomorrow's technologies today.
+            </Text>
+
+            <View style={styles.divider} />
+
+            <Text style={styles.subheading}>Innovation Focus</Text>
+            <Text style={styles.bodyText}>
+              Our R&D team consists of researchers, engineers, and visionaries who are passionate 
+              about pushing the boundaries of what's possible. We collaborate with academic institutions, 
+              technology partners, and industry leaders to stay ahead of technological trends and 
+              develop solutions that address future challenges.
+            </Text>
+
+            <Text style={styles.subheading}>Research Areas</Text>
+            
+            <View style={styles.featureCard}>
+              <Ionicons name="brain-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Artificial Intelligence & Machine Learning</Text>
+              <Text style={styles.featureDescription}>
+                Advanced AI research including natural language processing, computer vision, predictive 
+                analytics, and autonomous systems. We develop custom AI models and explore applications 
+                of generative AI, reinforcement learning, and neural network architectures.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="cube-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Blockchain & Distributed Systems</Text>
+              <Text style={styles.featureDescription}>
+                Research into blockchain technologies, smart contracts, decentralized applications (DApps), 
+                and distributed ledger systems. We explore consensus mechanisms, scalability solutions, 
+                and the integration of blockchain with traditional business systems.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="glasses-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Extended Reality (XR) Technologies</Text>
+              <Text style={styles.featureDescription}>
+                Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) research and 
+                development. We create immersive experiences for training, education, entertainment, 
+                and enterprise applications using cutting-edge XR technologies.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="cellular-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Internet of Things (IoT) & Edge Computing</Text>
+              <Text style={styles.featureDescription}>
+                Development of IoT ecosystems, edge computing solutions, and smart device integration. 
+                We research sensor technologies, real-time data processing, and the convergence of 
+                physical and digital systems in smart cities and Industry 4.0 applications.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="speedometer-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Quantum Computing Applications</Text>
+              <Text style={styles.featureDescription}>
+                Exploring quantum computing algorithms and their practical applications in cryptography, 
+                optimization, and complex problem-solving. We research quantum-safe security measures 
+                and prepare for the quantum computing era.
+              </Text>
+            </View>
+
+            <View style={styles.featureCard}>
+              <Ionicons name="leaf-outline" size={32} color="#0066CC" />
+              <Text style={styles.featureTitle}>Sustainable Technology Solutions</Text>
+              <Text style={styles.featureDescription}>
+                Research into green computing, energy-efficient algorithms, and sustainable software 
+                development practices. We focus on reducing the environmental impact of technology 
+                while maintaining high performance and user experience.
+              </Text>
+            </View>
+
+            <Text style={styles.subheading}>Research Methodology</Text>
+            <View style={styles.objectivesList}>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Collaborative research partnerships with leading universities and research institutions
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Open-source contributions and active participation in technology communities
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Rapid prototyping and proof-of-concept development for emerging technologies
+                </Text>
+              </View>
+              <View style={styles.objectiveItem}>
+                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
+                <Text style={styles.objectiveText}>
+                  Regular publication of research findings and participation in industry conferences
+                </Text>
+              </View>
+            </View>
+
+            <Text style={styles.subheading}>Innovation Pipeline</Text>
+            <Text style={styles.bodyText}>
+              Our R&D projects follow a structured innovation pipeline from initial research and 
+              experimentation to prototype development and eventual commercialization. We maintain 
+              a portfolio of projects at various stages, ensuring a continuous flow of innovative 
+              solutions that can be integrated into our client projects and internal products.
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
