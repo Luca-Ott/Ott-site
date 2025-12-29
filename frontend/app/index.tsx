@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Analytics } from '@vercel/analytics/react';
+// Analytics will be added via script tag in index.html for web
 
 export default function HomeScreen() {
   const router = useRouter();
