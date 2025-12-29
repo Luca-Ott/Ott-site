@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Linking, Animated, useWindowDimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Linking, Animated, useWindowDimensions, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function HomeScreen() {
   const router = useRouter();
