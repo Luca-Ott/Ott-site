@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
-    "version": "1.0.0",
+    "name": "On Time Technology Ltd",
+    "slug": "ott4future",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "frontend",
@@ -21,7 +21,13 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "name": "On Time Technology Ltd - Software Design & Development",
+      "shortName": "OTT",
+      "description": "On Time Technology Ltd - Innovating Tomorrow's Solutions Today. Software Design, Development, R&D and Special Projects including NoMoreFakeNews and Custodiy.",
+      "lang": "en",
+      "themeColor": "#0066CC",
+      "backgroundColor": "#E8F4F8"
     },
     "plugins": [
       "expo-router",
