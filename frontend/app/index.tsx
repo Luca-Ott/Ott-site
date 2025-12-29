@@ -406,7 +406,6 @@ export default function HomeScreen() {
           </Animated.View>
         </View>
       </SafeAreaView>
-      {Platform.OS === 'web' && <Analytics />}
     </LinearGradient>
   );
 }
