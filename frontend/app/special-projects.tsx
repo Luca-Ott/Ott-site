@@ -716,6 +716,11 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
+  projectLogo: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+  },
   statusBadge: {
     backgroundColor: '#FFF4E5',
     paddingHorizontal: 16,
