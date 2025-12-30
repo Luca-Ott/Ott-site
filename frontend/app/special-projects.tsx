@@ -42,7 +42,11 @@ export default function SpecialProjectsScreen() {
           {/* NoMoreFakeNews Project */}
           <View style={styles.projectCard}>
             <View style={styles.projectHeader}>
-              <Ionicons name="shield-checkmark" size={48} color="#0066CC" />
+              <Image 
+                source={require('../assets/nomorefakenews-logo.png')}
+                style={styles.projectLogo}
+                resizeMode="contain"
+              />
               <View style={styles.statusBadge}>
                 <Text style={styles.statusText}>In Development</Text>
               </View>
