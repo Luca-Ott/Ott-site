@@ -520,6 +520,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#4A9FD8',
   },
+  headerStats: {
+    flexDirection: 'row',
+    gap: 24,
+    marginLeft: 40,
+    paddingLeft: 40,
+    borderLeftWidth: 2,
+    borderLeftColor: '#0066CC',
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statNumber: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#0066CC',
+  },
+  statLabel: {
+    fontSize: 11,
+    color: '#4A9FD8',
+    marginTop: 2,
+  },
   breakingNewsContainer: {
     backgroundColor: '#0066CC',
     flexDirection: 'row',
