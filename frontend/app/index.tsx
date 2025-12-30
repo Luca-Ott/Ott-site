@@ -106,6 +106,21 @@ export default function HomeScreen() {
                   <Text style={styles.taglineDesktop}>Innovating Tomorrow's Solutions Today</Text>
                   <Text style={styles.subTaglineDesktop}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
                 </View>
+                {/* Stats - Solo Desktop */}
+                <View style={styles.headerStats}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.statNumber}>20+</Text>
+                    <Text style={styles.statLabel}>Happy Clients</Text>
+                  </View>
+                  <View style={styles.statItem}>
+                    <Text style={styles.statNumber}>50+</Text>
+                    <Text style={styles.statLabel}>Team Members</Text>
+                  </View>
+                  <View style={styles.statItem}>
+                    <Text style={styles.statNumber}>15+</Text>
+                    <Text style={styles.statLabel}>Years Experience</Text>
+                  </View>
+                </View>
               </View>
             ) : (
               // Mobile Layout - logo e nome in alto, tagline sotto
