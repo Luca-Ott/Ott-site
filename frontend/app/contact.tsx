@@ -63,21 +63,8 @@ export default function ContactScreen() {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert(
-          'Success!',
-          'Thank you for your message. We will get back to you soon.',
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                setName('');
-                setEmail('');
-                setMessage('');
-                router.back();
-              },
-            },
-          ]
-        );
+        // Navigate to success page
+        router.replace('/contact-success');
       } else {
         Alert.alert('Error', data.detail || 'Failed to submit form');
       }
