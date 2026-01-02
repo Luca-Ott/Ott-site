@@ -22,12 +22,16 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:url" content="https://www.ott4future.com/" />
         <meta property="og:title" content="On Time Technology Ltd - Software Design & Development" />
         <meta property="og:description" content="Innovating Tomorrow's Solutions Today. Software Design, Development, R&D and Special Projects." />
+        <meta property="og:image" content="https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
         <meta property="og:site_name" content="On Time Technology Ltd" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="On Time Technology Ltd - Software Design & Development" />
         <meta name="twitter:description" content="Innovating Tomorrow's Solutions Today. Software Design, Development, R&D and Special Projects." />
+        <meta name="twitter:image" content="https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68" />
         
         {/* Canonical */}
         <link rel="canonical" href="https://www.ott4future.com/" />
