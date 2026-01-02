@@ -14,7 +14,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import Constants from 'expo-constants';
 
 export default function ContactScreen() {
   const router = useRouter();
@@ -22,11 +21,6 @@ export default function ContactScreen() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const getApiUrl = () => {
-    // Use Formspree for form submissions
-    return 'https://formspree.io/f/YOUR_FORMSPREE_ID'; // Replace with your Formspree ID
-  };
 
   const handleSubmit = async () => {
     if (!name.trim() || !email.trim() || !message.trim()) {
