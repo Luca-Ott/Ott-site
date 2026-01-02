@@ -85,33 +85,34 @@ export default function InvestorInquiryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.headerLeft}>
-              <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color="#0066CC" />
-              </TouchableOpacity>
-              <Image
-                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                style={styles.logo}
-                resizeMode="contain"
-              />
+      <View style={styles.mainContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardView}
+        >
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            {/* Header */}
+            <View style={styles.header}>
+              <View style={styles.headerLeft}>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+                  <Ionicons name="arrow-back" size={24} color="#0066CC" />
+                </TouchableOpacity>
+                <Image
+                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
+              </View>
+              <Text style={styles.title}>Investment Inquiry</Text>
+              <View style={styles.placeholder} />
             </View>
-            <Text style={styles.title}>Investment Inquiry</Text>
-            <View style={styles.placeholder} />
-          </View>
 
-          <View style={styles.content}>
-            <View style={styles.projectBanner}>
-              <Ionicons name="shield-checkmark" size={48} color="#0066CC" />
-              <Text style={styles.bannerTitle}>NoMoreFakeNews</Text>
-              <Text style={styles.bannerSubtitle}>Investment Opportunity</Text>
-            </View>
+            <View style={styles.content}>
+              <View style={styles.projectBanner}>
+                <Ionicons name="shield-checkmark" size={48} color="#0066CC" />
+                <Text style={styles.bannerTitle}>NoMoreFakeNews</Text>
+                <Text style={styles.bannerSubtitle}>Investment Opportunity</Text>
+              </View>
 
             <View style={styles.infoCard}>
               <Text style={styles.infoText}>
