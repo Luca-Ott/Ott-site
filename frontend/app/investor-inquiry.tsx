@@ -200,10 +200,13 @@ export default function InvestorInquiryScreen() {
               <Text style={styles.contactCardText}>
                 For immediate inquiries, you can also reach us directly:
               </Text>
-              <View style={styles.contactRow}>
+              <TouchableOpacity 
+                style={styles.contactRow}
+                onPress={() => Linking.openURL('mailto:luca@ott4future.com')}
+              >
                 <Ionicons name="mail" size={20} color="#0066CC" />
-                <Text style={styles.contactEmail}>luca@ott4fututre.com</Text>
-              </View>
+                <Text style={styles.contactEmailLink}>luca@ott4future.com</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
