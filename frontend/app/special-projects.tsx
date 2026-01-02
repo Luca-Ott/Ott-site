@@ -651,7 +651,8 @@ export default function SpecialProjectsScreen() {
             </Text>
           </View>
         </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </SafeAreaView>
     </LinearGradient>
   );
@@ -663,6 +664,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    alignItems: 'center',
+  },
+  mainContainer: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 1400,
   },
   scrollContent: {
     paddingBottom: 32,
