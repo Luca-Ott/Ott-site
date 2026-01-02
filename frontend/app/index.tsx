@@ -228,7 +228,14 @@ export default function HomeScreen() {
               onPress={() => router.push('/special-projects')}
             >
               <View style={styles.projectHeader}>
-                <Text style={styles.projectName}>NoMoreFakeNews</Text>
+                <View style={styles.projectTitleWithLogo}>
+                  <Image
+                    source={require('../assets/nomorefakenews-logo.png')}
+                    style={styles.nomorefakenewsLogo}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.projectName}>NoMoreFakeNews</Text>
+                </View>
                 <View style={styles.statusBadge}>
                   <Text style={styles.statusText}>In Development</Text>
                 </View>
