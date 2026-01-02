@@ -26,15 +26,6 @@ export default function InvestorInquiryScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const getApiUrl = () => {
-    // In production (Vercel), use relative URL
-    if (typeof window !== 'undefined' && window.location.hostname.includes('ott4future.com')) {
-      return '';
-    }
-    // In development, use the backend URL
-    return Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '';
-  };
-
   const handleSubmit = async () => {
     if (!companyName.trim() || !name.trim() || !surname.trim() || !email.trim() || !phone.trim() || !message.trim()) {
       Alert.alert('Error', 'Please fill in all required fields');
