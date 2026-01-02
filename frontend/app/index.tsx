@@ -679,6 +679,11 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  nomorefakenewsLogo: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+  },
   projectName: {
     fontSize: 20,
     fontWeight: 'bold',
