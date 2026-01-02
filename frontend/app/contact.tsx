@@ -24,12 +24,8 @@ export default function ContactScreen() {
   const [loading, setLoading] = useState(false);
 
   const getApiUrl = () => {
-    // In production (Vercel), use relative URL
-    if (typeof window !== 'undefined' && window.location.hostname.includes('ott4future.com')) {
-      return '';
-    }
-    // In development, use the backend URL
-    return Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '';
+    // Use Formspree for form submissions
+    return 'https://formspree.io/f/YOUR_FORMSPREE_ID'; // Replace with your Formspree ID
   };
 
   const handleSubmit = async () => {
@@ -46,27 +42,26 @@ export default function ContactScreen() {
     setLoading(true);
 
     try {
-      const apiUrl = getApiUrl();
-      const response = await fetch(`${apiUrl}/api/contact`, {
+      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           name,
           email,
           message,
-          form_type: 'general',
+          _subject: 'New Contact Form - On Time Technology',
         }),
       });
-
-      const data = await response.json();
 
       if (response.ok) {
         // Navigate to success page
         router.replace('/contact-success');
       } else {
-        Alert.alert('Error', data.detail || 'Failed to submit form');
+        const data = await response.json();
+        Alert.alert('Error', data.error || 'Failed to submit form');
       }
     } catch (error) {
       Alert.alert('Error', 'Network error. Please check your connection and try again.');
