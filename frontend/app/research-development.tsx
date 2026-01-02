@@ -16,42 +16,43 @@ export default function ResearchDevelopmentScreen() {
       end={{ x: 1, y: 1 }}
     >
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.headerLeft}>
-              <TouchableOpacity 
-                style={styles.backButton}
-                onPress={() => router.back()}
-              >
-                <Ionicons name="arrow-back" size={24} color="#0066CC" />
-              </TouchableOpacity>
-              <Image
-                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                style={styles.logo}
-                resizeMode="contain"
-              />
-            </View>
-            <Text style={styles.title}>Research & Development</Text>
-            <View style={styles.placeholder} />
-          </View>
-
-          <View style={styles.content}>
-            {/* Main Card */}
-            <View style={styles.mainCard}>
-              <View style={styles.iconHeader}>
-                <Ionicons name="flask" size={64} color="#0066CC" />
+        <View style={styles.mainContainer}>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            {/* Header */}
+            <View style={styles.header}>
+              <View style={styles.headerLeft}>
+                <TouchableOpacity 
+                  style={styles.backButton}
+                  onPress={() => router.back()}
+                >
+                  <Ionicons name="arrow-back" size={24} color="#0066CC" />
+                </TouchableOpacity>
+                <Image
+                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
               </View>
+              <Text style={styles.title}>Research & Development</Text>
+              <View style={styles.placeholder} />
+            </View>
 
-              <Text style={styles.mainTitle}>Research & Development Innovation</Text>
-              
-              <Text style={styles.introText}>
-                Our Research & Development division is at the forefront of technological innovation, 
-                exploring emerging technologies and developing breakthrough solutions that shape the future 
-                of software and digital experiences. We invest in tomorrow's technologies today.
-              </Text>
+            <View style={styles.content}>
+              {/* Main Card */}
+              <View style={styles.mainCard}>
+                <View style={styles.iconHeader}>
+                  <Ionicons name="flask" size={64} color="#0066CC" />
+                </View>
 
-              <View style={styles.divider} />
+                <Text style={styles.mainTitle}>Research & Development Innovation</Text>
+                
+                <Text style={styles.introText}>
+                  Our Research & Development division is at the forefront of technological innovation, 
+                  exploring emerging technologies and developing breakthrough solutions that shape the future 
+                  of software and digital experiences. We invest in tomorrow's technologies today.
+                </Text>
+
+                <View style={styles.divider} />
 
               <Text style={styles.sectionHeading}>Our R&D Mission</Text>
               <Text style={styles.bodyText}>
