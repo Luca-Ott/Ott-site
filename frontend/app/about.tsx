@@ -152,7 +152,8 @@ export default function AboutScreen() {
               </View>
             </View>
           </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </SafeAreaView>
     </LinearGradient>
   );
