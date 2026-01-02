@@ -227,7 +227,7 @@ export default function HomeScreen() {
               style={styles.projectCardHalf}
               onPress={() => router.push('/special-projects')}
             >
-              <View style={styles.projectHeader}>
+              <View style={styles.projectHeaderColumn}>
                 <View style={styles.projectTitleWithLogo}>
                   <Image
                     source={require('../assets/nomorefakenews-logo.png')}
