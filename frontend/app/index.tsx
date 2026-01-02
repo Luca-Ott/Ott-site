@@ -687,6 +687,7 @@ const styles = StyleSheet.create({
   },
   projectHeaderColumn: {
     marginBottom: 12,
+    alignItems: 'flex-start',
   },
   projectTitleWithLogo: {
     flexDirection: 'row',
