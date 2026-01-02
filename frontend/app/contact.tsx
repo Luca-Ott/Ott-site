@@ -23,14 +23,22 @@ export default function ContactScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const showAlert = (title: string, message: string) => {
+    if (typeof window !== 'undefined') {
+      window.alert(`${title}: ${message}`);
+    } else {
+      Alert.alert(title, message);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!name.trim() || !email.trim() || !message.trim()) {
-      Alert.alert('Error', 'Please fill in all fields');
+      showAlert('Error', 'Please fill in all fields');
       return;
     }
 
     if (!email.includes('@')) {
-      Alert.alert('Error', 'Please enter a valid email address');
+      showAlert('Error', 'Please enter a valid email address');
       return;
     }
 
@@ -51,16 +59,19 @@ export default function ContactScreen() {
         }),
       });
 
+      console.log('Form response status:', response.status);
+
       if (response.ok) {
         // Navigate to success page
         router.replace('/contact-success');
       } else {
         const data = await response.json();
-        Alert.alert('Error', data.error || 'Failed to submit form');
+        console.log('Form error data:', data);
+        showAlert('Error', data.error || data.errors?.[0]?.message || 'Failed to submit form');
       }
     } catch (error) {
-      Alert.alert('Error', 'Network error. Please check your connection and try again.');
       console.error('Contact form error:', error);
+      showAlert('Error', 'Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
