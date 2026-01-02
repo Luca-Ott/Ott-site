@@ -227,19 +227,35 @@ export default function HomeScreen() {
               style={styles.projectCardHalf}
               onPress={() => router.push('/special-projects')}
             >
-              <View style={styles.projectHeaderColumn}>
-                <View style={styles.projectTitleWithLogo}>
-                  <Image
-                    source={require('../assets/nomorefakenews-logo.png')}
-                    style={styles.nomorefakenewsLogo}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.projectName}>NoMoreFakeNews</Text>
+              {isDesktop ? (
+                <View style={styles.projectHeader}>
+                  <View style={styles.projectTitleWithLogo}>
+                    <Image
+                      source={require('../assets/nomorefakenews-logo.png')}
+                      style={styles.nomorefakenewsLogo}
+                      resizeMode="contain"
+                    />
+                    <Text style={styles.projectName}>NoMoreFakeNews</Text>
+                  </View>
+                  <View style={styles.statusBadge}>
+                    <Text style={styles.statusText}>In Development</Text>
+                  </View>
                 </View>
-                <View style={styles.statusBadge}>
-                  <Text style={styles.statusText}>In Development</Text>
+              ) : (
+                <View style={styles.projectHeaderColumn}>
+                  <View style={styles.projectTitleWithLogoMobile}>
+                    <Image
+                      source={require('../assets/nomorefakenews-logo.png')}
+                      style={styles.nomorefakenewsLogo}
+                      resizeMode="contain"
+                    />
+                    <Text style={styles.projectName}>NoMoreFakeNews</Text>
+                  </View>
+                  <View style={styles.statusBadge}>
+                    <Text style={styles.statusText}>In Development</Text>
+                  </View>
                 </View>
-              </View>
+              )}
               <Text style={styles.projectDescription}>
                 An innovative project designed to combat fake news and misinformation. 
                 Our solution aims to identify, flag, and eventually eliminate fake news through advanced AI.
