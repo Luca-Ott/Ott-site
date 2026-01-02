@@ -23,7 +23,14 @@ export default function ContactScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const backendUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '';
+  const getApiUrl = () => {
+    // In production (Vercel), use relative URL
+    if (typeof window !== 'undefined' && window.location.hostname.includes('ott4future.com')) {
+      return '';
+    }
+    // In development, use the backend URL
+    return Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '';
+  };
 
   const handleSubmit = async () => {
     if (!name.trim() || !email.trim() || !message.trim()) {
@@ -39,7 +46,8 @@ export default function ContactScreen() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${backendUrl}/api/contact`, {
+      const apiUrl = getApiUrl();
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
