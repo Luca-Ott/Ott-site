@@ -230,8 +230,9 @@ export default function InvestorInquiryScreen() {
               </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -240,6 +241,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+  },
+  mainContainer: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 1400,
   },
   keyboardView: {
     flex: 1,
