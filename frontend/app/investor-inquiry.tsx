@@ -391,4 +391,10 @@ const styles = StyleSheet.create({
     color: '#0066CC',
     fontWeight: '500',
   },
+  contactEmailLink: {
+    fontSize: 14,
+    color: '#0066CC',
+    fontWeight: '500',
+    textDecorationLine: 'underline',
+  },
 });
