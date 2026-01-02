@@ -27,14 +27,22 @@ export default function InvestorInquiryScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const showAlert = (title: string, message: string) => {
+    if (typeof window !== 'undefined') {
+      window.alert(`${title}: ${message}`);
+    } else {
+      Alert.alert(title, message);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!companyName.trim() || !name.trim() || !surname.trim() || !email.trim() || !phone.trim() || !message.trim()) {
-      Alert.alert('Error', 'Please fill in all required fields');
+      showAlert('Error', 'Please fill in all required fields');
       return;
     }
 
     if (!email.includes('@')) {
-      Alert.alert('Error', 'Please enter a valid email address');
+      showAlert('Error', 'Please enter a valid email address');
       return;
     }
 
@@ -57,16 +65,19 @@ export default function InvestorInquiryScreen() {
         }),
       });
 
+      console.log('Form response status:', response.status);
+
       if (response.ok) {
         // Navigate to success page
         router.replace('/contact-success');
       } else {
         const data = await response.json();
-        Alert.alert('Error', data.error || 'Failed to submit inquiry');
+        console.log('Form error data:', data);
+        showAlert('Error', data.error || data.errors?.[0]?.message || 'Failed to submit inquiry');
       }
     } catch (error) {
-      Alert.alert('Error', 'Network error. Please check your connection and try again.');
       console.error('Investor inquiry error:', error);
+      showAlert('Error', 'Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
