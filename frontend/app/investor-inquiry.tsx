@@ -49,29 +49,28 @@ export default function InvestorInquiryScreen() {
     setLoading(true);
 
     try {
-      const apiUrl = getApiUrl();
-      const response = await fetch(`${apiUrl}/api/investor-inquiry`, {
+      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           company_name: companyName,
-          name,
-          surname,
+          name: `${name} ${surname}`,
           email,
           phone,
           message,
+          _subject: 'New Investor Inquiry - NoMoreFakeNews - On Time Technology',
         }),
       });
-
-      const data = await response.json();
 
       if (response.ok) {
         // Navigate to success page
         router.replace('/contact-success');
       } else {
-        Alert.alert('Error', data.detail || 'Failed to submit inquiry');
+        const data = await response.json();
+        Alert.alert('Error', data.error || 'Failed to submit inquiry');
       }
     } catch (error) {
       Alert.alert('Error', 'Network error. Please check your connection and try again.');
