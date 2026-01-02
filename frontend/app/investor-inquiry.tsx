@@ -26,7 +26,14 @@ export default function InvestorInquiryScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const backendUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '';
+  const getApiUrl = () => {
+    // In production (Vercel), use relative URL
+    if (typeof window !== 'undefined' && window.location.hostname.includes('ott4future.com')) {
+      return '';
+    }
+    // In development, use the backend URL
+    return Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '';
+  };
 
   const handleSubmit = async () => {
     if (!companyName.trim() || !name.trim() || !surname.trim() || !email.trim() || !phone.trim() || !message.trim()) {
@@ -42,7 +49,8 @@ export default function InvestorInquiryScreen() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${backendUrl}/api/investor-inquiry`, {
+      const apiUrl = getApiUrl();
+      const response = await fetch(`${apiUrl}/api/investor-inquiry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,24 +68,8 @@ export default function InvestorInquiryScreen() {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert(
-          'Inquiry Submitted!',
-          'Thank you for your interest in NoMoreFakeNews. Our team will review your inquiry and contact you shortly at luca@ott4fututre.com',
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                setCompanyName('');
-                setName('');
-                setSurname('');
-                setEmail('');
-                setPhone('');
-                setMessage('');
-                router.back();
-              },
-            },
-          ]
-        );
+        // Navigate to success page
+        router.replace('/contact-success');
       } else {
         Alert.alert('Error', data.detail || 'Failed to submit inquiry');
       }
