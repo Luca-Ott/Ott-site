@@ -669,11 +669,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
+  projectHeaderColumn: {
+    marginBottom: 12,
+  },
   projectTitleWithLogo: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
     flex: 1,
+    marginBottom: 8,
   },
   custodiyLogo: {
     width: 32,
