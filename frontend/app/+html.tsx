@@ -1,6 +1,7 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import type { PropsWithChildren } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function Root({ children }: PropsWithChildren) {
   // Schema.org structured data for Organization
@@ -91,6 +92,7 @@ export default function Root({ children }: PropsWithChildren) {
       </head>
       <body>
         {children}
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
