@@ -14,8 +14,9 @@ export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
 
-  const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • ';
-  const repeatedNews = newsText + newsText;
+  const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones •    ';
+  // Repeat the text 3 times for seamless loop
+  const repeatedNews = newsText + newsText + newsText;
 
   useEffect(() => {
     Animated.timing(menuAnimation, {
@@ -26,23 +27,22 @@ export default function HomeScreen() {
   }, [menuVisible]);
 
   useEffect(() => {
+    // Width of a single copy of the news text (approximate)
+    const singleTextWidth = 2000;
+    
+    // Start animation from 0
     scrollX.setValue(0);
-    const textWidth = 1500; // Lunghezza approssimativa del testo singolo
+    
+    // Create a seamless infinite loop
     const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(scrollX, {
-          toValue: -textWidth,
-          duration: 60000,
-          useNativeDriver: true,
-          easing: (t) => t, // Linear
-        }),
-        Animated.timing(scrollX, {
-          toValue: 0,
-          duration: 0,
-          useNativeDriver: true,
-        }),
-      ])
+      Animated.timing(scrollX, {
+        toValue: -singleTextWidth, // Scroll by one text width
+        duration: 30000, // 30 seconds for one complete cycle
+        useNativeDriver: true,
+        easing: (t) => t, // Linear easing for smooth constant speed
+      })
     );
+    
     animation.start();
     return () => animation.stop();
   }, []);
