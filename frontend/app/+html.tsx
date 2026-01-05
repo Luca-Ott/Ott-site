@@ -2,6 +2,39 @@ import { ScrollViewStyleReset } from 'expo-router/html';
 import type { PropsWithChildren } from 'react';
 
 export default function Root({ children }: PropsWithChildren) {
+  // Schema.org structured data for Organization
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "On Time Technology Ltd",
+    "alternateName": "OTT",
+    "url": "https://www.ott4future.com",
+    "logo": "https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68",
+    "description": "Innovating Tomorrow's Solutions Today. Software Design, Software Development, R&D and Special Projects.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "The Black Church - St Mary's Place",
+      "addressLocality": "Dublin",
+      "postalCode": "D07 P4AX",
+      "addressCountry": "IE"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+44-777-568-2831",
+      "contactType": "customer service",
+      "email": "Info@ott4future.com"
+    },
+    "sameAs": []
+  };
+
+  // WebSite structured data for search
+  const websiteData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "On Time Technology Ltd",
+    "url": "https://www.ott4future.com"
+  };
+
   return (
     <html lang="en">
       <head>
@@ -13,9 +46,13 @@ export default function Root({ children }: PropsWithChildren) {
         <title>On Time Technology Ltd - Software Design & Development</title>
         <meta name="title" content="On Time Technology Ltd - Software Design & Development" />
         <meta name="description" content="On Time Technology Ltd - Innovating Tomorrow's Solutions Today. Software Design, Software Development, R&D and Special Projects." />
-        <meta name="keywords" content="software design, software development, R&D, IT company, NoMoreFakeNews, Custodiy, technology, UK" />
+        <meta name="keywords" content="software design, software development, R&D, IT company, NoMoreFakeNews, Custodiy, technology, UK, Ireland" />
         <meta name="author" content="On Time Technology Ltd" />
         <meta name="robots" content="index, follow" />
+        
+        {/* Favicon */}
+        <link rel="icon" type="image/png" sizes="32x32" href="https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68" />
+        <link rel="apple-touch-icon" href="https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -39,7 +76,15 @@ export default function Root({ children }: PropsWithChildren) {
         {/* Theme */}
         <meta name="theme-color" content="#0066CC" />
         
-        {/* Vercel Analytics - script will silently fail in non-Vercel environments */}
+        {/* Schema.org Structured Data for Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
+        />
         
         <ScrollViewStyleReset />
       </head>
