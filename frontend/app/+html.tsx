@@ -39,10 +39,7 @@ export default function Root({ children }: PropsWithChildren) {
         {/* Theme */}
         <meta name="theme-color" content="#0066CC" />
         
-        {/* Vercel Analytics - only loads on Vercel production */}
-        {typeof window !== 'undefined' && window.location.hostname.includes('ott4future.com') && (
-          <script defer src="/_vercel/insights/script.js"></script>
-        )}
+        {/* Vercel Analytics - script will silently fail in non-Vercel environments */}
         
         <ScrollViewStyleReset />
       </head>
