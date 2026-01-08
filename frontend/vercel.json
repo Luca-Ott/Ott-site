@@ -2,7 +2,23 @@
   "buildCommand": "npx expo export --platform web",
   "outputDirectory": "dist",
   "framework": null,
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml" }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain" }
+      ]
+    }
+  ],
   "routes": [
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
+    { "src": "/robots.txt", "dest": "/robots.txt" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
