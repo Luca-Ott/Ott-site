@@ -440,7 +440,7 @@ export default function HomeScreen() {
                   style={styles.menuItem}
                   onPress={() => {
                     setMenuVisible(false);
-                    router.push('/contact');
+                    trackConversion(() => router.push('/contact'));
                   }}
                 >
                   <Ionicons name="mail-outline" size={24} color="#FFF" />
