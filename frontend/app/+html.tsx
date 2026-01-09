@@ -52,6 +52,28 @@ export default function Root({ children }: PropsWithChildren) {
           }}
         />
         
+        {/* Event snippet for Visualizzazione di pagina conversion */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                gtag('event', 'conversion', {
+                  'send_to': 'AW-17842656105/aJJ8CLz4k98bEOmmhbxC',
+                  'value': 1.0,
+                  'currency': 'USD',
+                  'event_callback': callback
+                });
+                return false;
+              }
+            `
+          }}
+        />
+        
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
