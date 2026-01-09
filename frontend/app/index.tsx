@@ -338,7 +338,7 @@ export default function HomeScreen() {
 
             <TouchableOpacity 
               style={styles.contactButton}
-              onPress={() => router.push('/contact')}
+              onPress={() => trackConversion(() => router.push('/contact'))}
             >
               <Text style={styles.contactButtonText}>Send Us a Message</Text>
               <Ionicons name="arrow-forward" size={20} color="#FFF" />
