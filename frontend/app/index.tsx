@@ -59,6 +59,14 @@ export default function HomeScreen() {
     Linking.openURL(url);
   };
 
+  // Google Ads conversion tracking
+  const trackConversion = (callback?: () => void) => {
+    if (typeof window !== 'undefined' && (window as any).gtag_report_conversion) {
+      (window as any).gtag_report_conversion();
+    }
+    if (callback) callback();
+  };
+
   // Calcola la larghezza del contenuto principale animata
   const mainContentWidth = menuAnimation.interpolate({
     inputRange: [0, 1],
