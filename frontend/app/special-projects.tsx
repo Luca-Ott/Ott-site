@@ -122,7 +122,7 @@ export default function SpecialProjectsScreen() {
               </Text>
               <TouchableOpacity 
                 style={styles.investorButton}
-                onPress={() => router.push('/investor-inquiry')}
+                onPress={() => trackConversion(() => router.push('/investor-inquiry'))}
               >
                 <Ionicons name="briefcase" size={24} color="#FFF" />
                 <Text style={styles.investorButtonText}>Investment Inquiry</Text>
