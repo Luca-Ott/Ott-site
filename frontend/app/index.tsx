@@ -225,7 +225,7 @@ export default function HomeScreen() {
           <View style={styles.projectsRow}>
             <TouchableOpacity 
               style={styles.projectCardHalf}
-              onPress={() => router.push('/special-projects')}
+              onPress={() => router.push('/nomorefakenews')}
             >
               {isDesktop ? (
                 <View style={styles.projectHeader}>
