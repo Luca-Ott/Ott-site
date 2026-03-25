@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Linking, Animated, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -14,8 +14,16 @@ export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const isDesktop = width >= 768;
 
-  const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones • ';
-  const repeatedNews = newsText + newsText;
+  const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones •  ';
+  const [textWidth, setTextWidth] = useState(0);
+  const animationRef = useRef<Animated.CompositeAnimation | null>(null);
+
+  const onTextLayout = useCallback((e: any) => {
+    const measuredWidth = e.nativeEvent.layout.width;
+    if (measuredWidth > 0 && measuredWidth !== textWidth) {
+      setTextWidth(measuredWidth);
+    }
+  }, [textWidth]);
 
   useEffect(() => {
     Animated.timing(menuAnimation, {
@@ -26,26 +34,29 @@ export default function HomeScreen() {
   }, [menuVisible]);
 
   useEffect(() => {
+    if (textWidth <= 0) return;
+
+    // Stop any previous animation
+    if (animationRef.current) {
+      animationRef.current.stop();
+    }
     scrollX.setValue(0);
-    const textWidth = 1500; // Lunghezza approssimativa del testo singolo
+
+    // Speed: ~50px per second for smooth reading
+    const duration = (textWidth / 50) * 1000;
+
     const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(scrollX, {
-          toValue: -textWidth,
-          duration: 60000,
-          useNativeDriver: true,
-          easing: (t) => t, // Linear
-        }),
-        Animated.timing(scrollX, {
-          toValue: 0,
-          duration: 0,
-          useNativeDriver: true,
-        }),
-      ])
+      Animated.timing(scrollX, {
+        toValue: -textWidth,
+        duration: duration,
+        useNativeDriver: true,
+        easing: (t: number) => t, // Linear
+      }),
     );
+    animationRef.current = animation;
     animation.start();
     return () => animation.stop();
-  }, []);
+  }, [textWidth]);
 
   const handleCall = () => {
     Linking.openURL('tel:+447775682831');
@@ -156,9 +167,16 @@ export default function HomeScreen() {
             <Text style={styles.breakingNewsLabelText}>{isDesktop ? 'BREAKING NEWS' : 'NEWS'}</Text>
           </View>
           <View style={styles.breakingNewsScroll}>
-            <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
+            <Animated.View style={[styles.breakingNewsContent, { flexDirection: 'row', transform: [{ translateX: scrollX }] }]}>
+              <Text
+                style={styles.breakingNewsText}
+                numberOfLines={1}
+                onLayout={onTextLayout}
+              >
+                {newsText}
+              </Text>
               <Text style={styles.breakingNewsText} numberOfLines={1}>
-                {repeatedNews}
+                {newsText}
               </Text>
             </Animated.View>
           </View>
