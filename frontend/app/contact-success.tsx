@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     margin: 20,
     padding: 32,
     borderRadius: 20,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   infoBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 16,
     borderRadius: 12,
     gap: 12,

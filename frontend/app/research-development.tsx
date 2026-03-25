@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     paddingHorizontal: 16,
     paddingVertical: 16,
     borderBottomWidth: 1,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   mainCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 24,
     borderRadius: 16,
     marginBottom: 24,
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   serviceCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 20,
     borderRadius: 12,
     marginBottom: 16,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   methodologyCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,

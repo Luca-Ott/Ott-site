@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   },
   // Main Card
   mainCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 24,
     borderRadius: 16,
     marginTop: 20,
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
   },
   // Cards
   card: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 24,
     borderRadius: 16,
     marginTop: 16,

@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   infoCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 20,
     borderRadius: 12,
     marginBottom: 16,
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   formCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 20,
     borderRadius: 12,
     shadowColor: '#000',
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   contactCard: {
-    backgroundColor: '#E8F4F8',
+    backgroundColor: '#D0EBFF',
     padding: 20,
     borderRadius: 12,
     shadowColor: '#000',
