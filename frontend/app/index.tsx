@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Linking, Animated, useWindowDimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Linking, Animated, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,7 +11,17 @@ export default function HomeScreen() {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const menuWidth = 280;
   const menuAnimation = useRef(new Animated.Value(0)).current; // 0 = closed, 1 = open
-  const { width } = useWindowDimensions();
+
+  // SSR-safe dimensions: default to desktop, update on client
+  const [width, setWidth] = useState(1024);
+  useEffect(() => {
+    const { width: w } = Dimensions.get('window');
+    if (w > 0) setWidth(w);
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      if (window.width > 0) setWidth(window.width);
+    });
+    return () => subscription?.remove();
+  }, []);
   const isDesktop = width >= 768;
 
   const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones •  ';

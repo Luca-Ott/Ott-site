@@ -12,10 +12,11 @@ export default function Root({ children }: PropsWithChildren) {
         {/* Primary Meta Tags */}
         <title>On Time Technology Ltd - Software Design & Development</title>
         <meta name="title" content="On Time Technology Ltd - Software Design & Development" />
-        <meta name="description" content="On Time Technology Ltd - Innovating Tomorrow's Solutions Today. Software Design, Software Development, R&D and Special Projects." />
-        <meta name="keywords" content="software design, software development, R&D, IT company, NoMoreFakeNews, Custodiy, technology, UK" />
+        <meta name="description" content="On Time Technology Ltd - Innovating Tomorrow's Solutions Today. We provide Software Design, Software Development, R&D and Special Projects including NoMoreFakeNews and Custodiy." />
+        <meta name="keywords" content="software design, software development, R&D, research development, IT company, NoMoreFakeNews, Custodiy, fake news, technology, UK, London" />
         <meta name="author" content="On Time Technology Ltd" />
         <meta name="robots" content="index, follow" />
+        <meta name="language" content="English" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -26,6 +27,7 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:image:width" content="512" />
         <meta property="og:image:height" content="512" />
         <meta property="og:site_name" content="On Time Technology Ltd" />
+        <meta property="og:locale" content="en_GB" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -38,6 +40,18 @@ export default function Root({ children }: PropsWithChildren) {
         
         {/* Theme */}
         <meta name="theme-color" content="#0066CC" />
+        <meta name="msapplication-TileColor" content="#0066CC" />
+        
+        {/* Geo Tags */}
+        <meta name="geo.region" content="GB" />
+        <meta name="geo.placename" content="United Kingdom" />
+        
+        {/* Contact */}
+        <meta name="contact" content="luca@ott4future.com" />
+        <meta name="reply-to" content="luca@ott4future.com" />
+        
+        {/* Favicon */}
+        <link rel="icon" type="image/png" href="/favicon.png" />
         
         {/* Vercel Analytics */}
         <script defer src="/_vercel/insights/script.js"></script>
