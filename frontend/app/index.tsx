@@ -24,7 +24,7 @@ export default function HomeScreen() {
   }, []);
   const isDesktop = width >= 768;
 
-  const newsText = '🚀 NoMoreFakeNews project launches investment opportunity • 💼 Custodiy platform now live with OTC and Escrow services • 🎉 ON TIME TECHNOLOGY expands R&D division • ✨ New software development solutions available • 📈 Special projects reaching new milestones •  ';
+  const newsText = '🚀 NoMoreFakeNews — AI-powered platform to eliminate fake news, now open for investors • 💼 Custodiy — Comprehensive modular platform for the digital economy: OTC trading, Escrow services, crypto custody & business solutions • 🔐 Cyber Security Projects — Advanced protection for businesses and individuals • 🎉 ON TIME TECHNOLOGY expands R&D division with cutting-edge innovation • ✨ New software design & development solutions available for enterprises • 📈 Special projects reaching new milestones • 🌍 Building the future of technology from the UK to the world • 💡 Custom IT solutions tailored to your business needs •  ';
   const [textWidth, setTextWidth] = useState(0);
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -177,15 +177,20 @@ export default function HomeScreen() {
             <Text style={styles.breakingNewsLabelText}>{isDesktop ? 'BREAKING NEWS' : 'NEWS'}</Text>
           </View>
           <View style={styles.breakingNewsScroll}>
-            <Animated.View style={[styles.breakingNewsContent, { flexDirection: 'row', transform: [{ translateX: scrollX }] }]}>
+            <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
               <Text
                 style={styles.breakingNewsText}
                 numberOfLines={1}
+                ellipsizeMode="clip"
                 onLayout={onTextLayout}
               >
                 {newsText}
               </Text>
-              <Text style={styles.breakingNewsText} numberOfLines={1}>
+              <Text 
+                style={styles.breakingNewsText}
+                numberOfLines={1}
+                ellipsizeMode="clip"
+              >
                 {newsText}
               </Text>
             </Animated.View>
@@ -617,9 +622,15 @@ const styles = StyleSheet.create({
   breakingNewsScroll: {
     flex: 1,
     overflow: 'hidden',
+    height: 20,
   },
   breakingNewsContent: {
     paddingLeft: 16,
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    position: 'absolute',
+    left: 0,
+    top: 0,
   },
   breakingNewsText: {
     color: '#FFF',
