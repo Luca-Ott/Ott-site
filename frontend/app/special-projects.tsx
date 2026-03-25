@@ -715,7 +715,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   projectCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#E8F4F8',
     padding: 24,
     borderRadius: 16,
     shadowColor: '#000',

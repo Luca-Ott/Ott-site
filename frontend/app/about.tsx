@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   serviceCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#E8F4F8',
     padding: 20,
     borderRadius: 12,
     marginBottom: 16,

@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   serviceCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#E8F4F8',
     padding: 20,
     borderRadius: 12,
     marginBottom: 16,
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   methodologyCard: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#E8F4F8',
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
