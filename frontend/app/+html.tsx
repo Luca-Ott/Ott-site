@@ -56,10 +56,6 @@ export default function Root({ children }: PropsWithChildren) {
         {/* Vercel Analytics */}
         <script defer src="/_vercel/insights/script.js"></script>
         
-        {/* Vercel Speed Insights */}
-        <script dangerouslySetInnerHTML={{ __html: `window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };` }} />
-        <script defer src="/_vercel/speed-insights/script.js"></script>
-        
         <ScrollViewStyleReset />
       </head>
       <body>
