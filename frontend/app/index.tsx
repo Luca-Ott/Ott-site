@@ -465,6 +465,16 @@ export default function HomeScreen() {
                   <Text style={styles.footerLink}>R&D</Text>
                 </TouchableOpacity>
               </View>
+
+              <View style={styles.footerLinksColumn}>
+                <Text style={styles.footerLinksTitle}>Social</Text>
+                <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
+                  <View style={styles.footerSocialRow}>
+                    <Text style={styles.footerXLogo}>𝕏</Text>
+                    <Text style={styles.footerLink}>@OnTechnolo1200</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
 
@@ -990,6 +1000,16 @@ const styles = StyleSheet.create({
     color: '#B0D4F1',
     marginBottom: 8,
     textDecorationLine: 'underline',
+  },
+  footerSocialRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  footerXLogo: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   footerDivider: {
     height: 1,
