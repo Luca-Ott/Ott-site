@@ -470,21 +470,19 @@ export default function HomeScreen() {
 
           {/* Bottom Line and Copyright */}
           <View style={styles.footerDivider} />
-          <View style={styles.footerBottomRow}>
-            <Text style={styles.footerCopyright}>
-              © 2026 On Time Technology. All rights reserved.
-            </Text>
-            <TouchableOpacity 
-              style={styles.footerSocialLink}
-              onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}
-            >
-              <Ionicons name="logo-twitter" size={18} color="#FFF" />
-              <Text style={styles.footerSocialText}>@OnTechnolo1200</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.footerCopyright}>
+            © 2026 On Time Technology. All rights reserved.
+          </Text>
           <Text style={styles.footerRelease}>
             Release 1.1
           </Text>
+          <TouchableOpacity 
+            style={styles.footerSocialLink}
+            onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}
+          >
+            <Ionicons name="logo-twitter" size={16} color="#FFF" />
+            <Text style={styles.footerSocialText}>Follow us on X</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
           </View>
@@ -1011,11 +1009,20 @@ const styles = StyleSheet.create({
   footerSocialLink: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    justifyContent: 'center',
+    gap: 8,
+    marginTop: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 20,
+    alignSelf: 'center',
   },
   footerSocialText: {
-    color: '#E0E0E0',
-    fontSize: 12,
+    color: '#FFF',
+    fontSize: 13,
+    fontWeight: '500',
   },
   menuColumn: {
     backgroundColor: 'rgba(0, 102, 204, 0.95)',
