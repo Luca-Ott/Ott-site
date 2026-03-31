@@ -413,14 +413,6 @@ export default function HomeScreen() {
               </Text>
             </View>
 
-            <TouchableOpacity 
-              style={styles.contactButton}
-              onPress={() => router.push('/contact')}
-            >
-              <Text style={styles.contactButtonText}>Send Us a Message</Text>
-              <Ionicons name="arrow-forward" size={20} color="#FFF" />
-            </TouchableOpacity>
-
             {!isDesktop && (
               <TouchableOpacity 
                 style={styles.contactSocialRow}
@@ -430,6 +422,14 @@ export default function HomeScreen() {
                 <Text style={styles.contactSocialText}>@OnTechnolo1200</Text>
               </TouchableOpacity>
             )}
+
+            <TouchableOpacity 
+              style={styles.contactButton}
+              onPress={() => router.push('/contact')}
+            >
+              <Text style={styles.contactButtonText}>Send Us a Message</Text>
+              <Ionicons name="arrow-forward" size={20} color="#FFF" />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -461,12 +461,6 @@ export default function HomeScreen() {
                 <TouchableOpacity onPress={() => router.push('/contact')}>
                   <Text style={styles.footerLink}>Contact</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
-                  <View style={styles.footerSocialRow}>
-                    <Text style={styles.footerXLogo}>𝕏</Text>
-                    <Text style={styles.footerLink}>@OnTechnolo1200</Text>
-                  </View>
-                </TouchableOpacity>
               </View>
 
               <View style={styles.footerLinksColumn}>
@@ -479,6 +473,16 @@ export default function HomeScreen() {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push('/research-development')}>
                   <Text style={styles.footerLink}>R&D</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.footerLinksColumn}>
+                <Text style={styles.footerLinksTitle}>Social</Text>
+                <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
+                  <View style={styles.footerSocialRow}>
+                    <Text style={styles.footerXLogo}>𝕏</Text>
+                    <Text style={styles.footerLink}>@OnTechnolo1200</Text>
+                  </View>
                 </TouchableOpacity>
               </View>
 
