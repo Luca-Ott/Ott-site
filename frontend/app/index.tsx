@@ -420,6 +420,16 @@ export default function HomeScreen() {
               <Text style={styles.contactButtonText}>Send Us a Message</Text>
               <Ionicons name="arrow-forward" size={20} color="#FFF" />
             </TouchableOpacity>
+
+            {!isDesktop && (
+              <TouchableOpacity 
+                style={styles.contactSocialRow}
+                onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}
+              >
+                <Text style={styles.contactXLogo}>𝕏</Text>
+                <Text style={styles.contactSocialText}>@OnTechnolo1200</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
@@ -936,6 +946,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#FFF',
+  },
+  contactSocialRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+  },
+  contactXLogo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+  },
+  contactSocialText: {
+    fontSize: 15,
+    color: '#0066CC',
+    fontWeight: '500',
   },
   footer: {
     paddingVertical: 32,
