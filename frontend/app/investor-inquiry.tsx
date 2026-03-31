@@ -61,7 +61,7 @@ export default function InvestorInquiryScreen() {
           email,
           phone,
           message,
-          _subject: 'New Investor Inquiry - NoMoreFakeNews - On Time Technology',
+          _subject: 'New Investor Inquiry - Freety - On Time Technology',
         }),
       });
 
@@ -110,13 +110,13 @@ export default function InvestorInquiryScreen() {
             <View style={styles.content}>
               <View style={styles.projectBanner}>
                 <Ionicons name="shield-checkmark" size={48} color="#0066CC" />
-                <Text style={styles.bannerTitle}>NoMoreFakeNews</Text>
+                <Text style={styles.bannerTitle}>Freety</Text>
                 <Text style={styles.bannerSubtitle}>Investment Opportunity</Text>
               </View>
 
             <View style={styles.infoCard}>
               <Text style={styles.infoText}>
-                Thank you for your interest in investing in NoMoreFakeNews. Please provide your 
+                Thank you for your interest in investing in Freety. Please provide your 
                 details below and our team will reach out to discuss this exciting opportunity.
               </Text>
             </View>
