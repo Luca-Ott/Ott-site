@@ -347,10 +347,11 @@ export default function HomeScreen() {
             >
               <View style={styles.projectHeader}>
                 <View style={styles.projectTitleWithLogo}>
-                  <View style={styles.freetyIconContainer}>
-                    <Ionicons name="globe" size={28} color="#FFF" />
-                  </View>
-                  <Text style={styles.projectName}>Freety</Text>
+                  <Image 
+                    source={require('../assets/freety-logo.jpg')}
+                    style={styles.freetyLogo}
+                    resizeMode="contain"
+                  />
                 </View>
                 <View style={[styles.statusBadge, { backgroundColor: '#E8F5E9' }]}>
                   <Text style={[styles.statusText, { color: '#2E7D32' }]}>In Development</Text>
@@ -727,6 +728,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#0066CC',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  freetyLogo: {
+    width: 140,
+    height: 42,
+    borderRadius: 4,
   },
   freetyTagline: {
     fontSize: 14,
