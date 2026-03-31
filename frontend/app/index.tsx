@@ -24,7 +24,7 @@ export default function HomeScreen() {
   }, []);
   const isDesktop = width >= 768;
 
-  const newsText = '🚀 NoMoreFakeNews — AI-powered platform to eliminate fake news, now open for investors • 💼 Custodiy — Comprehensive modular platform for the digital economy: OTC trading, Escrow services, crypto custody & business solutions • 🔐 Cyber Security Projects — Advanced protection for businesses and individuals • 🎉 ON TIME TECHNOLOGY expands R&D division with cutting-edge innovation • ✨ New software design & development solutions available for enterprises • 📈 Special projects reaching new milestones • 🌍 Building the future of technology from the UK to the world • 💡 Custom IT solutions tailored to your business needs •  ';
+  const newsText = '🚀 NoMoreFakeNews — AI-powered platform to eliminate fake news, now open for investors • 💼 Custodiy — Comprehensive modular platform for the digital economy: OTC trading, Escrow services, crypto custody & business solutions • 🌍 Freety — Digital infrastructure for global commodity & energy trading with cargo tokenization and AI tools • 🔐 Cyber Security Projects — Advanced protection for businesses and individuals • 🎉 ON TIME TECHNOLOGY expands R&D division with cutting-edge innovation • ✨ New software design & development solutions available for enterprises • 📈 Special projects reaching new milestones • 💡 Custom IT solutions tailored to your business needs •  ';
   const [textWidth, setTextWidth] = useState(0);
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -335,6 +335,57 @@ export default function HomeScreen() {
                   <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
                   <Text style={styles.featureText}>Marketplace Platform</Text>
                 </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Freety - Full Width Card */}
+          <View style={{ marginTop: 16 }}>
+            <TouchableOpacity 
+              style={styles.projectCardFull}
+              onPress={() => router.push('/investor-inquiry')}
+            >
+              <View style={styles.projectHeader}>
+                <View style={styles.projectTitleWithLogo}>
+                  <View style={styles.freetyIconContainer}>
+                    <Ionicons name="globe" size={28} color="#FFF" />
+                  </View>
+                  <Text style={styles.projectName}>Freety</Text>
+                </View>
+                <View style={[styles.statusBadge, { backgroundColor: '#E8F5E9' }]}>
+                  <Text style={[styles.statusText, { color: '#2E7D32' }]}>In Development</Text>
+                </View>
+              </View>
+              <Text style={styles.freetyTagline}>Fueling the Future — Digital Infrastructure for Global Commodity & Energy Trading</Text>
+              <Text style={styles.projectDescription}>
+                A digital B2B platform designed to modernize global trading of commodities and energy products.
+                Integrating marketplace technology, financial settlement, escrow, cargo tokenization, and AI-driven trading tools.
+              </Text>
+              <View style={styles.featuresList}>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Spot Trading, Auctions & Group Purchase</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Smart Contracts & Escrow</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Cargo Tokenization & Secondary Market</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>Multi-Currency Wallets & Stablecoin Settlement</Text>
+                </View>
+                <View style={styles.featureItem}>
+                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
+                  <Text style={styles.featureText}>AI Trading Intelligence</Text>
+                </View>
+              </View>
+              <View style={styles.investorButton}>
+                <Ionicons name="briefcase" size={20} color="#0066CC" />
+                <Text style={styles.investorButtonText}>Investor Inquiries Welcome</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -657,6 +708,32 @@ const styles = StyleSheet.create({
     elevation: 3,
     flex: 1,
     minWidth: 280,
+  },
+  projectCardFull: {
+    backgroundColor: '#E8F4F8',
+    padding: 20,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    width: '100%',
+  },
+  freetyIconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 10,
+    backgroundColor: '#0066CC',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  freetyTagline: {
+    fontSize: 14,
+    color: '#0066CC',
+    fontWeight: '600',
+    fontStyle: 'italic',
+    marginBottom: 8,
   },
   sectionTitle: {
     fontSize: 22,
