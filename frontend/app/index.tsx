@@ -951,7 +951,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 24,
     flexWrap: 'wrap',
-    gap: 48,
+    gap: 24,
     paddingHorizontal: 24,
   },
   footerLeft: {
@@ -982,12 +982,13 @@ const styles = StyleSheet.create({
   },
   footerRight: {
     flexDirection: 'row',
-    gap: 48,
+    gap: 24,
     alignItems: 'flex-start',
+    flexWrap: 'wrap',
     minWidth: 120,
   },
   footerLinksColumn: {
-    minWidth: 150,
+    minWidth: 120,
   },
   footerLinksTitle: {
     fontSize: 16,
