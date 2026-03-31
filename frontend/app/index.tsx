@@ -451,6 +451,12 @@ export default function HomeScreen() {
                 <TouchableOpacity onPress={() => router.push('/contact')}>
                   <Text style={styles.footerLink}>Contact</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
+                  <View style={styles.footerSocialRow}>
+                    <Text style={styles.footerXLogo}>𝕏</Text>
+                    <Text style={styles.footerLink}>@OnTechnolo1200</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
 
               <View style={styles.footerLinksColumn}>
@@ -466,15 +472,6 @@ export default function HomeScreen() {
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.footerLinksColumn}>
-                <Text style={styles.footerLinksTitle}>Social</Text>
-                <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
-                  <View style={styles.footerSocialRow}>
-                    <Text style={styles.footerXLogo}>𝕏</Text>
-                    <Text style={styles.footerLink}>@OnTechnolo1200</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
             </View>
           </View>
 
