@@ -343,7 +343,7 @@ export default function HomeScreen() {
           <View style={{ marginTop: 16 }}>
             <TouchableOpacity 
               style={styles.projectCardFull}
-              onPress={() => router.push('/investor-inquiry')}
+              onPress={() => router.push('/freety')}
             >
               <View style={styles.projectHeader}>
                 <View style={styles.projectTitleWithLogo}>
