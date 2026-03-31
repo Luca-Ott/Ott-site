@@ -476,12 +476,16 @@ export default function HomeScreen() {
           <Text style={styles.footerRelease}>
             Release 1.1
           </Text>
+        </View>
+
+        {/* Social Link - Outside Footer */}
+        <View style={styles.socialBar}>
           <TouchableOpacity 
-            style={styles.footerSocialLink}
+            style={styles.socialLink}
             onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}
           >
-            <Ionicons name="logo-twitter" size={16} color="#FFF" />
-            <Text style={styles.footerSocialText}>Follow us on X</Text>
+            <Ionicons name="logo-twitter" size={16} color="#0066CC" />
+            <Text style={styles.socialLinkText}>@OnTechnolo1200</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -1022,6 +1026,21 @@ const styles = StyleSheet.create({
   footerSocialText: {
     color: '#FFF',
     fontSize: 13,
+    fontWeight: '500',
+  },
+  socialBar: {
+    backgroundColor: '#FFF',
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  socialLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  socialLinkText: {
+    color: '#0066CC',
+    fontSize: 14,
     fontWeight: '500',
   },
   menuColumn: {
