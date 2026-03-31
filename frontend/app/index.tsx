@@ -471,10 +471,10 @@ export default function HomeScreen() {
           {/* Bottom Line and Copyright */}
           <View style={styles.footerDivider} />
           <Text style={styles.footerCopyright}>
-            © 2025 On Time Technology. All rights reserved.
+            © 2026 On Time Technology. All rights reserved.
           </Text>
           <Text style={styles.footerRelease}>
-            Release 1.01
+            Release 1.1
           </Text>
         </View>
       </ScrollView>
