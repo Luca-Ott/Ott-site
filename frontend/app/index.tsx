@@ -479,15 +479,6 @@ export default function HomeScreen() {
         </View>
 
         {/* Social Link - Outside Footer */}
-        <View style={styles.socialBar}>
-          <TouchableOpacity 
-            style={styles.socialLink}
-            onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}
-          >
-            <Ionicons name="logo-twitter" size={16} color="#0066CC" />
-            <Text style={styles.socialLinkText}>@OnTechnolo1200</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
           </View>
 
@@ -533,6 +524,19 @@ export default function HomeScreen() {
                 >
                   <Ionicons name="mail-outline" size={24} color="#FFF" />
                   <Text style={styles.menuItemText}>Contact</Text>
+                </TouchableOpacity>
+
+                <View style={styles.menuDivider} />
+
+                <TouchableOpacity 
+                  style={styles.menuItem}
+                  onPress={() => {
+                    setMenuVisible(false);
+                    Linking.openURL('https://x.com/OnTechnolo1200');
+                  }}
+                >
+                  <Text style={styles.xLogoText}>𝕏</Text>
+                  <Text style={styles.menuItemText}>@OnTechnolo1200</Text>
                 </TouchableOpacity>
               </>
             )}
@@ -1042,6 +1046,16 @@ const styles = StyleSheet.create({
     color: '#0066CC',
     fontSize: 14,
     fontWeight: '500',
+  },
+  menuDivider: {
+    height: 1,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    marginVertical: 10,
+  },
+  xLogoText: {
+    color: '#FFF',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
   menuColumn: {
     backgroundColor: 'rgba(0, 102, 204, 0.95)',
