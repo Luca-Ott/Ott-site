@@ -5,6 +5,8 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import Head from 'expo-router/head';
+
 export default function AboutScreen() {
   const router = useRouter();
 
@@ -15,6 +17,10 @@ export default function AboutScreen() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
+      <Head>
+        <title>About Us - On Time Technology Ltd</title>
+        <meta name="description" content="Learn about On Time Technology Ltd, a UK-based IT company delivering innovative software design, development and R&D solutions for businesses worldwide." />
+      </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scrollContent}>

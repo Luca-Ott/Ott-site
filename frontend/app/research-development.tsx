@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Head from 'expo-router/head';
 
 export default function ResearchDevelopmentScreen() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function ResearchDevelopmentScreen() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
+      <Head>
+        <title>Research & Development - On Time Technology Ltd</title>
+        <meta name="description" content="On Time Technology R&D division explores emerging technologies including AI, blockchain, IoT, and quantum computing to develop breakthrough solutions for the future." />
+      </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scrollContent}>

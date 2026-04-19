@@ -15,6 +15,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import Head from 'expo-router/head';
 
 export default function ContactScreen() {
   const router = useRouter();
@@ -79,7 +80,10 @@ export default function ContactScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.mainContainer}>
+      <Head>
+        <title>Contact Us - On Time Technology Ltd</title>
+        <meta name="description" content="Get in touch with On Time Technology Ltd. Contact us for software design, development, R&D projects and business inquiries." />
+      </Head>      <View style={styles.mainContainer}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardView}

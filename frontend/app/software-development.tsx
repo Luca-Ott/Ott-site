@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Head from 'expo-router/head';
 
 export default function SoftwareDevelopmentScreen() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function SoftwareDevelopmentScreen() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
+      <Head>
+        <title>Software Development Services - On Time Technology Ltd</title>
+        <meta name="description" content="Full-stack software development: mobile apps, web applications, backend systems, cloud solutions and AI integration by On Time Technology Ltd." />
+      </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scrollContent}>

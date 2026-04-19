@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Head from 'expo-router/head';
 
 export default function SpecialProjectsScreen() {
   const router = useRouter();
@@ -16,6 +17,13 @@ export default function SpecialProjectsScreen() {
     <LinearGradient
       colors={['#2ECC71', '#3498DB', '#1E88E5']}
       style={styles.gradient}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
+      <Head>
+        <title>Special Projects - On Time Technology Ltd</title>
+        <meta name="description" content="Discover On Time Technology's special projects: NoMoreFakeNews AI platform, Custodiy digital economy solution, and Cyber Security initiatives." />
+      </Head>
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
