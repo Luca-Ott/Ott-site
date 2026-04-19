@@ -16,6 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import Head from 'expo-router/head';
 
 export default function InvestorInquiryScreen() {
   const router = useRouter();
@@ -85,6 +86,10 @@ export default function InvestorInquiryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Head>
+        <title>Investor Inquiry - On Time Technology Ltd</title>
+        <meta name="description" content="Submit your investment inquiry for Freety, a digital B2B platform for global commodity and energy trading, developed by On Time Technology Ltd." />
+      </Head>
       <View style={styles.mainContainer}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

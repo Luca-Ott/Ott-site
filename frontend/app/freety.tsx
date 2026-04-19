@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Head from 'expo-router/head';
 
 export default function FreetyScreen() {
   const router = useRouter();
@@ -25,6 +26,10 @@ export default function FreetyScreen() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
+      <Head>
+        <title>Freety - On Time Technology Ltd</title>
+        <meta name="description" content="Freety is a digital B2B platform designed to modernize global trading of commodities and energy products with marketplace technology, financial settlement and AI-driven trading tools." />
+      </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scrollContent}>
