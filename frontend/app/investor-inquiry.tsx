@@ -99,7 +99,7 @@ export default function InvestorInquiryScreen() {
             {/* Header */}
             <View style={styles.header}>
               <View style={styles.headerLeft}>
-                <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.canGoBack() ? router.back() : router.replace('/')}>
                   <Ionicons name="arrow-back" size={24} color="#0066CC" />
                 </TouchableOpacity>
                 <Image

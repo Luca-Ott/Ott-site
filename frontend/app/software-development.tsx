@@ -28,7 +28,7 @@ export default function SoftwareDevelopmentScreen() {
               <View style={styles.headerLeft}>
                 <TouchableOpacity 
                   style={styles.backButton}
-                  onPress={() => router.back()}
+                  onPress={() => router.canGoBack() ? router.back() : router.replace('/')}
                 >
                   <Ionicons name="arrow-back" size={24} color="#0066CC" />
                 </TouchableOpacity>
