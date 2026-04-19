@@ -54,6 +54,12 @@ export default function Root({ children }: PropsWithChildren) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+        {/* Override Expo body overflow hidden for SEO crawlers */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          body { overflow: visible !important; overflow-y: auto !important; }
+          #root { overflow: visible !important; }
+        ` }} />
         
         {/* Vercel Analytics */}
         <script defer src="/_vercel/insights/script.js"></script>
