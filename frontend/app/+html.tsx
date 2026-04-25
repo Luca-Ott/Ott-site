@@ -10,8 +10,8 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         
         {/* Primary Meta Tags */}
-        <title>On Time Technology Ltd - Software Design & Development | ott4future.com</title>
-        <meta name="title" content="On Time Technology Ltd - Software Design & Development | ott4future.com" />
+        <title>On Time Technology Ltd - Software Design & Development</title>
+        <meta name="title" content="On Time Technology Ltd - Software Design & Development" />
         <meta name="description" content="On Time Technology Ltd is a UK-based IT company specializing in Software Design, Software Development, Research & Development. We deliver innovative technology solutions for businesses worldwide." />
         <meta name="keywords" content="On Time Technology, ott4future, software design, software development, R&D, research development, IT company, Freety, NoMoreFakeNews, Custodiy, technology, UK, London" />
         <meta name="author" content="On Time Technology Ltd" />
@@ -82,7 +82,7 @@ export default function Root({ children }: PropsWithChildren) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "On Time Technology Ltd",
-          "alternateName": "OTT",
+          "alternateName": "ott4future",
           "url": "https://www.ott4future.com"
         }) }} />
         
