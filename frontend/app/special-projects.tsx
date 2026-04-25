@@ -23,6 +23,8 @@ export default function SpecialProjectsScreen() {
       <Head>
         <title>Special Projects - On Time Technology Ltd</title>
         <meta name="description" content="Discover On Time Technology's special projects: NoMoreFakeNews AI platform, Custodiy digital economy solution, and Cyber Security initiatives." />
+        <link rel="canonical" href="https://www.ott4future.com/special-projects" />
+        <meta property="og:url" content="https://www.ott4future.com/special-projects" />
       </Head>
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}

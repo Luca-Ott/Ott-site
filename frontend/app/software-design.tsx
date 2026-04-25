@@ -19,6 +19,8 @@ export default function SoftwareDesignScreen() {
       <Head>
         <title>Software Design Services - On Time Technology Ltd</title>
         <meta name="description" content="Professional UI/UX design, responsive web design, brand identity and visual design services by On Time Technology Ltd. User-centered digital experiences." />
+        <link rel="canonical" href="https://www.ott4future.com/software-design" />
+        <meta property="og:url" content="https://www.ott4future.com/software-design" />
       </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>

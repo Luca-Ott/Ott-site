@@ -20,6 +20,8 @@ export default function AboutScreen() {
       <Head>
         <title>About Us - On Time Technology Ltd</title>
         <meta name="description" content="Learn about On Time Technology Ltd, a UK-based IT company delivering innovative software design, development and R&D solutions for businesses worldwide." />
+        <link rel="canonical" href="https://www.ott4future.com/about" />
+        <meta property="og:url" content="https://www.ott4future.com/about" />
       </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>

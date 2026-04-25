@@ -19,6 +19,8 @@ export default function ResearchDevelopmentScreen() {
       <Head>
         <title>Research & Development - On Time Technology Ltd</title>
         <meta name="description" content="On Time Technology R&D division explores emerging technologies including AI, blockchain, IoT, and quantum computing to develop breakthrough solutions for the future." />
+        <link rel="canonical" href="https://www.ott4future.com/research-development" />
+        <meta property="og:url" content="https://www.ott4future.com/research-development" />
       </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>

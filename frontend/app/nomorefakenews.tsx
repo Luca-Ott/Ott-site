@@ -18,6 +18,12 @@ export default function NoMoreFakeNewsScreen() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
+      <Head>
+        <title>NoMoreFakeNews - On Time Technology Ltd</title>
+        <meta name="description" content="NoMoreFakeNews is an innovative AI-powered project by On Time Technology Ltd designed to combat fake news and misinformation through advanced detection technology." />
+        <link rel="canonical" href="https://www.ott4future.com/nomorefakenews" />
+        <meta property="og:url" content="https://www.ott4future.com/nomorefakenews" />
+      </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scrollContent}>

@@ -102,6 +102,8 @@ export default function HomeScreen() {
       <Head>
         <title>On Time Technology Ltd - Software Design & Development</title>
         <meta name="description" content="On Time Technology Ltd is a UK-based IT company specializing in Software Design, Software Development, Research & Development. Innovative technology solutions for businesses worldwide." />
+        <link rel="canonical" href="https://www.ott4future.com/" />
+        <meta property="og:url" content="https://www.ott4future.com/" />
       </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>

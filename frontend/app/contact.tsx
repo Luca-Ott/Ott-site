@@ -83,6 +83,8 @@ export default function ContactScreen() {
       <Head>
         <title>Contact Us - On Time Technology Ltd</title>
         <meta name="description" content="Get in touch with On Time Technology Ltd. Contact us for software design, development, R&D projects and business inquiries." />
+        <link rel="canonical" href="https://www.ott4future.com/contact" />
+        <meta property="og:url" content="https://www.ott4future.com/contact" />
       </Head>      <View style={styles.mainContainer}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

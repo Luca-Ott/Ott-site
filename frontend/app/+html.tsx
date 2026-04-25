@@ -9,18 +9,14 @@ export default function Root({ children }: PropsWithChildren) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         
-        {/* Primary Meta Tags */}
-        <title>On Time Technology Ltd - Software Design & Development</title>
-        <meta name="title" content="On Time Technology Ltd - Software Design & Development" />
-        <meta name="description" content="On Time Technology Ltd is a UK-based IT company specializing in Software Design, Software Development, Research & Development. We deliver innovative technology solutions for businesses worldwide." />
+        {/* Primary Meta Tags - Defaults, overridden by per-page <Head> tags */}
         <meta name="keywords" content="On Time Technology, ott4future, software design, software development, R&D, research development, IT company, Freety, NoMoreFakeNews, Custodiy, technology, UK, London" />
         <meta name="author" content="On Time Technology Ltd" />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />
         
-        {/* Open Graph / Facebook */}
+        {/* Open Graph / Facebook - Defaults */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.ott4future.com/" />
         <meta property="og:title" content="On Time Technology Ltd - Software Design & Development" />
         <meta property="og:description" content="On Time Technology Ltd is a UK-based IT company specializing in Software Design, Software Development, Research & Development. Innovative technology solutions for businesses worldwide." />
         <meta property="og:image" content="https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68" />
@@ -34,9 +30,6 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="twitter:title" content="On Time Technology Ltd - Software Design & Development" />
         <meta name="twitter:description" content="On Time Technology Ltd is a UK-based IT company specializing in Software Design, Software Development, Research & Development. Innovative technology solutions for businesses worldwide." />
         <meta name="twitter:image" content="https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68" />
-        
-        {/* Canonical */}
-        <link rel="canonical" href="https://www.ott4future.com/" />
         
         {/* Theme */}
         <meta name="theme-color" content="#0066CC" />

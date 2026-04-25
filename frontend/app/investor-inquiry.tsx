@@ -89,6 +89,8 @@ export default function InvestorInquiryScreen() {
       <Head>
         <title>Investor Inquiry - On Time Technology Ltd</title>
         <meta name="description" content="Submit your investment inquiry for Freety, a digital B2B platform for global commodity and energy trading, developed by On Time Technology Ltd." />
+        <link rel="canonical" href="https://www.ott4future.com/investor-inquiry" />
+        <meta property="og:url" content="https://www.ott4future.com/investor-inquiry" />
       </Head>
       <View style={styles.mainContainer}>
         <KeyboardAvoidingView

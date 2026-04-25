@@ -29,6 +29,8 @@ export default function FreetyScreen() {
       <Head>
         <title>Freety - On Time Technology Ltd</title>
         <meta name="description" content="Freety is a digital B2B platform designed to modernize global trading of commodities and energy products with marketplace technology, financial settlement and AI-driven trading tools." />
+        <link rel="canonical" href="https://www.ott4future.com/freety" />
+        <meta property="og:url" content="https://www.ott4future.com/freety" />
       </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>

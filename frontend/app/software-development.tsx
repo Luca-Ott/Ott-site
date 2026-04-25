@@ -19,6 +19,8 @@ export default function SoftwareDevelopmentScreen() {
       <Head>
         <title>Software Development Services - On Time Technology Ltd</title>
         <meta name="description" content="Full-stack software development: mobile apps, web applications, backend systems, cloud solutions and AI integration by On Time Technology Ltd." />
+        <link rel="canonical" href="https://www.ott4future.com/software-development" />
+        <meta property="og:url" content="https://www.ott4future.com/software-development" />
       </Head>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
