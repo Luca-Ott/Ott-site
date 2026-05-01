@@ -43,10 +43,17 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="contact" content="luca@ott4future.com" />
         <meta name="reply-to" content="luca@ott4future.com" />
         
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        {/* Favicon - Multiple sizes for Google (min 48x48 required) */}
+        <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        
+        {/* Web App Manifest - Critical for Google Site Name */}
+        <link rel="manifest" href="/manifest.json" />
 
         {/* Override Expo body overflow hidden for SEO crawlers */}
         <style dangerouslySetInnerHTML={{ __html: `
@@ -75,8 +82,13 @@ export default function Root({ children }: PropsWithChildren) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "On Time Technology Ltd",
-          "alternateName": "ott4future",
-          "url": "https://www.ott4future.com"
+          "alternateName": ["ott4future", "OTT", "On Time Technology"],
+          "url": "https://www.ott4future.com",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.ott4future.com/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
         }) }} />
         
         <ScrollViewStyleReset />
