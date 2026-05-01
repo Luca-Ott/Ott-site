@@ -25,7 +25,7 @@ export default function HomeScreen() {
   }, []);
   const isDesktop = width >= 768;
 
-  const newsText = '🚀 NoMoreFakeNews — AI-powered platform to eliminate fake news, now open for investors • 💼 Custodiy — Comprehensive modular platform for the digital economy: OTC trading, Escrow services, crypto custody & business solutions • 🌍 Freety — Digital infrastructure for global commodity & energy trading with cargo tokenization and AI tools • 🔐 Cyber Security Projects — Advanced protection for businesses and individuals • 🎉 ON TIME TECHNOLOGY expands R&D division with cutting-edge innovation • ✨ New software design & development solutions available for enterprises • 📈 Special projects reaching new milestones • 💡 Custom IT solutions tailored to your business needs •  ';
+  const newsText = '🚀 NoMoreFakeNews — AI-powered platform to eliminate fake news, now open for investors • 💼 Custodiy — Custodiy Announces that version 2.0 of the web app is now live • 🌍 Freety — Digital infrastructure for global commodity & energy trading with cargo tokenization and AI tools • 🔐 Cyber Security Projects — Advanced protection for businesses and individuals • 🎉 ON TIME TECHNOLOGY expands R&D division with cutting-edge innovation • ✨ New software design & development solutions available for enterprises • 📈 Special projects reaching new milestones • 💡 Custom IT solutions tailored to your business needs •  ';
   const [textWidth, setTextWidth] = useState(0);
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
 
