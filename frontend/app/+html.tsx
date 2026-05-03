@@ -10,6 +10,8 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         
         {/* Primary Meta Tags - Defaults, overridden by per-page <Head> tags */}
+        <title>On Time Technology Ltd</title>
+        <meta name="application-name" content="On Time Technology Ltd" />
         <meta name="keywords" content="On Time Technology, ott4future, software design, software development, R&D, research development, IT company, Freety, NoMoreFakeNews, Custodiy, technology, UK, London" />
         <meta name="author" content="On Time Technology Ltd" />
         <meta name="robots" content="index, follow" />
