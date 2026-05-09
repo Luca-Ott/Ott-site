@@ -484,6 +484,19 @@ export default function HomeScreen() {
               </View>
 
               <View style={styles.footerLinksColumn}>
+                <Text style={styles.footerLinksTitle}>Special Projects</Text>
+                <TouchableOpacity onPress={() => router.push('/nomorefakenews')}>
+                  <Text style={styles.footerLink}>NoMoreFakeNews</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/special-projects')}>
+                  <Text style={styles.footerLink}>Custodiy</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/freety')}>
+                  <Text style={styles.footerLink}>Freety</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.footerLinksColumn}>
                 <Text style={styles.footerLinksTitle}>Social</Text>
                 <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
                   <View style={styles.footerSocialRow}>
