@@ -26,9 +26,6 @@ export default function SpecialProjectsScreen() {
         <link rel="canonical" href="https://www.ott4future.com/special-projects" />
         <meta property="og:url" content="https://www.ott4future.com/special-projects" />
       </Head>
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scrollContent}>
