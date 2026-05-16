@@ -1,149 +1,74 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Head from 'expo-router/head';
+
+import PageShell from '../src/components/PageShell';
+import GlassCard from '../src/components/GlassCard';
+import GradientText from '../src/components/GradientText';
+import { colors, radii, space } from '../src/theme/tokens';
 
 export default function ContactSuccessScreen() {
   const router = useRouter();
+  const dims = useWindowDimensions();
+  const width = dims.width || 1200;
+  const isDesktop = width >= 900;
 
   return (
-    <LinearGradient
-      colors={['#2ECC71', '#3498DB', '#1E88E5']}
-      style={styles.gradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
-      <SafeAreaView style={styles.container}>
-        <View style={styles.content}>
-          <View style={styles.iconContainer}>
-            <Ionicons name="checkmark-circle" size={100} color="#2ECC71" />
+    <PageShell hideFooter>
+      <Head>
+        <title>Thank you — On Time Technology</title>
+        <meta name="description" content="Thank you for contacting On Time Technology Ltd — our team will be in touch shortly." />
+      </Head>
+
+      <View style={styles.wrap}>
+        <GlassCard glow="cyan" style={styles.card}>
+          <LinearGradient
+            colors={['rgba(34,211,238,0.18)', 'rgba(59,130,246,0.18)', 'rgba(168,85,247,0.18)']}
+            start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+            style={StyleSheet.absoluteFill as any}
+          />
+          <View style={styles.iconWrap}>
+            <Ionicons name="checkmark" size={36} color="#fff" />
           </View>
-          
-          <Text style={styles.title}>Message Sent!</Text>
-          
-          <Text style={styles.subtitle}>
-            Thank you for contacting On Time Technology Ltd.
+          <Text style={styles.eyebrow}>MESSAGE SENT</Text>
+          <Text style={[styles.title, !isDesktop && { fontSize: 36, lineHeight: 42 }]}>
+            Thank you for{' '}
+            <GradientText style={styles.titleGrad} colors={['#22D3EE', '#A855F7']}>reaching out</GradientText>
           </Text>
-          
-          <Text style={styles.description}>
-            We have received your message and will get back to you as soon as possible. 
-            Our team typically responds within 24-48 business hours.
+          <Text style={styles.body}>
+            We received your message and a member of our team will be in touch within one business day.
+            In the meantime, you may want to explore our latest insights and projects.
           </Text>
-
-          <View style={styles.infoBox}>
-            <Ionicons name="mail-outline" size={24} color="#0066CC" />
-            <Text style={styles.infoText}>
-              A confirmation has been sent to your email address.
-            </Text>
+          <View style={styles.ctaRow}>
+            <TouchableOpacity style={styles.primaryBtn} onPress={() => router.replace('/')}>
+              <Ionicons name="home-outline" size={16} color="#fff" />
+              <Text style={styles.primaryBtnText}>Back to home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.ghostBtn} onPress={() => router.replace('/blog')}>
+              <Text style={styles.ghostBtnText}>Read our blog</Text>
+              <Ionicons name="arrow-forward" size={14} color={colors.text} />
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity 
-            style={styles.homeButton}
-            onPress={() => router.replace('/')}
-          >
-            <Ionicons name="home" size={20} color="#FFF" />
-            <Text style={styles.homeButtonText}>Back to Home</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.contactButton}
-            onPress={() => router.replace('/contact')}
-          >
-            <Text style={styles.contactButtonText}>Send Another Message</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    </LinearGradient>
+        </GlassCard>
+      </View>
+    </PageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    backgroundColor: '#D0EBFF',
-    margin: 20,
-    padding: 32,
-    borderRadius: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 8,
-    maxWidth: 400,
-    width: '90%',
-  },
-  iconContainer: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#0066CC',
-    fontWeight: '600',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 24,
-  },
-  infoBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#D0EBFF',
-    padding: 16,
-    borderRadius: 12,
-    gap: 12,
-    marginBottom: 24,
-    width: '100%',
-  },
-  infoText: {
-    flex: 1,
-    fontSize: 13,
-    color: '#0066CC',
-  },
-  homeButton: {
-    backgroundColor: '#0066CC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    width: '100%',
-    marginBottom: 12,
-  },
-  homeButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFF',
-  },
-  contactButton: {
-    paddingVertical: 12,
-  },
-  contactButtonText: {
-    fontSize: 14,
-    color: '#0066CC',
-    fontWeight: '500',
-  },
+  wrap: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: space.lg, paddingVertical: space.xxxl, minHeight: 600 },
+  card: { maxWidth: 640, width: '100%', padding: 44, alignItems: 'center', position: 'relative', overflow: 'hidden' },
+  iconWrap: { width: 72, height: 72, borderRadius: 36, backgroundColor: '#10B981', alignItems: 'center', justifyContent: 'center', marginBottom: 18, ...(typeof window !== 'undefined' ? ({ boxShadow: '0 12px 40px rgba(16,185,129,0.5)' } as any) : {}) },
+  eyebrow: { color: colors.cyan, fontSize: 12, fontWeight: '800', letterSpacing: 2, marginBottom: 8 },
+  title: { color: colors.text, fontSize: 44, lineHeight: 52, fontWeight: '900', letterSpacing: -1, textAlign: 'center' },
+  titleGrad: { fontSize: 44, lineHeight: 52, fontWeight: '900', letterSpacing: -1 } as any,
+  body: { color: colors.textMuted, fontSize: 16, lineHeight: 26, textAlign: 'center', marginTop: 16, marginBottom: 22, maxWidth: 480 },
+  ctaRow: { flexDirection: 'row', gap: 12, flexWrap: 'wrap', justifyContent: 'center' },
+  primaryBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#3B82F6', paddingHorizontal: 22, paddingVertical: 13, borderRadius: radii.pill },
+  primaryBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  ghostBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 18, paddingVertical: 12, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: 'rgba(255,255,255,0.02)' },
+  ghostBtnText: { color: colors.text, fontSize: 14, fontWeight: '600' },
 });

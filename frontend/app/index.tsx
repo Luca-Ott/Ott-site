@@ -1,1166 +1,645 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Linking, Animated, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+  Platform,
+  Image,
+  Linking,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Head from 'expo-router/head';
 
+import MeshBackground from '../src/components/MeshBackground';
+import ParticleField from '../src/components/ParticleField';
+import CustomCursor from '../src/components/CustomCursor';
+import ScrollReveal from '../src/components/ScrollReveal';
+import AnimatedCounter from '../src/components/AnimatedCounter';
+import GlassCard from '../src/components/GlassCard';
+import GradientText from '../src/components/GradientText';
+import SiteHeader from '../src/components/SiteHeader';
+import SiteFooter from '../src/components/SiteFooter';
+import { getAllArticles, formatDate } from '../src/data/blog';
+import { colors, radii, space } from '../src/theme/tokens';
+
+const newsItems = [
+  'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
+  'Custodiy v2.0 of the web app is now live',
+  'Freety — Digital infrastructure for global commodity & energy trading',
+  'Cyber Security Projects — Advanced protection for enterprise',
+  'R&D division expanding with cutting-edge AI innovation',
+  'New enterprise software design & development solutions available',
+];
+
 export default function HomeScreen() {
   const router = useRouter();
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const [menuVisible, setMenuVisible] = React.useState(false);
-  const menuWidth = 280;
-  const menuAnimation = useRef(new Animated.Value(0)).current; // 0 = closed, 1 = open
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const articles = getAllArticles().slice(0, 3);
 
-  // SSR-safe dimensions: default to desktop, update on client
-  const [width, setWidth] = useState(1024);
   useEffect(() => {
-    const { width: w } = Dimensions.get('window');
-    if (w > 0) setWidth(w);
-    const subscription = Dimensions.addEventListener('change', ({ window }) => {
-      if (window.width > 0) setWidth(window.width);
-    });
-    return () => subscription?.remove();
+    const sub = Dimensions.addEventListener('change', ({ window }) => setWidth(window.width));
+    return () => sub?.remove();
   }, []);
-  const isDesktop = width >= 768;
 
-  const newsText = '🚀 NoMoreFakeNews — AI-powered platform to eliminate fake news, now open for investors • 💼 Custodiy — Custodiy Announces that version 2.0 of the web app is now live • 🌍 Freety — Digital infrastructure for global commodity & energy trading with cargo tokenization and AI tools • 🔐 Cyber Security Projects — Advanced protection for businesses and individuals • 🎉 ON TIME TECHNOLOGY expands R&D division with cutting-edge innovation • ✨ New software design & development solutions available for enterprises • 📈 Special projects reaching new milestones • 💡 Custom IT solutions tailored to your business needs •  ';
-  const [textWidth, setTextWidth] = useState(0);
-  const animationRef = useRef<Animated.CompositeAnimation | null>(null);
+  const isDesktop = width >= 900;
+  const isTablet = width >= 640;
 
-  const onTextLayout = useCallback((e: any) => {
-    const measuredWidth = e.nativeEvent.layout.width;
-    if (measuredWidth > 0 && measuredWidth !== textWidth) {
-      setTextWidth(measuredWidth);
-    }
-  }, [textWidth]);
+  // Hero parallax & breathing animation
+  const pulse = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(menuAnimation, {
-      toValue: menuVisible ? 1 : 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  }, [menuVisible]);
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1, duration: 2400, useNativeDriver: false }),
+        Animated.timing(pulse, { toValue: 0, duration: 2400, useNativeDriver: false }),
+      ])
+    ).start();
+  }, [pulse]);
+
+  // Ticker
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const [tickerWidth, setTickerWidth] = useState(0);
+  const tickerAnimRef = useRef<Animated.CompositeAnimation | null>(null);
+  const tickerText = newsItems.map((t) => `◆  ${t}`).join('     ');
+  const onTickerLayout = useCallback((e: any) => {
+    const w = e.nativeEvent.layout.width;
+    if (w > 0 && w !== tickerWidth) setTickerWidth(w);
+  }, [tickerWidth]);
 
   useEffect(() => {
-    if (textWidth <= 0) return;
-
-    // Stop any previous animation
-    if (animationRef.current) {
-      animationRef.current.stop();
-    }
+    if (tickerWidth <= 0) return;
+    if (tickerAnimRef.current) tickerAnimRef.current.stop();
     scrollX.setValue(0);
-
-    // Speed: ~50px per second for smooth reading
-    const duration = (textWidth / 50) * 1000;
-
-    const animation = Animated.loop(
+    const duration = (tickerWidth / 60) * 1000;
+    const anim = Animated.loop(
       Animated.timing(scrollX, {
-        toValue: -textWidth,
-        duration: duration,
+        toValue: -tickerWidth,
+        duration,
         useNativeDriver: true,
-        easing: (t: number) => t, // Linear
-      }),
+        easing: (t) => t,
+      })
     );
-    animationRef.current = animation;
-    animation.start();
-    return () => animation.stop();
-  }, [textWidth]);
-
-  const handleCall = () => {
-    Linking.openURL('tel:+447775682831');
-  };
-
-  const handleEmail = () => {
-    Linking.openURL('mailto:Info@ott4future.com');
-  };
-
-  const handleWebsite = (url: string) => {
-    Linking.openURL(url);
-  };
-
-  // Calcola la larghezza del contenuto principale animata
-  const mainContentWidth = menuAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['100%', `${100 - 280 * 100 / 1920}%`], // fallback, ma usiamo flex
-  });
-  
-  const menuWidthAnimated = menuAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, menuWidth],
-  });
+    tickerAnimRef.current = anim;
+    anim.start();
+    return () => anim.stop();
+  }, [tickerWidth, scrollX]);
 
   return (
-    <LinearGradient
-      colors={['#2ECC71', '#3498DB', '#1E88E5']}
-      style={styles.gradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <View style={styles.root}>
       <Head>
-        <title>On Time Technology Ltd - Software Design & Development</title>
-        <meta name="description" content="On Time Technology Ltd is a UK-based IT company specializing in Software Design, Software Development, Research & Development. Innovative technology solutions for businesses worldwide." />
+        <title>On Time Technology Ltd — Future-Ready Software & R&D</title>
+        <meta name="description" content="On Time Technology Ltd is a UK-based IT company building the digital infrastructure of tomorrow — software design, development, R&D and visionary special projects." />
         <link rel="canonical" href="https://www.ott4future.com/" />
         <meta property="og:url" content="https://www.ott4future.com/" />
       </Head>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.mainContainer}>
-          {/* Main Content */}
-          <View style={styles.mainContent}>
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Header */}
-        <LinearGradient
-          colors={['#E8F4F8', '#D4E9F7', '#C0E0F5']}
-          style={styles.headerGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <View style={styles.header}>
-            {isDesktop ? (
-              // Desktop Layout - tutto su una riga
-              <View style={styles.headerLeft}>
-                <Image
-                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                  style={styles.logoDesktop}
-                  resizeMode="contain"
+
+      <MeshBackground />
+      <ParticleField density={70} />
+      <CustomCursor />
+
+      <SafeAreaView style={{ flex: 1, zIndex: 1 } as any} edges={['top']}>
+        <SiteHeader />
+
+        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+          {/* ============================ HERO ============================ */}
+          <View style={[styles.hero, !isDesktop && styles.heroMobile]}>
+            <View style={{ maxWidth: 980, width: '100%', alignItems: 'center' }}>
+              <View style={styles.eyebrow}>
+                <Animated.View
+                  style={[
+                    styles.eyebrowDot,
+                    {
+                      opacity: pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }),
+                    },
+                  ]}
                 />
-                <View style={styles.headerTextContainer}>
-                  <Text style={styles.companyNameDesktop}>
-                    ON TIME TECHNOLOGY LTD
-                  </Text>
-                  <Text style={styles.taglineDesktop}>Innovating Tomorrow's Solutions Today</Text>
-                  <Text style={styles.subTaglineDesktop}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
+                <Text style={styles.eyebrowText}>UK · IT COMPANY · EST. 2010</Text>
+              </View>
+
+              <Text style={[styles.heroTitle, !isDesktop && styles.heroTitleMobile]}>
+                Building the digital{'\n'}
+                <GradientText style={styles.heroTitleGrad} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
+                  infrastructure of tomorrow
+                </GradientText>
+              </Text>
+
+              <Text style={[styles.heroSub, !isDesktop && styles.heroSubMobile]}>
+                We architect software, R&D programmes and visionary special projects for organisations that intend
+                to lead the next decade — from AI-native platforms to programmable trust infrastructure.
+              </Text>
+
+              <View style={styles.heroCtas}>
+                <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/special-projects')}>
+                  <Text style={styles.primaryBtnText}>Explore our projects</Text>
+                  <Ionicons name="arrow-forward" size={16} color="#fff" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/contact')}>
+                  <Text style={styles.ghostBtnText}>Get in touch</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.heroBadges}>
+                <View style={styles.heroBadge}>
+                  <Ionicons name="shield-checkmark" size={14} color={colors.cyan} />
+                  <Text style={styles.heroBadgeText}>UK Registered</Text>
                 </View>
-                {/* Stats - Solo Desktop */}
-                <View style={styles.headerStats}>
-                  <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>20+</Text>
-                    <Text style={styles.statLabel}>Happy Clients</Text>
-                  </View>
-                  <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>50+</Text>
-                    <Text style={styles.statLabel}>Team Members</Text>
-                  </View>
-                  <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>15+</Text>
-                    <Text style={styles.statLabel}>Years Experience</Text>
-                  </View>
+                <View style={styles.heroBadge}>
+                  <Ionicons name="rocket" size={14} color={colors.purple} />
+                  <Text style={styles.heroBadgeText}>R&D Driven</Text>
+                </View>
+                <View style={styles.heroBadge}>
+                  <Ionicons name="sparkles" size={14} color={colors.accent} />
+                  <Text style={styles.heroBadgeText}>AI Native</Text>
                 </View>
               </View>
-            ) : (
-              // Mobile Layout - logo e nome in alto, tagline sotto
-              <View style={styles.headerMobile}>
-                <View style={styles.headerTopRow}>
-                  <Image
-                    source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                    style={styles.logo}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.companyName}>
-                    ON TIME TECHNOLOGY LTD
-                  </Text>
-                </View>
-                <Text style={styles.tagline}>Innovating Tomorrow's Solutions Today</Text>
-                <Text style={styles.subTagline}>Empowering businesses with cutting-edge software solutions in design, development, and research.</Text>
-              </View>
-            )}
-            
-            {/* Hamburger Menu Icon on Right */}
-            <TouchableOpacity 
-              style={styles.menuButton}
-              onPress={() => setMenuVisible(!menuVisible)}
-            >
-              <Ionicons name="menu" size={32} color="#0066CC" />
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
-
-        {/* News Section */}
-        <View style={[styles.breakingNewsContainer, isDesktop && styles.breakingNewsContainerDesktop]}>
-          <View style={styles.breakingNewsLabel}>
-            <Ionicons name="newspaper" size={isDesktop ? 16 : 14} color="#FFF" />
-            <Text style={styles.breakingNewsLabelText}>{isDesktop ? 'BREAKING NEWS' : 'NEWS'}</Text>
-          </View>
-          <View style={styles.breakingNewsScroll}>
-            <Animated.View style={[styles.breakingNewsContent, { transform: [{ translateX: scrollX }] }]}>
-              <Text
-                style={styles.breakingNewsText}
-                numberOfLines={1}
-                ellipsizeMode="clip"
-                onLayout={onTextLayout}
-              >
-                {newsText}
-              </Text>
-              <Text 
-                style={styles.breakingNewsText}
-                numberOfLines={1}
-                ellipsizeMode="clip"
-              >
-                {newsText}
-              </Text>
-            </Animated.View>
-          </View>
-        </View>
-
-        {/* Services Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Our Services</Text>
-          <View style={styles.servicesGrid}>
-            <View style={styles.servicesRow}>
-              <TouchableOpacity 
-                style={styles.serviceCardHalf}
-                onPress={() => router.push('/software-design')}
-              >
-                <Ionicons name="code-slash" size={40} color="#0066CC" />
-                <Text style={styles.serviceTitle}>Software Design</Text>
-                <Text style={styles.serviceDescription}>
-                  Innovative software design solutions tailored to your business needs
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={styles.serviceCardHalf}
-                onPress={() => router.push('/software-development')}
-              >
-                <Ionicons name="build" size={40} color="#0066CC" />
-                <Text style={styles.serviceTitle}>Software Development</Text>
-                <Text style={styles.serviceDescription}>
-                  Custom software development with cutting-edge technologies
-                </Text>
-              </TouchableOpacity>
             </View>
 
-            <View style={styles.servicesRow}>
-              <TouchableOpacity 
-                style={styles.serviceCardHalf}
-                onPress={() => router.push('/research-development')}
+            {/* Floating orbit visual (desktop only) */}
+            {isDesktop && (
+              <Animated.View
+                pointerEvents="none"
+                style={[
+                  styles.orbitWrap,
+                  {
+                    transform: [
+                      {
+                        translateY: pulse.interpolate({ inputRange: [0, 1], outputRange: [0, -10] }),
+                      },
+                    ],
+                  },
+                ]}
               >
-                <Ionicons name="flask" size={40} color="#0066CC" />
-                <Text style={styles.serviceTitle}>R&D</Text>
-                <Text style={styles.serviceDescription}>
-                  Research and development for next-generation solutions
-                </Text>
-              </TouchableOpacity>
+                <View style={styles.orbitRing1} />
+                <View style={styles.orbitRing2} />
+                <View style={styles.orbitRing3} />
+                <View style={styles.orbitCore} />
+              </Animated.View>
+            )}
 
-              <TouchableOpacity 
-                style={styles.serviceCardHalf}
+            {/* Scroll indicator */}
+            <View style={styles.scrollHint}>
+              <Animated.View
+                style={[
+                  styles.scrollDot,
+                  {
+                    transform: [
+                      { translateY: pulse.interpolate({ inputRange: [0, 1], outputRange: [0, 10] }) },
+                    ],
+                  },
+                ]}
+              />
+              <Text style={styles.scrollHintText}>SCROLL</Text>
+            </View>
+          </View>
+
+          {/* ============================ TICKER ============================ */}
+          <View style={styles.ticker}>
+            <View style={styles.tickerLabel}>
+              <Animated.View
+                style={[
+                  styles.tickerPulse,
+                  { opacity: pulse.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1] }) },
+                ]}
+              />
+              <Text style={styles.tickerLabelText}>LIVE</Text>
+            </View>
+            <View style={styles.tickerTrack}>
+              <Animated.View style={[styles.tickerInner, { transform: [{ translateX: scrollX }] }]}>
+                <Text style={styles.tickerText} numberOfLines={1} onLayout={onTickerLayout}>
+                  {tickerText}
+                </Text>
+                <Text style={styles.tickerText} numberOfLines={1}>
+                  {tickerText}
+                </Text>
+              </Animated.View>
+            </View>
+          </View>
+
+          {/* ============================ MISSION ============================ */}
+          <View style={styles.section}>
+            <ScrollReveal>
+              <Text style={styles.sectionLabel}>OUR MISSION</Text>
+              <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+                Engineering tomorrow,{'\n'}
+                <GradientText style={styles.sectionTitleGrad} colors={['#22D3EE', '#3B82F6']}>
+                  delivered today
+                </GradientText>
+              </Text>
+            </ScrollReveal>
+
+            <View style={[styles.missionGrid, !isDesktop && styles.missionGridMobile]}>
+              {[
+                {
+                  icon: 'flash' as const,
+                  title: 'Velocity',
+                  body: 'We ship production-grade software at startup speed, with the discipline of an enterprise R&D lab.',
+                  glow: 'blue' as const,
+                },
+                {
+                  icon: 'lock-closed' as const,
+                  title: 'Trust',
+                  body: 'Security, verifiability and resilience are designed into the architecture — not patched on afterwards.',
+                  glow: 'cyan' as const,
+                },
+                {
+                  icon: 'planet' as const,
+                  title: 'Vision',
+                  body: 'Our special projects sit at the frontier of AI, Web3 and global infrastructure for the next decade.',
+                  glow: 'purple' as const,
+                },
+              ].map((m, idx) => (
+                <ScrollReveal key={m.title} delay={idx * 120} style={{ flex: 1, minWidth: 260 }}>
+                  <GlassCard glow={m.glow} style={styles.missionCard}>
+                    <View style={[styles.missionIcon, { backgroundColor: m.glow === 'blue' ? 'rgba(59,130,246,0.18)' : m.glow === 'cyan' ? 'rgba(34,211,238,0.18)' : 'rgba(168,85,247,0.18)' }]}>
+                      <Ionicons name={m.icon} size={22} color={m.glow === 'blue' ? colors.accentBright : m.glow === 'cyan' ? colors.cyan : colors.purple} />
+                    </View>
+                    <Text style={styles.missionTitle}>{m.title}</Text>
+                    <Text style={styles.missionBody}>{m.body}</Text>
+                  </GlassCard>
+                </ScrollReveal>
+              ))}
+            </View>
+          </View>
+
+          {/* ============================ TECH STACK ============================ */}
+          <View style={styles.section}>
+            <ScrollReveal>
+              <Text style={styles.sectionLabel}>TECH STACK</Text>
+              <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+                The frameworks behind{'\n'}
+                <GradientText style={styles.sectionTitleGrad} colors={['#A855F7', '#EC4899']}>
+                  our craft
+                </GradientText>
+              </Text>
+            </ScrollReveal>
+
+            <View style={styles.stackGrid}>
+              {[
+                { name: 'React Native', icon: 'logo-react' as const },
+                { name: 'Python · FastAPI', icon: 'logo-python' as const },
+                { name: 'TypeScript', icon: 'code-slash' as const },
+                { name: 'MongoDB', icon: 'server-outline' as const },
+                { name: 'AWS · Vercel', icon: 'cloud-outline' as const },
+                { name: 'OpenAI · LLMs', icon: 'sparkles-outline' as const },
+                { name: 'Ethereum · Web3', icon: 'cube-outline' as const },
+                { name: 'CI / CD', icon: 'git-branch-outline' as const },
+              ].map((s, idx) => (
+                <ScrollReveal key={s.name} delay={idx * 60} style={{ flex: 1, minWidth: 150 }}>
+                  <View style={styles.stackChip}>
+                    <Ionicons name={s.icon} size={20} color={colors.accentBright} />
+                    <Text style={styles.stackChipText}>{s.name}</Text>
+                  </View>
+                </ScrollReveal>
+              ))}
+            </View>
+          </View>
+
+          {/* ============================ PROJECTS ============================ */}
+          <View style={styles.section}>
+            <ScrollReveal>
+              <Text style={styles.sectionLabel}>FEATURED PROJECTS</Text>
+              <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+                Special projects with{'\n'}
+                <GradientText style={styles.sectionTitleGrad} colors={['#60A5FA', '#22D3EE']}>
+                  outsized ambition
+                </GradientText>
+              </Text>
+            </ScrollReveal>
+
+            <View style={[styles.projectsGrid, !isDesktop && styles.projectsGridMobile]}>
+              <ProjectCard
+                title="NoMoreFakeNews"
+                category="AI · TRUST"
+                tagline="An AI-powered platform engineered to identify, flag and dismantle disinformation in real time."
+                gradient={['#3B82F6', '#A855F7']}
+                status="Open for investors"
+                onPress={() => router.push('/nomorefakenews')}
+                isDesktop={isDesktop}
+              />
+              <ProjectCard
+                title="Custodiy"
+                category="WEB3 · COMMERCE"
+                tagline="A modular platform for OTC trading, escrow, marketplaces and secure document custody."
+                gradient={['#06B6D4', '#3B82F6']}
+                status="v2.0 live"
+                onPress={() => Linking.openURL('https://custodiy.com')}
+                isDesktop={isDesktop}
+                external
+              />
+              <ProjectCard
+                title="Freety"
+                category="COMMODITIES · AI"
+                tagline="Digital infrastructure for global commodity & energy trading, with cargo tokenisation and AI tooling."
+                gradient={['#10B981', '#22D3EE']}
+                status="Active"
+                onPress={() => router.push('/freety')}
+                isDesktop={isDesktop}
+              />
+              <ProjectCard
+                title="Cyber Security"
+                category="ENTERPRISE · DEFENCE"
+                tagline="Advanced protection programmes for businesses and individuals exposed to next-gen threats."
+                gradient={['#F472B6', '#A855F7']}
+                status="In R&D"
                 onPress={() => router.push('/special-projects')}
-              >
-                <Ionicons name="rocket" size={40} color="#0066CC" />
-                <Text style={styles.serviceTitle}>Special Projects</Text>
-                <Text style={styles.serviceDescription}>
-                  Unique and innovative projects tackling real-world challenges
-                </Text>
+                isDesktop={isDesktop}
+              />
+            </View>
+
+            <View style={styles.sectionFooter}>
+              <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/special-projects')}>
+                <Text style={styles.ghostBtnText}>View all projects</Text>
+                <Ionicons name="arrow-forward" size={14} color={colors.text} />
               </TouchableOpacity>
             </View>
           </View>
-        </View>
 
-        {/* Special Projects Highlight */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Featured Projects</Text>
-          
-          <View style={styles.projectsRow}>
-            <TouchableOpacity 
-              style={styles.projectCardHalf}
-              onPress={() => router.push('/nomorefakenews')}
-            >
-              {isDesktop ? (
-                <View style={styles.projectHeader}>
-                  <View style={styles.projectTitleWithLogo}>
-                    <Image
-                      source={require('../assets/nomorefakenews-logo.png')}
-                      style={styles.nomorefakenewsLogo}
-                      resizeMode="contain"
-                    />
-                    <Text style={styles.projectName}>NoMoreFakeNews</Text>
-                  </View>
-                  <View style={styles.statusBadge}>
-                    <Text style={styles.statusText}>In Development</Text>
-                  </View>
-                </View>
-              ) : (
-                <View style={styles.projectHeaderColumn}>
-                  <View style={styles.projectTitleWithLogoMobile}>
-                    <Image
-                      source={require('../assets/nomorefakenews-logo.png')}
-                      style={styles.nomorefakenewsLogo}
-                      resizeMode="contain"
-                    />
-                    <Text style={styles.projectName}>NoMoreFakeNews</Text>
-                  </View>
-                  <View style={styles.statusBadge}>
-                    <Text style={styles.statusText}>In Development</Text>
-                  </View>
-                </View>
-              )}
-              <Text style={styles.projectDescription}>
-                An innovative project designed to combat fake news and misinformation. 
-                Our solution aims to identify, flag, and eventually eliminate fake news through advanced AI.
-              </Text>
-              <View style={styles.investorButton}>
-                <Ionicons name="briefcase" size={20} color="#0066CC" />
-                <Text style={styles.investorButtonText}>Investor Inquiries Welcome</Text>
+          {/* ============================ STATS ============================ */}
+          <View style={styles.section}>
+            <GlassCard style={styles.statsCard}>
+              <View style={[styles.statsRow, !isTablet && styles.statsRowStacked]}>
+                <StatItem to={15} suffix="+" label="Years of Engineering" />
+                <StatItem to={50} suffix="+" label="Specialists Network" />
+                <StatItem to={20} suffix="+" label="Active Clients" />
+                <StatItem to={4} suffix="" label="Special Projects" />
               </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.projectCardHalf}
-              onPress={() => handleWebsite('https://custodiy.com')}
-            >
-              <View style={styles.projectHeader}>
-                <View style={styles.projectTitleWithLogo}>
-                  <Image
-                    source={require('../assets/custodiy-logo.png')}
-                    style={styles.custodiyLogo}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.projectName}>Custodiy</Text>
-                </View>
-                <Ionicons name="open-outline" size={20} color="#666" />
-              </View>
-              <Text style={styles.projectDescription}>
-                A modular platform empowering individuals and businesses with marketplace, 
-                OTC services, and secure document management solutions.
-              </Text>
-              <View style={styles.featuresList}>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Custodial Wallets</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>OTC Service</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Escrow via Smart Contracts</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Marketplace Platform</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+            </GlassCard>
           </View>
 
-          {/* Freety - Full Width Card */}
-          <View style={{ marginTop: 16 }}>
-            <TouchableOpacity 
-              style={styles.projectCardFull}
-              onPress={() => router.push('/freety')}
-            >
-              <View style={styles.projectHeader}>
-                <View style={styles.projectTitleWithLogo}>
-                  <Image 
-                    source={require('../assets/freety-logo.jpg')}
-                    style={styles.freetyLogo}
-                    resizeMode="contain"
-                  />
+          {/* ============================ BLOG TEASER ============================ */}
+          <View style={styles.section}>
+            <ScrollReveal>
+              <View style={styles.blogHeader}>
+                <View>
+                  <Text style={styles.sectionLabel}>INSIGHTS</Text>
+                  <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+                    From the{' '}
+                    <GradientText style={styles.sectionTitleGrad} colors={['#22D3EE', '#A855F7']}>
+                      OTT lab
+                    </GradientText>
+                  </Text>
                 </View>
-                <View style={[styles.statusBadge, { backgroundColor: '#E8F5E9' }]}>
-                  <Text style={[styles.statusText, { color: '#2E7D32' }]}>In Development</Text>
-                </View>
+                <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/blog')}>
+                  <Text style={styles.ghostBtnText}>All articles</Text>
+                  <Ionicons name="arrow-forward" size={14} color={colors.text} />
+                </TouchableOpacity>
               </View>
-              <Text style={styles.freetyTagline}>Fueling the Future — Digital Infrastructure for Global Commodity & Energy Trading</Text>
-              <Text style={styles.projectDescription}>
-                A digital B2B platform designed to modernize global trading of commodities and energy products.
-                Integrating marketplace technology, financial settlement, escrow, cargo tokenization, and AI-driven trading tools.
-              </Text>
-              <View style={styles.featuresList}>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Spot Trading, Auctions & Group Purchase</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Smart Contracts & Escrow</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Cargo Tokenization & Secondary Market</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>Multi-Currency Wallets & Stablecoin Settlement</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <Ionicons name="checkmark-circle" size={16} color="#00AA00" />
-                  <Text style={styles.featureText}>AI Trading Intelligence</Text>
-                </View>
-              </View>
-              <View style={styles.investorButton}>
-                <Ionicons name="briefcase" size={20} color="#0066CC" />
-                <Text style={styles.investorButtonText}>Investor Inquiries Welcome</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+            </ScrollReveal>
 
-        {/* Contact Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Contact Us</Text>
-          <View style={styles.contactCard}>
-            <TouchableOpacity style={styles.contactRow} onPress={handleCall}>
-              <Ionicons name="call" size={24} color="#0066CC" />
-              <Text style={styles.contactText}>+44 777 568 2831</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.contactRow} onPress={handleEmail}>
-              <Ionicons name="mail" size={24} color="#0066CC" />
-              <Text style={styles.contactText}>Info@ott4future.com</Text>
-            </TouchableOpacity>
-
-            <View style={styles.contactRow}>
-              <Ionicons name="location" size={24} color="#0066CC" />
-              <Text style={styles.contactText}>
-                The Black Church - St Mary's Place{' \n'}Dublin, D07 P4AX, Ireland
-              </Text>
+            <View style={[styles.blogGrid, !isDesktop && styles.blogGridMobile]}>
+              {articles.map((a, idx) => (
+                <ScrollReveal key={a.slug} delay={idx * 100} style={{ flex: 1, minWidth: 260 }}>
+                  <TouchableOpacity
+                    activeOpacity={0.85}
+                    onPress={() => router.push(`/blog/${a.slug}` as any)}
+                    style={styles.blogCard}
+                  >
+                    <LinearGradient
+                      colors={a.cover_gradient as any}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.blogCover}
+                    >
+                      <Text style={styles.blogCoverCategory}>{a.category.toUpperCase()}</Text>
+                      <View style={styles.blogCoverIcon}>
+                        <Ionicons name="newspaper" size={28} color="rgba(255,255,255,0.9)" />
+                      </View>
+                    </LinearGradient>
+                    <View style={styles.blogBody}>
+                      <Text style={styles.blogTitle} numberOfLines={2}>{a.title}</Text>
+                      <Text style={styles.blogExcerpt} numberOfLines={3}>{a.excerpt}</Text>
+                      <View style={styles.blogMeta}>
+                        <Text style={styles.blogMetaText}>{formatDate(a.published_at)}</Text>
+                        <Text style={styles.blogMetaText}>·</Text>
+                        <Text style={styles.blogMetaText}>{a.read_time} min read</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </ScrollReveal>
+              ))}
             </View>
-
-            {!isDesktop && (
-              <TouchableOpacity 
-                style={styles.contactSocialRow}
-                onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}
-              >
-                <Text style={styles.contactXLogo}>𝕏</Text>
-                <Text style={styles.contactSocialText}>@OnTechnolo1200</Text>
-              </TouchableOpacity>
-            )}
-
-            <TouchableOpacity 
-              style={styles.contactButton}
-              onPress={() => router.push('/contact')}
-            >
-              <Text style={styles.contactButtonText}>Send Us a Message</Text>
-              <Ionicons name="arrow-forward" size={20} color="#FFF" />
-            </TouchableOpacity>
           </View>
-        </View>
 
-        {/* Footer */}
-        <View style={styles.footer}>
-          <View style={styles.footerContent}>
-            {/* Left Side - Logo and Company Info */}
-            <View style={styles.footerLeft}>
-              <View style={styles.footerLogoRow}>
-                <Image
-                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                  style={styles.footerLogo}
-                  resizeMode="contain"
+          {/* ============================ CTA ============================ */}
+          <View style={[styles.section, styles.ctaSection]}>
+            <ScrollReveal>
+              <GlassCard glow="purple" style={styles.ctaCard}>
+                <LinearGradient
+                  colors={['rgba(59,130,246,0.15)', 'rgba(168,85,247,0.15)', 'rgba(34,211,238,0.15)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={StyleSheet.absoluteFill}
                 />
-                <Text style={styles.footerCompanyName}>On Time Technology Ltd</Text>
-              </View>
-              <Text style={styles.footerTagline}>
-                Delivering innovative software solutions that empower{'\n'}businesses to succeed in the digital age.
-              </Text>
-            </View>
-
-            {/* Right Side - Quick Links and Services */}
-            <View style={styles.footerRight}>
-              <View style={styles.footerLinksColumn}>
-                <Text style={styles.footerLinksTitle}>Quick Links</Text>
-                <TouchableOpacity onPress={() => router.push('/about')}>
-                  <Text style={styles.footerLink}>About</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/contact')}>
-                  <Text style={styles.footerLink}>Contact</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.footerLinksColumn}>
-                <Text style={styles.footerLinksTitle}>Services</Text>
-                <TouchableOpacity onPress={() => router.push('/software-design')}>
-                  <Text style={styles.footerLink}>Software Design</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/software-development')}>
-                  <Text style={styles.footerLink}>Software Development</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/research-development')}>
-                  <Text style={styles.footerLink}>R&D</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.footerLinksColumn}>
-                <Text style={styles.footerLinksTitle}>Special Projects</Text>
-                <TouchableOpacity onPress={() => router.push('/nomorefakenews')}>
-                  <Text style={styles.footerLink}>NoMoreFakeNews</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/special-projects')}>
-                  <Text style={styles.footerLink}>Custodiy</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/freety')}>
-                  <Text style={styles.footerLink}>Freety</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.footerLinksColumn}>
-                <Text style={styles.footerLinksTitle}>Social</Text>
-                <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')}>
-                  <View style={styles.footerSocialRow}>
-                    <Text style={styles.footerXLogo}>𝕏</Text>
-                    <Text style={styles.footerLink}>@OnTechnolo1200</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-
-            </View>
-          </View>
-
-          {/* Bottom Line and Copyright */}
-          <View style={styles.footerDivider} />
-          <Text style={styles.footerCopyright}>
-            © 2026 On Time Technology. All rights reserved.
-          </Text>
-          <Text style={styles.footerRelease}>
-            Release 1.1
-          </Text>
-        </View>
-
-        {/* Social Link - Outside Footer */}
-      </ScrollView>
-          </View>
-
-          {/* Menu Column - Push style from right */}
-          <Animated.View style={[styles.menuColumn, { width: menuWidthAnimated }]}>
-            {menuVisible && (
-              <>
-                <View style={styles.menuHeader}>
-                  <Text style={styles.menuTitle}>Menu</Text>
-                  <TouchableOpacity onPress={() => setMenuVisible(false)}>
-                    <Ionicons name="close" size={28} color="#FFF" />
+                <Text style={[styles.ctaTitle, !isDesktop && { fontSize: 32 }]}>
+                  Have a vision that needs{' '}
+                  <GradientText style={styles.ctaTitleGrad} colors={['#22D3EE', '#A855F7']}>
+                    elite engineering?
+                  </GradientText>
+                </Text>
+                <Text style={styles.ctaSub}>
+                  Whether you are launching a transformative product, scaling an enterprise platform, or seeking
+                  an investor-grade R&D partner — we are ready when you are.
+                </Text>
+                <View style={styles.ctaButtons}>
+                  <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/contact')}>
+                    <Text style={styles.primaryBtnText}>Start a conversation</Text>
+                    <Ionicons name="arrow-forward" size={16} color="#fff" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/investor-inquiry')}>
+                    <Text style={styles.ghostBtnText}>Investor inquiry</Text>
                   </TouchableOpacity>
                 </View>
+              </GlassCard>
+            </ScrollReveal>
+          </View>
 
-                <TouchableOpacity 
-                  style={styles.menuItem}
-                  onPress={() => {
-                    setMenuVisible(false);
-                    router.push('/about');
-                  }}
-                >
-                  <Ionicons name="information-circle-outline" size={24} color="#FFF" />
-                  <Text style={styles.menuItemText}>About Us</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                  style={styles.menuItem}
-                  onPress={() => {
-                    setMenuVisible(false);
-                    router.push('/software-design');
-                  }}
-                >
-                  <Ionicons name="briefcase-outline" size={24} color="#FFF" />
-                  <Text style={styles.menuItemText}>Our Services</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                  style={styles.menuItem}
-                  onPress={() => {
-                    setMenuVisible(false);
-                    router.push('/contact');
-                  }}
-                >
-                  <Ionicons name="mail-outline" size={24} color="#FFF" />
-                  <Text style={styles.menuItemText}>Contact</Text>
-                </TouchableOpacity>
-
-                <View style={styles.menuDivider} />
-
-                <TouchableOpacity 
-                  style={styles.menuItem}
-                  onPress={() => {
-                    setMenuVisible(false);
-                    Linking.openURL('https://x.com/OnTechnolo1200');
-                  }}
-                >
-                  <Text style={styles.xLogoText}>𝕏</Text>
-                  <Text style={styles.menuItemText}>@OnTechnolo1200</Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </Animated.View>
-        </View>
+          <SiteFooter />
+        </ScrollView>
       </SafeAreaView>
-    </LinearGradient>
+    </View>
+  );
+}
+
+function StatItem({ to, suffix, label, delay = 400 }: { to: number; suffix?: string; label: string; delay?: number }) {
+  return (
+    <View style={styles.statItem}>
+      <AnimatedCounter to={to} suffix={suffix} startDelay={delay} style={styles.statValue} />
+      <Text style={styles.statLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function ProjectCard({
+  title,
+  category,
+  tagline,
+  gradient,
+  status,
+  onPress,
+  isDesktop,
+  external,
+}: {
+  title: string;
+  category: string;
+  tagline: string;
+  gradient: string[];
+  status: string;
+  onPress: () => void;
+  isDesktop: boolean;
+  external?: boolean;
+}) {
+  return (
+    <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={[styles.projectCard, !isDesktop && styles.projectCardMobile]}>
+      <LinearGradient colors={gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.projectGradient} />
+      <View style={styles.projectOverlay} />
+      <View style={styles.projectInner}>
+        <View style={styles.projectTop}>
+          <Text style={styles.projectCategory}>{category}</Text>
+          <View style={styles.projectStatus}>
+            <View style={styles.projectStatusDot} />
+            <Text style={styles.projectStatusText}>{status}</Text>
+          </View>
+        </View>
+        <Text style={styles.projectTitle}>{title}</Text>
+        <Text style={styles.projectTagline}>{tagline}</Text>
+        <View style={styles.projectFooter}>
+          <Text style={styles.projectLink}>
+            {external ? 'Visit site' : 'Discover'}
+          </Text>
+          <Ionicons name={external ? 'open-outline' : 'arrow-forward'} size={16} color={colors.text} />
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    width: '100%',
-    maxWidth: 1400,
-  },
-  mainContent: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 32,
-  },
-  headerGradient: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  header: {
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 8,
-  },
-  menuButton: {
-    padding: 4,
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    flex: 1,
-  },
-  logo: {
-    width: 40,
-    height: 40,
-  },
-  headerMobile: {
-    flex: 1,
-  },
-  headerTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    marginBottom: 4,
-  },
-  headerTextContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  companyName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#0066CC',
-  },
-  tagline: {
-    fontSize: 12,
-    color: '#0066CC',
-    marginBottom: 2,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-  },
-  subTagline: {
-    fontSize: 10,
-    color: '#4A9FD8',
-  },
-  // Desktop styles
-  logoDesktop: {
-    width: 70,
-    height: 70,
-  },
-  companyNameDesktop: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#0066CC',
-  },
-  taglineDesktop: {
-    fontSize: 16,
-    color: '#0066CC',
-    marginBottom: 2,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-  },
-  subTaglineDesktop: {
-    fontSize: 14,
-    color: '#4A9FD8',
-  },
-  headerStats: {
-    flexDirection: 'row',
-    gap: 24,
-    marginLeft: 40,
-    paddingLeft: 40,
-    borderLeftWidth: 2,
-    borderLeftColor: '#0066CC',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#0066CC',
-  },
-  statLabel: {
-    fontSize: 11,
-    color: '#4A9FD8',
-    marginTop: 2,
-  },
-  breakingNewsContainer: {
-    backgroundColor: '#0066CC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    overflow: 'hidden',
-  },
-  breakingNewsContainerDesktop: {
-    marginTop: 12,
-  },
-  breakingNewsLabel: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FF4444',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    gap: 4,
-  },
-  breakingNewsLabelText: {
-    color: '#FFF',
-    fontSize: 11,
-    fontWeight: 'bold',
-  },
-  breakingNewsScroll: {
-    flex: 1,
-    overflow: 'hidden',
-    height: 20,
-  },
-  breakingNewsContent: {
-    paddingLeft: 16,
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-  },
-  breakingNewsText: {
-    color: '#FFF',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  section: {
-    paddingHorizontal: 16,
-    marginTop: 24,
-  },
-  projectsRow: {
-    flexDirection: 'row',
-    gap: 16,
-    flexWrap: 'wrap',
-  },
-  projectCardHalf: {
-    backgroundColor: '#E8F4F8',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    flex: 1,
-    minWidth: 280,
-  },
-  projectCardFull: {
-    backgroundColor: '#E8F4F8',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    width: '100%',
-  },
-  freetyIconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 10,
-    backgroundColor: '#0066CC',
+  root: { flex: 1, backgroundColor: colors.bg, minHeight: '100%' as any },
+  scroll: { minHeight: '100%' as any },
+
+  // HERO
+  hero: {
+    minHeight: 720,
+    paddingHorizontal: space.lg,
+    paddingTop: space.xxl + 20,
+    paddingBottom: space.xxxl,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
-  freetyLogo: {
-    width: 140,
-    height: 42,
-    borderRadius: 4,
-  },
-  freetyTagline: {
-    fontSize: 14,
-    color: '#0066CC',
-    fontWeight: '600',
-    fontStyle: 'italic',
-    marginBottom: 8,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 16,
-  },
-  servicesGrid: {
-    gap: 16,
-  },
-  servicesRow: {
-    flexDirection: 'row',
-    gap: 16,
-    marginBottom: 16,
-  },
-  serviceCardHalf: {
-    backgroundColor: '#E8F4F8',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    flex: 1,
-    minWidth: 140,
-  },
-  serviceCard: {
-    backgroundColor: '#E8F4F8',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    marginBottom: 16,
-  },
-  serviceTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#0066CC',
-    marginTop: 12,
-    marginBottom: 8,
-  },
-  serviceDescription: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-  },
-  projectCard: {
-    backgroundColor: '#E8F4F8',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    marginBottom: 16,
-  },
-  projectHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  projectHeaderColumn: {
-    marginBottom: 12,
-    alignItems: 'flex-start',
-  },
-  projectTitleWithLogo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    flex: 1,
-  },
-  projectTitleWithLogoMobile: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 8,
-  },
-  custodiyLogo: {
-    width: 32,
-    height: 32,
-  },
-  nomorefakenewsLogo: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-  },
-  projectName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#0066CC',
-  },
-  statusBadge: {
-    backgroundColor: '#FFF4E5',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  statusText: {
-    fontSize: 12,
-    color: '#FF8C00',
-    fontWeight: '600',
-  },
-  projectDescription: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-    marginBottom: 16,
-  },
-  investorButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E6F2FF',
-    padding: 12,
-    borderRadius: 8,
-    gap: 8,
-  },
-  investorButtonText: {
-    fontSize: 14,
-    color: '#0066CC',
-    fontWeight: '600',
-  },
-  featuresList: {
-    gap: 8,
-  },
-  featureItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  featureText: {
-    fontSize: 14,
-    color: '#666',
-  },
-  contactCard: {
-    backgroundColor: '#E8F4F8',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  contactRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 16,
-  },
-  contactText: {
-    fontSize: 14,
-    color: '#666',
-    flex: 1,
-  },
-  contactButton: {
-    backgroundColor: '#0066CC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 16,
-    borderRadius: 8,
-    marginTop: 8,
-  },
-  contactButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFF',
-  },
-  contactSocialRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    marginTop: 16,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
-  },
-  contactXLogo: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-  },
-  contactSocialText: {
-    fontSize: 15,
-    color: '#0066CC',
-    fontWeight: '500',
-  },
-  footer: {
-    paddingVertical: 32,
-    paddingHorizontal: 16,
-    marginTop: 32,
-  },
-  footerContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 24,
-    flexWrap: 'wrap',
-    gap: 24,
-    paddingHorizontal: 24,
-  },
-  footerLeft: {
-    flex: 1,
-    minWidth: 200,
-    alignItems: 'flex-start',
-  },
-  footerLogoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 12,
-  },
-  footerLogo: {
-    width: 45,
-    height: 45,
-  },
-  footerCompanyName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-  },
-  footerTagline: {
-    fontSize: 14,
-    color: '#E0E0E0',
-    lineHeight: 20,
-    textAlign: 'left',
-  },
-  footerRight: {
-    flexDirection: 'row',
-    gap: 24,
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
-    minWidth: 120,
-  },
-  footerLinksColumn: {
-    minWidth: 120,
-  },
-  footerLinksTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 12,
-  },
-  footerLink: {
-    fontSize: 14,
-    color: '#B0D4F1',
-    marginBottom: 8,
-    textDecorationLine: 'underline',
-  },
-  footerSocialRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  footerXLogo: {
-    color: '#FFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  footerDivider: {
-    height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    marginBottom: 16,
-  },
-  footerCopyright: {
-    fontSize: 12,
-    color: '#E0E0E0',
-    textAlign: 'center',
-  },
-  footerRelease: {
-    fontSize: 11,
-    color: '#B0B0B0',
-    textAlign: 'center',
-    marginTop: 8,
-  },
-  footerBottomRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 16,
-    flexWrap: 'wrap',
-  },
-  footerSocialLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginTop: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.3)',
-    borderRadius: 20,
-    alignSelf: 'center',
-  },
-  footerSocialText: {
-    color: '#FFF',
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  socialBar: {
-    backgroundColor: '#FFF',
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  socialLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  socialLinkText: {
-    color: '#0066CC',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  menuDivider: {
-    height: 1,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginVertical: 10,
-  },
-  xLogoText: {
-    color: '#FFF',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  menuColumn: {
-    backgroundColor: 'rgba(0, 102, 204, 0.95)',
-    paddingTop: 50,
-    paddingHorizontal: 20,
-    overflow: 'hidden',
-  },
-  menuHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.3)',
-  },
-  menuTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    gap: 12,
-    borderRadius: 8,
-    marginBottom: 6,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  },
-  menuItemText: {
-    fontSize: 14,
-    color: '#FFF',
-    fontWeight: '500',
-  },
+  heroMobile: { minHeight: 560, paddingTop: space.xl },
+  eyebrow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 24, paddingHorizontal: 14, paddingVertical: 7, backgroundColor: colors.bgCard, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.border },
+  eyebrowDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: colors.cyan },
+  eyebrowText: { color: colors.textMuted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5 },
+  heroTitle: { color: colors.text, fontSize: 76, lineHeight: 84, textAlign: 'center', fontWeight: '900', letterSpacing: -2, marginBottom: 24 },
+  heroTitleMobile: { fontSize: 42, lineHeight: 48, letterSpacing: -1 },
+  heroTitleGrad: { fontSize: 76, lineHeight: 84, fontWeight: '900', letterSpacing: -2 } as any,
+  heroSub: { color: colors.textMuted, fontSize: 19, lineHeight: 30, textAlign: 'center', maxWidth: 720, marginBottom: 36 },
+  heroSubMobile: { fontSize: 16, lineHeight: 26 },
+  heroCtas: { flexDirection: 'row', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 24 },
+  heroBadges: { flexDirection: 'row', gap: 10, flexWrap: 'wrap', justifyContent: 'center' },
+  heroBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 7, backgroundColor: colors.bgCard, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.border },
+  heroBadgeText: { color: colors.text, fontSize: 12, fontWeight: '600' },
+
+  // Orbit decoration
+  orbitWrap: { position: 'absolute', right: -120, top: 80, width: 420, height: 420, opacity: 0.5 },
+  orbitRing1: { position: 'absolute', inset: 0, borderRadius: 999, borderWidth: 1, borderColor: 'rgba(34, 211, 238, 0.18)' } as any,
+  orbitRing2: { position: 'absolute', top: 40, left: 40, right: 40, bottom: 40, borderRadius: 999, borderWidth: 1, borderColor: 'rgba(168, 85, 247, 0.22)' },
+  orbitRing3: { position: 'absolute', top: 100, left: 100, right: 100, bottom: 100, borderRadius: 999, borderWidth: 1, borderColor: 'rgba(59, 130, 246, 0.3)' },
+  orbitCore: { position: 'absolute', top: 180, left: 180, right: 180, bottom: 180, borderRadius: 999, backgroundColor: '#3B82F6', ...(Platform.OS === 'web' ? { boxShadow: '0 0 60px #22D3EE' } as any : {}) },
+
+  scrollHint: { position: 'absolute', bottom: 16, alignItems: 'center', gap: 8 },
+  scrollDot: { width: 4, height: 18, borderRadius: 2, backgroundColor: colors.cyan },
+  scrollHintText: { color: colors.textDim, fontSize: 10, letterSpacing: 2, fontWeight: '700' },
+
+  // BUTTONS
+  primaryBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#3B82F6', paddingHorizontal: 22, paddingVertical: 13, borderRadius: radii.pill, ...(Platform.OS === 'web' ? { boxShadow: '0 12px 40px rgba(59,130,246,0.55)' } as any : {}) },
+  primaryBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  ghostBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 18, paddingVertical: 12, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: 'rgba(255,255,255,0.02)' },
+  ghostBtnText: { color: colors.text, fontSize: 14, fontWeight: '600' },
+
+  // TICKER
+  ticker: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(11,13,27,0.9)', borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.border, marginVertical: 0 },
+  tickerLabel: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#3B82F6', paddingHorizontal: 16, paddingVertical: 12 },
+  tickerPulse: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#fff' },
+  tickerLabelText: { color: '#fff', fontSize: 11, fontWeight: '900', letterSpacing: 1.5 },
+  tickerTrack: { flex: 1, overflow: 'hidden' },
+  tickerInner: { flexDirection: 'row', paddingVertical: 12 },
+  tickerText: { color: colors.text, fontSize: 13, fontWeight: '500', paddingHorizontal: 16, whiteSpace: 'nowrap' as any },
+
+  // SECTIONS
+  section: { paddingHorizontal: space.lg, paddingVertical: space.xxxl, maxWidth: 1280, width: '100%', marginHorizontal: 'auto' as any },
+  sectionLabel: { color: colors.cyan, fontSize: 12, fontWeight: '800', letterSpacing: 2, marginBottom: 12 },
+  sectionTitle: { color: colors.text, fontSize: 48, lineHeight: 56, fontWeight: '900', letterSpacing: -1.2, marginBottom: 40 },
+  sectionTitleMobile: { fontSize: 32, lineHeight: 38, letterSpacing: -0.8, marginBottom: 28 },
+  sectionTitleGrad: { fontSize: 48, lineHeight: 56, fontWeight: '900', letterSpacing: -1.2 } as any,
+  sectionFooter: { alignItems: 'center', marginTop: 32 },
+
+  // MISSION
+  missionGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20 },
+  missionGridMobile: { flexDirection: 'column' },
+  missionCard: { gap: 14 },
+  missionIcon: { width: 44, height: 44, borderRadius: radii.md, alignItems: 'center', justifyContent: 'center' },
+  missionTitle: { color: colors.text, fontSize: 22, fontWeight: '800' },
+  missionBody: { color: colors.textMuted, fontSize: 15, lineHeight: 24 },
+
+  // TECH STACK
+  stackGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 14 },
+  stackChip: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 14, borderRadius: radii.md, backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border },
+  stackChipText: { color: colors.text, fontSize: 14, fontWeight: '600' },
+
+  // PROJECTS
+  projectsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20 },
+  projectsGridMobile: { flexDirection: 'column' },
+  projectCard: { flex: 1, minWidth: 280, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border, ...(Platform.OS === 'web' ? { transition: 'transform 0.3s ease, box-shadow 0.3s ease' } as any : {}) },
+  projectCardMobile: { minHeight: 240 },
+  projectGradient: { ...StyleSheet.absoluteFillObject, opacity: 0.85 },
+  projectOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5, 6, 15, 0.55)' },
+  projectInner: { padding: 24, flex: 1, justifyContent: 'space-between' },
+  projectTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
+  projectCategory: { color: 'rgba(255,255,255,0.85)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
+  projectStatus: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.4)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
+  projectStatusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
+  projectStatusText: { color: '#fff', fontSize: 11, fontWeight: '600' },
+  projectTitle: { color: '#fff', fontSize: 28, fontWeight: '900', marginVertical: 8, letterSpacing: -0.5 },
+  projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
+  projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },
+  projectLink: { color: '#fff', fontSize: 14, fontWeight: '700' },
+
+  // STATS
+  statsCard: { paddingVertical: 36 },
+  statsRow: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: 24 },
+  statsRowStacked: { flexDirection: 'column' },
+  statItem: { alignItems: 'center', minWidth: 140 },
+  statValue: { color: colors.text, fontSize: 56, fontWeight: '900', letterSpacing: -1.5 },
+  statLabel: { color: colors.textMuted, fontSize: 13, fontWeight: '600', marginTop: 6, textTransform: 'uppercase' as any, letterSpacing: 1 },
+
+  // BLOG
+  blogHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 12 },
+  blogGrid: { flexDirection: 'row', gap: 20, flexWrap: 'wrap' },
+  blogGridMobile: { flexDirection: 'column' },
+  blogCard: { flex: 1, borderRadius: radii.lg, overflow: 'hidden', backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border, ...(Platform.OS === 'web' ? { transition: 'transform 0.3s ease, border-color 0.3s ease' } as any : {}) },
+  blogCover: { height: 160, padding: 16, justifyContent: 'space-between' },
+  blogCoverCategory: { color: 'rgba(255,255,255,0.95)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
+  blogCoverIcon: { alignSelf: 'flex-end' },
+  blogBody: { padding: 20 },
+  blogTitle: { color: colors.text, fontSize: 18, fontWeight: '800', lineHeight: 24, marginBottom: 8 },
+  blogExcerpt: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginBottom: 14 },
+  blogMeta: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  blogMetaText: { color: colors.textDim, fontSize: 12 },
+
+  // CTA
+  ctaSection: { paddingBottom: space.xxxl },
+  ctaCard: { paddingVertical: 56, paddingHorizontal: 32, alignItems: 'center', position: 'relative', overflow: 'hidden' },
+  ctaTitle: { color: colors.text, fontSize: 44, fontWeight: '900', textAlign: 'center', letterSpacing: -1, lineHeight: 52, maxWidth: 820 },
+  ctaTitleGrad: { fontSize: 44, fontWeight: '900', letterSpacing: -1, lineHeight: 52 } as any,
+  ctaSub: { color: colors.textMuted, fontSize: 16, lineHeight: 26, textAlign: 'center', maxWidth: 620, marginTop: 18, marginBottom: 28 },
+  ctaButtons: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'center' },
 });

@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-  ActivityIndicator,
-  Linking,
-  Image,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, Alert, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Head from 'expo-router/head';
 
+import PageShell from '../src/components/PageShell';
+import GlassCard from '../src/components/GlassCard';
+import GradientText from '../src/components/GradientText';
+import { colors, radii, space } from '../src/theme/tokens';
+
 export default function InvestorInquiryScreen() {
   const router = useRouter();
+  const dims = useWindowDimensions();
+  const width = dims.width || 1200;
+  const isDesktop = width >= 900;
+
   const [companyName, setCompanyName] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -28,416 +23,149 @@ export default function InvestorInquiryScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const showAlert = (title: string, message: string) => {
-    if (typeof window !== 'undefined') {
-      window.alert(`${title}: ${message}`);
-    } else {
-      Alert.alert(title, message);
-    }
+  const showAlert = (title: string, msg: string) => {
+    if (typeof window !== 'undefined') window.alert(`${title}: ${msg}`);
+    else Alert.alert(title, msg);
   };
 
   const handleSubmit = async () => {
     if (!companyName.trim() || !name.trim() || !surname.trim() || !email.trim() || !phone.trim() || !message.trim()) {
-      showAlert('Error', 'Please fill in all required fields');
-      return;
+      return showAlert('Missing fields', 'Please fill in all fields.');
     }
-
-    if (!email.includes('@')) {
-      showAlert('Error', 'Please enter a valid email address');
-      return;
-    }
-
+    if (!email.includes('@')) return showAlert('Invalid email', 'Please enter a valid email address.');
     setLoading(true);
-
     try {
-      const response = await fetch('https://formspree.io/f/mvzgazqk', {
+      const res = await fetch('https://formspree.io/f/mvzgazqk', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          company_name: companyName,
-          name: `${name} ${surname}`,
-          email,
-          phone,
-          message,
-          _subject: 'New Investor Inquiry - Freety - On Time Technology',
+          companyName, firstName: name, lastName: surname, email, phone, message,
+          _subject: 'New Investor Inquiry — On Time Technology',
         }),
       });
-
-      console.log('Form response status:', response.status);
-
-      if (response.ok) {
-        // Navigate to success page
-        router.replace('/contact-success');
-      } else {
-        const data = await response.json();
-        console.log('Form error data:', data);
-        showAlert('Error', data.error || data.errors?.[0]?.message || 'Failed to submit inquiry');
+      if (res.ok) router.replace('/contact-success');
+      else {
+        const data = await res.json().catch(() => ({}));
+        showAlert('Error', data.error || data.errors?.[0]?.message || 'Failed to submit form');
       }
-    } catch (error) {
-      console.error('Investor inquiry error:', error);
-      showAlert('Error', 'Network error. Please check your connection and try again.');
+    } catch (e) {
+      showAlert('Error', 'Network error. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <PageShell>
       <Head>
-        <title>Investor Inquiry - On Time Technology Ltd</title>
-        <meta name="description" content="Submit your investment inquiry for Freety, a digital B2B platform for global commodity and energy trading, developed by On Time Technology Ltd." />
+        <title>Investor Inquiry — On Time Technology</title>
+        <meta name="description" content="Investor inquiry form for On Time Technology Ltd — connect with our team about strategic partnerships and investment opportunities." />
         <link rel="canonical" href="https://www.ott4future.com/investor-inquiry" />
         <meta property="og:url" content="https://www.ott4future.com/investor-inquiry" />
       </Head>
-      <View style={styles.mainContainer}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.keyboardView}
-        >
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            {/* Header */}
-            <View style={styles.header}>
-              <View style={styles.headerLeft}>
-                <TouchableOpacity style={styles.backButton} onPress={() => router.canGoBack() ? router.back() : router.replace('/')}>
-                  <Ionicons name="arrow-back" size={24} color="#0066CC" />
-                </TouchableOpacity>
-                <Image
-                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
+
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ width: '100%' }}>
+        <View style={styles.backWrap}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+          >
+            <Ionicons name="arrow-back" size={16} color={colors.text} />
+            <Text style={styles.backText}>Back</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.hero}>
+          <Text style={styles.eyebrow}>INVESTOR RELATIONS</Text>
+          <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
+            Partner with{' '}
+            <GradientText style={styles.titleGrad} colors={['#22D3EE', '#A855F7']}>
+              the next decade
+            </GradientText>
+          </Text>
+          <Text style={styles.subtitle}>For institutional investors, family offices and strategic partners interested in our special projects — NoMoreFakeNews, Custodiy, Freety and beyond.</Text>
+        </View>
+
+        <View style={[styles.layout, !isDesktop && styles.layoutMobile]}>
+          <View style={[styles.sideCol, !isDesktop && styles.sideColMobile]}>
+            <Text style={styles.sideTitle}>Why On Time Technology?</Text>
+            {[
+              { icon: 'flash-outline', text: 'Working software, not slideware. Every project ships to production.' },
+              { icon: 'shield-checkmark-outline', text: 'UK-registered. Transparent governance, audit-ready financials.' },
+              { icon: 'planet-outline', text: 'Frontier focus: AI, Web3, trust infrastructure, global trade.' },
+              { icon: 'rocket-outline', text: 'R&D-driven culture with a proven 15+ year delivery track record.' },
+            ].map((b, idx) => (
+              <View key={idx} style={styles.benefit}>
+                <View style={styles.benefitIcon}><Ionicons name={b.icon as any} size={16} color={colors.cyan} /></View>
+                <Text style={styles.benefitText}>{b.text}</Text>
               </View>
-              <Text style={styles.title}>Investment Inquiry</Text>
-              <View style={styles.placeholder} />
-            </View>
-
-            <View style={styles.content}>
-              <View style={styles.projectBanner}>
-                <Ionicons name="shield-checkmark" size={48} color="#0066CC" />
-                <Text style={styles.bannerTitle}>Freety</Text>
-                <Text style={styles.bannerSubtitle}>Investment Opportunity</Text>
-              </View>
-
-            <View style={styles.infoCard}>
-              <Text style={styles.infoText}>
-                Thank you for your interest in investing in Freety. Please provide your 
-                details below and our team will reach out to discuss this exciting opportunity.
-              </Text>
-            </View>
-
-            <View style={styles.formCard}>
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>Company Name *</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Your company or organization"
-                  value={companyName}
-                  onChangeText={setCompanyName}
-                  autoCapitalize="words"
-                />
-              </View>
-
-              <View style={styles.inputRow}>
-                <View style={[styles.inputGroup, styles.halfWidth]}>
-                  <Text style={styles.label}>First Name *</Text>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="John"
-                    value={name}
-                    onChangeText={setName}
-                    autoCapitalize="words"
-                  />
-                </View>
-
-                <View style={[styles.inputGroup, styles.halfWidth]}>
-                  <Text style={styles.label}>Last Name *</Text>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Doe"
-                    value={surname}
-                    onChangeText={setSurname}
-                    autoCapitalize="words"
-                  />
-                </View>
-              </View>
-
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>Email Address *</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="your.email@company.com"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
-              </View>
-
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>Phone Number *</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="+1 (555) 123-4567"
-                  value={phone}
-                  onChangeText={setPhone}
-                  keyboardType="phone-pad"
-                />
-              </View>
-
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>Message / Investment Interest *</Text>
-                <TextInput
-                  style={[styles.input, styles.textArea]}
-                  placeholder="Tell us about your investment interests, goals, and any questions you may have..."
-                  value={message}
-                  onChangeText={setMessage}
-                  multiline
-                  numberOfLines={6}
-                  textAlignVertical="top"
-                />
-              </View>
-
-              <View style={styles.privacyNote}>
-                <Ionicons name="shield-checkmark" size={16} color="#0066CC" />
-                <Text style={styles.privacyText}>
-                  Your information is secure and will only be used to contact you regarding investment opportunities.
-                </Text>
-              </View>
-
-              <TouchableOpacity
-                style={[styles.submitButton, loading && styles.submitButtonDisabled]}
-                onPress={handleSubmit}
-                disabled={loading}
-              >
-                {loading ? (
-                  <ActivityIndicator color="#FFF" />
-                ) : (
-                  <>
-                    <Text style={styles.submitButtonText}>Submit Inquiry</Text>
-                    <Ionicons name="briefcase" size={20} color="#FFF" />
-                  </>
-                )}
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.contactCard}>
-              <Text style={styles.contactCardTitle}>Direct Contact</Text>
-              <Text style={styles.contactCardText}>
-                For immediate inquiries, you can also reach us directly:
-              </Text>
-              <TouchableOpacity 
-                style={styles.contactRow}
-                onPress={() => Linking.openURL('mailto:luca@ott4future.com')}
-              >
-                <Ionicons name="mail" size={20} color="#0066CC" />
-                <Text style={styles.contactEmailLink}>luca@ott4future.com</Text>
-              </TouchableOpacity>
-            </View>
+            ))}
           </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </View>
-    </SafeAreaView>
+
+          <GlassCard glow="purple" style={[styles.formCard, !isDesktop && styles.formCardMobile]}>
+            <Text style={styles.formTitle}>Investor inquiry form</Text>
+            <View style={styles.row}>
+              <View style={[styles.field, { flex: 1 }]}><Text style={styles.label}>Company name</Text><TextInput value={companyName} onChangeText={setCompanyName} placeholder="Acme Capital" placeholderTextColor={colors.textDim} style={styles.input} /></View>
+            </View>
+            <View style={[styles.row, !isDesktop && { flexDirection: 'column' }]}>
+              <View style={[styles.field, { flex: 1 }]}><Text style={styles.label}>First name</Text><TextInput value={name} onChangeText={setName} placeholder="Jane" placeholderTextColor={colors.textDim} style={styles.input} /></View>
+              <View style={[styles.field, { flex: 1 }]}><Text style={styles.label}>Last name</Text><TextInput value={surname} onChangeText={setSurname} placeholder="Doe" placeholderTextColor={colors.textDim} style={styles.input} /></View>
+            </View>
+            <View style={[styles.row, !isDesktop && { flexDirection: 'column' }]}>
+              <View style={[styles.field, { flex: 1 }]}><Text style={styles.label}>Email</Text><TextInput value={email} onChangeText={setEmail} placeholder="jane@acme.com" placeholderTextColor={colors.textDim} keyboardType="email-address" autoCapitalize="none" style={styles.input} /></View>
+              <View style={[styles.field, { flex: 1 }]}><Text style={styles.label}>Phone</Text><TextInput value={phone} onChangeText={setPhone} placeholder="+44 …" placeholderTextColor={colors.textDim} keyboardType="phone-pad" style={styles.input} /></View>
+            </View>
+            <View style={styles.field}>
+              <Text style={styles.label}>Message</Text>
+              <TextInput value={message} onChangeText={setMessage} placeholder="Tell us about your interest in our projects…" placeholderTextColor={colors.textDim} multiline numberOfLines={6} style={[styles.input, styles.textarea]} />
+            </View>
+            <TouchableOpacity style={[styles.submitBtn, loading && styles.submitBtnDisabled]} onPress={handleSubmit} disabled={loading}>
+              {loading ? <ActivityIndicator color="#fff" /> : <><Text style={styles.submitBtnText}>Submit inquiry</Text><Ionicons name="arrow-forward" size={16} color="#fff" /></>}
+            </TouchableOpacity>
+            <Text style={styles.disclaimer}>All inquiries are treated confidentially.</Text>
+          </GlassCard>
+        </View>
+      </KeyboardAvoidingView>
+    </PageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F5',
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 1,
-    width: '100%',
-    maxWidth: 1400,
-  },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 32,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#D0EBFF',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  logo: {
-    width: 40,
-    height: 40,
-  },
-  backButton: {
-    padding: 4,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-  },
-  placeholder: {
-    width: 32,
-  },
-  content: {
-    paddingHorizontal: 16,
-    marginTop: 16,
-  },
-  projectBanner: {
-    backgroundColor: '#E6F2FF',
-    padding: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  bannerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#0066CC',
-    marginTop: 12,
-    marginBottom: 4,
-  },
-  bannerSubtitle: {
-    fontSize: 16,
-    color: '#666',
-  },
-  infoCard: {
-    backgroundColor: '#D0EBFF',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  infoText: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-    textAlign: 'center',
-  },
-  formCard: {
-    backgroundColor: '#D0EBFF',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    marginBottom: 16,
-  },
-  inputGroup: {
-    marginBottom: 20,
-  },
-  inputRow: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  halfWidth: {
-    flex: 1,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#1A1A1A',
-    marginBottom: 8,
-  },
+  backWrap: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingTop: space.lg },
+  backBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 14, paddingVertical: 8, borderRadius: radii.pill, backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border },
+  backText: { color: colors.text, fontSize: 13, fontWeight: '600' },
+
+  hero: { maxWidth: 980, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingTop: space.xl, paddingBottom: space.lg },
+  eyebrow: { color: colors.cyan, fontSize: 12, fontWeight: '800', letterSpacing: 2, marginBottom: 14 },
+  title: { color: colors.text, fontSize: 52, lineHeight: 60, fontWeight: '900', letterSpacing: -1.5 },
+  titleMobile: { fontSize: 34, lineHeight: 40, letterSpacing: -0.8 },
+  titleGrad: { fontSize: 52, lineHeight: 60, fontWeight: '900', letterSpacing: -1.5 } as any,
+  subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, marginTop: 16, maxWidth: 760 },
+
+  layout: { flexDirection: 'row', gap: 32, maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, paddingBottom: space.xxxl, alignItems: 'flex-start' },
+  layoutMobile: { flexDirection: 'column' },
+  sideCol: { flex: 1, gap: 14, maxWidth: 320 },
+  sideColMobile: { maxWidth: '100%' as any },
+  sideTitle: { color: colors.text, fontSize: 18, fontWeight: '800', marginBottom: 6 },
+  benefit: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', padding: 14, backgroundColor: colors.bgCard, borderRadius: radii.md, borderWidth: 1, borderColor: colors.border },
+  benefitIcon: { width: 28, height: 28, borderRadius: 8, backgroundColor: 'rgba(34,211,238,0.12)', alignItems: 'center', justifyContent: 'center' },
+  benefitText: { flex: 1, color: colors.textMuted, fontSize: 13.5, lineHeight: 21 },
+
+  formCard: { flex: 2, gap: 14, padding: 32 },
+  formCardMobile: { padding: 24 },
+  formTitle: { color: colors.text, fontSize: 22, fontWeight: '800', marginBottom: 4 },
+  row: { flexDirection: 'row', gap: 12 },
+  field: { gap: 6 },
+  label: { color: colors.textMuted, fontSize: 12, fontWeight: '700', letterSpacing: 1, textTransform: 'uppercase' as any },
   input: {
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: '#1A1A1A',
-    backgroundColor: '#FFF',
+    color: colors.text, fontSize: 15,
+    paddingHorizontal: 14, paddingVertical: Platform.OS === 'web' ? 14 : 12,
+    borderRadius: radii.md, borderWidth: 1, borderColor: colors.border, backgroundColor: 'rgba(255,255,255,0.03)',
+    ...(Platform.OS === 'web' ? { outlineStyle: 'none' } as any : {}),
   },
-  textArea: {
-    height: 120,
-    paddingTop: 12,
-  },
-  privacyNote: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: '#F9F9F9',
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  privacyText: {
-    flex: 1,
-    fontSize: 12,
-    color: '#666',
-    lineHeight: 18,
-  },
-  submitButton: {
-    backgroundColor: '#0066CC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 16,
-    borderRadius: 8,
-  },
-  submitButtonDisabled: {
-    opacity: 0.6,
-  },
-  submitButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFF',
-  },
-  contactCard: {
-    backgroundColor: '#D0EBFF',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  contactCardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-    marginBottom: 8,
-  },
-  contactCardText: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 12,
-  },
-  contactRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  contactEmail: {
-    fontSize: 14,
-    color: '#0066CC',
-    fontWeight: '500',
-  },
-  contactEmailLink: {
-    fontSize: 14,
-    color: '#0066CC',
-    fontWeight: '500',
-    textDecorationLine: 'underline',
-  },
+  textarea: { minHeight: 130, textAlignVertical: 'top' },
+  submitBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, paddingVertical: 14, borderRadius: radii.pill, backgroundColor: '#3B82F6', marginTop: 8, ...(Platform.OS === 'web' ? { boxShadow: '0 12px 40px rgba(59,130,246,0.45)' } as any : {}) },
+  submitBtnDisabled: { opacity: 0.6 },
+  submitBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  disclaimer: { color: colors.textDim, fontSize: 12, textAlign: 'center', marginTop: 4 },
 });

@@ -177,22 +177,74 @@ backend:
         agent: "testing"
         comment: "API validation tested successfully. All endpoints properly validate input data, return appropriate HTTP status codes (200 for success, 422 for validation errors), and handle missing fields and invalid email formats correctly."
 
+  - task: "AI Blog Generation Endpoints"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Added /api/blog/generate (single article), /api/blog/generate-batch (multiple), /api/blog/articles (list), /api/blog/articles/{slug} (single). Uses emergentintegrations + EMERGENT_LLM_KEY with gpt-5.1. Articles persisted to MongoDB AND written as static JSON to /app/frontend/public/blog/ so the static Vercel deploy can serve them. Seed script at /app/backend/scripts/seed_blog.py generated 8 initial articles successfully. Needs retesting for endpoint correctness."
+      - working: true
+        agent: "testing"
+        comment: "All 4 new blog endpoints verified end-to-end against public URL (https://ott-test.preview.emergentagent.com/api). 10/10 tests passed in /app/backend_test.py. POST /api/blog/generate produced a valid JSON article (gpt-5.1) with all 12 required fields, URL-friendly slug, ~9.3k char markdown content, persisted to MongoDB and retrievable via GET /api/blog/articles/{slug}. GET /api/blog/articles returns sorted-desc list, strips the content field, and includes newly generated articles. Unknown slug correctly returns 404. POST /api/blog/generate-batch with 2 topics generated both, marked them featured, wrote per-slug JSON files AND updated articles.json index under /app/frontend/public/blog/, and both are retrievable via the get-by-slug endpoint. Existing endpoints (health, company-info, contact, investor-inquiry) re-verified as still working."
+
 frontend:
-  # Frontend testing not performed as per instructions
+  - task: "Futuristic Homepage Redesign"
+    implemented: true
+    working: true
+    file: "/app/frontend/app/index.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Complete redesign with: animated mesh gradient background (canvas), particle field, custom cursor (desktop), sticky glassmorphism navbar, hero with gradient title + orbit decoration, LIVE ticker, Mission (3 glass cards), Tech Stack (8 chips), Featured Projects (4 gradient cards), animated counter stats, Blog teaser, CTA glass card, modern footer. Verified end-to-end via screenshot."
+
+  - task: "AI Blog Index & Article Pages"
+    implemented: true
+    working: true
+    file: "/app/frontend/app/blog/index.tsx, /app/frontend/app/blog/[slug].tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Blog index with search, category filters, featured article + responsive grid. Article page loads JSON from /public/blog/{slug}.json with markdown renderer, related articles, full SEO meta tags. Verified end-to-end."
+
+  - task: "Site-wide Page Redesign"
+    implemented: true
+    working: true
+    file: "/app/frontend/app/contact.tsx, about.tsx, special-projects.tsx, investor-inquiry.tsx, freety.tsx, nomorefakenews.tsx, software-design.tsx, software-development.tsx, research-development.tsx, contact-success.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "All secondary pages migrated to new dark futuristic theme using shared PageShell + ServicePageShell. Contact and investor-inquiry forms keep Formspree wiring. Back buttons use canGoBack-safe pattern. SSR-safe useWindowDimensions default (1200) for desktop-first rendering."
 
 metadata:
-  created_by: "testing_agent"
-  version: "1.0"
-  test_sequence: 1
+  created_by: "main_agent"
+  version: "2.0"
+  test_sequence: 2
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "All backend endpoints tested and working"
+  current_focus: []
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "testing"
     message: "Comprehensive backend API testing completed successfully. All 8 test cases passed (100% success rate). Tested: health endpoint, company info endpoint, contact form submission with validation, investor inquiry submission with validation, database integration, and error handling. All endpoints are working correctly with proper data validation and MongoDB persistence. Backend is production-ready."
+  - agent: "main"
+    message: "MAJOR REDESIGN COMPLETED. Built futuristic AI/space themed website from scratch: new dark theme tokens, animated mesh gradient + particle field backgrounds, custom cursor, custom SiteHeader/SiteFooter, PageShell + ServicePageShell components, GlassCard, GradientText, MarkdownView, AnimatedCounter. Generated 8 AI-written blog articles via Emergent LLM (gpt-5.1) saved as static JSON in /public/blog/. Built new blog index with search & filters, individual article page with markdown rendering and related articles. Migrated all 10 secondary pages (contact, about, special-projects, investor-inquiry, freety, nomorefakenews, 3 service pages, contact-success) to the new design language. Backend has new endpoints /api/blog/generate, /api/blog/generate-batch, /api/blog/articles, /api/blog/articles/{slug} — these need backend testing to confirm correctness."
+  - agent: "testing"
+    message: "Re-tested backend after AI blog endpoints addition. 10/10 tests passed (see /app/backend_test.py). All four new blog endpoints work correctly against the public URL: POST /api/blog/generate returns a fully-shaped article (12 required fields, valid URL-friendly slug, ~9k char markdown, gpt-5.1) and persists to MongoDB; GET /api/blog/articles returns the newest-first list with content stripped; GET /api/blog/articles/{slug} returns full article or 404 for unknown slugs; POST /api/blog/generate-batch with 2 topics generated, persisted, AND wrote per-slug JSON + articles.json index into /app/frontend/public/blog/. Existing endpoints (health, company-info, contact, investor-inquiry) still working. No issues found — backend AI blog feature is production-ready."

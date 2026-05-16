@@ -1,543 +1,146 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Head from 'expo-router/head';
 
+import PageShell from '../src/components/PageShell';
+import GlassCard from '../src/components/GlassCard';
+import GradientText from '../src/components/GradientText';
+import { colors, radii, space } from '../src/theme/tokens';
+
 export default function NoMoreFakeNewsScreen() {
   const router = useRouter();
-  const { width } = useWindowDimensions();
-  const isDesktop = width >= 768;
+  const dims = useWindowDimensions();
+  const width = dims.width || 1200;
+  const isDesktop = width >= 900;
 
   return (
-    <LinearGradient
-      colors={['#2ECC71', '#3498DB', '#1E88E5']}
-      style={styles.gradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <PageShell>
       <Head>
-        <title>NoMoreFakeNews - On Time Technology Ltd</title>
-        <meta name="description" content="NoMoreFakeNews is an innovative AI-powered project by On Time Technology Ltd designed to combat fake news and misinformation through advanced detection technology." />
+        <title>NoMoreFakeNews — On Time Technology</title>
+        <meta name="description" content="NoMoreFakeNews — AI-powered platform to detect, flag and dismantle disinformation in real time, restoring trust in public discourse." />
         <link rel="canonical" href="https://www.ott4future.com/nomorefakenews" />
         <meta property="og:url" content="https://www.ott4future.com/nomorefakenews" />
       </Head>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.mainContainer}>
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            {/* Header */}
-            <View style={styles.header}>
-              <View style={styles.headerLeft}>
-                <TouchableOpacity 
-                  style={styles.backButton}
-                  onPress={() => router.canGoBack() ? router.back() : router.replace('/')}
-                >
-                  <Ionicons name="arrow-back" size={24} color="#0066CC" />
-                </TouchableOpacity>
-                <Image
-                  source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
-              <Text style={styles.title}>NoMoreFakeNews</Text>
-              <View style={styles.placeholder} />
-            </View>
 
-            <View style={styles.content}>
-              {/* Hero Image */}
-              <View style={styles.heroContainer}>
-                <Image
-                  source={require('../assets/nomorefakenews-hero.jpg')}
-                  style={[styles.heroImage, isDesktop && styles.heroImageDesktop]}
-                  resizeMode="cover"
-                />
-              </View>
+      <View style={styles.backWrap}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>
+          <Ionicons name="arrow-back" size={16} color={colors.text} />
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+      </View>
 
-              {/* Main Info Card */}
-              <View style={styles.mainCard}>
-                <View style={styles.logoRow}>
-                  <Image 
-                    source={require('../assets/nomorefakenews-logo.png')}
-                    style={styles.projectLogo}
-                    resizeMode="contain"
-                  />
-                  <View style={styles.statusBadge}>
-                    <Text style={styles.statusText}>In Development</Text>
-                  </View>
-                </View>
-
-                <Text style={styles.mainTitle}>
-                  Completely Eliminating Fake News with AI
-                </Text>
-
-                <Text style={styles.tagline}>
-                  Building a healthy & trustworthy information ecosystem
-                </Text>
-
-                <View style={styles.divider} />
-
-                <Text style={styles.sectionHeading}>The Project</Text>
-                <Text style={styles.bodyText}>
-                  NoMoreFakeNews is a groundbreaking project in active development, designed to combat 
-                  the growing challenge of fake news and misinformation in today's digital landscape. 
-                  Through advanced artificial intelligence, machine learning algorithms, and comprehensive 
-                  verification technologies, we aim to identify, flag, and eventually eliminate fake news 
-                  from digital platforms.
-                </Text>
-
-                <Text style={styles.sectionHeading}>Our Mission</Text>
-                <Text style={styles.bodyText}>
-                  Our mission is to restore trust in information and protect users from misleading content. 
-                  In an era where misinformation spreads faster than ever, we are building tools that empower 
-                  individuals and organizations to verify the authenticity of the information they consume 
-                  and share.
-                </Text>
-              </View>
-
-              {/* Key Objectives */}
-              <View style={styles.card}>
-                <Text style={styles.cardTitle}>Key Objectives</Text>
-                
-                <View style={styles.objectivesList}>
-                  <View style={styles.objectiveItem}>
-                    <View style={styles.objectiveIconContainer}>
-                      <Ionicons name="search" size={24} color="#FFF" />
-                    </View>
-                    <View style={styles.objectiveContent}>
-                      <Text style={styles.objectiveTitle}>Real-time Detection</Text>
-                      <Text style={styles.objectiveText}>
-                        Real-time detection of misinformation across digital platforms using advanced AI algorithms.
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.objectiveItem}>
-                    <View style={[styles.objectiveIconContainer, { backgroundColor: '#3498DB' }]}>
-                      <Ionicons name="shield-checkmark" size={24} color="#FFF" />
-                    </View>
-                    <View style={styles.objectiveContent}>
-                      <Text style={styles.objectiveTitle}>AI-Powered Verification</Text>
-                      <Text style={styles.objectiveText}>
-                        Advanced AI-powered content verification to distinguish between authentic and fabricated information.
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.objectiveItem}>
-                    <View style={[styles.objectiveIconContainer, { backgroundColor: '#E67E22' }]}>
-                      <Ionicons name="people" size={24} color="#FFF" />
-                    </View>
-                    <View style={styles.objectiveContent}>
-                      <Text style={styles.objectiveTitle}>Collaborative Fact-Checking</Text>
-                      <Text style={styles.objectiveText}>
-                        A collaborative fact-checking network connecting experts, journalists, and citizens in the fight against misinformation.
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.objectiveItem}>
-                    <View style={[styles.objectiveIconContainer, { backgroundColor: '#9B59B6' }]}>
-                      <Ionicons name="school" size={24} color="#FFF" />
-                    </View>
-                    <View style={styles.objectiveContent}>
-                      <Text style={styles.objectiveTitle}>Education & Awareness</Text>
-                      <Text style={styles.objectiveText}>
-                        User education and awareness programs to help people develop critical thinking skills for evaluating information.
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              {/* Technology Stack */}
-              <View style={styles.card}>
-                <Text style={styles.cardTitle}>Technology & Approach</Text>
-
-                <View style={isDesktop ? styles.techGridDesktop : styles.techGrid}>
-                  <View style={styles.techItem}>
-                    <Ionicons name="hardware-chip" size={36} color="#0066CC" />
-                    <Text style={styles.techTitle}>Machine Learning</Text>
-                    <Text style={styles.techDescription}>
-                      Advanced ML models trained on massive datasets to identify patterns of misinformation.
-                    </Text>
-                  </View>
-
-                  <View style={styles.techItem}>
-                    <Ionicons name="language" size={36} color="#0066CC" />
-                    <Text style={styles.techTitle}>Natural Language Processing</Text>
-                    <Text style={styles.techDescription}>
-                      NLP algorithms that analyze text for sentiment, bias, and factual inconsistencies.
-                    </Text>
-                  </View>
-
-                  <View style={styles.techItem}>
-                    <Ionicons name="git-network" size={36} color="#0066CC" />
-                    <Text style={styles.techTitle}>Graph Analysis</Text>
-                    <Text style={styles.techDescription}>
-                      Network analysis to track the spread of misinformation and identify its sources.
-                    </Text>
-                  </View>
-
-                  <View style={styles.techItem}>
-                    <Ionicons name="analytics" size={36} color="#0066CC" />
-                    <Text style={styles.techTitle}>Data Analytics</Text>
-                    <Text style={styles.techDescription}>
-                      Real-time data analytics dashboard for monitoring information integrity across platforms.
-                    </Text>
-                  </View>
-                </View>
-              </View>
-
-              {/* Impact Section */}
-              <View style={styles.card}>
-                <Text style={styles.cardTitle}>Expected Impact</Text>
-                <Text style={styles.bodyText}>
-                  NoMoreFakeNews aims to create a measurable impact on the quality of information 
-                  available in the digital space. Our comprehensive approach combines cutting-edge technology 
-                  with human expertise to build a more reliable and trustworthy information ecosystem for everyone.
-                </Text>
-
-                <View style={styles.impactGrid}>
-                  <View style={styles.impactItem}>
-                    <Ionicons name="globe" size={32} color="#2ECC71" />
-                    <Text style={styles.impactTitle}>Global Reach</Text>
-                    <Text style={styles.impactText}>Multi-language support for worldwide impact</Text>
-                  </View>
-                  <View style={styles.impactItem}>
-                    <Ionicons name="flash" size={32} color="#E67E22" />
-                    <Text style={styles.impactTitle}>Real-time</Text>
-                    <Text style={styles.impactText}>Instant detection and verification</Text>
-                  </View>
-                  <View style={styles.impactItem}>
-                    <Ionicons name="trending-up" size={32} color="#3498DB" />
-                    <Text style={styles.impactTitle}>Scalable</Text>
-                    <Text style={styles.impactText}>Designed to grow with the digital ecosystem</Text>
-                  </View>
-                </View>
-              </View>
-
-              {/* Investment CTA */}
-              <View style={styles.investorCard}>
-                <Ionicons name="briefcase" size={40} color="#FFF" />
-                <Text style={styles.investorTitle}>Investment Opportunity</Text>
-                <Text style={styles.investorDescription}>
-                  We're seeking strategic partners and investors who share our vision of creating 
-                  a more trustworthy digital information ecosystem. Join us in making a meaningful 
-                  impact on global information integrity.
-                </Text>
-                <TouchableOpacity 
-                  style={styles.investorButton}
-                  onPress={() => router.push('/investor-inquiry')}
-                >
-                  <Text style={styles.investorButtonText}>Investment Inquiry</Text>
-                  <Ionicons name="arrow-forward" size={20} color="#0066CC" />
-                </TouchableOpacity>
-              </View>
-
-              {/* Website Reference */}
-              <View style={styles.websiteCard}>
-                <Text style={styles.websiteText}>www.ott4future.com</Text>
-              </View>
-            </View>
-          </ScrollView>
+      <View style={styles.hero}>
+        <View style={styles.tagRow}>
+          <View style={styles.tag}><Ionicons name="sparkles" size={12} color={colors.purple} /><Text style={styles.tagText}>AI · TRUST INFRASTRUCTURE</Text></View>
+          <View style={[styles.tag, { borderColor: 'rgba(34,211,238,0.4)' }]}><View style={[styles.dot, { backgroundColor: colors.cyan }]} /><Text style={[styles.tagText, { color: colors.cyan }]}>Open for investors</Text></View>
         </View>
-      </SafeAreaView>
-    </LinearGradient>
+        <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
+          Restoring trust in the{' '}
+          <GradientText style={styles.titleGrad} colors={['#3B82F6', '#A855F7', '#22D3EE']}>
+            information age
+          </GradientText>
+        </Text>
+        <Text style={styles.subtitle}>
+          NoMoreFakeNews is an AI-powered platform engineered to detect, flag and dismantle disinformation in
+          real time. We combine advanced machine learning, provenance signals and a collaborative fact-checking
+          network to protect the integrity of digital information.
+        </Text>
+      </View>
+
+      <View style={[styles.objectivesGrid, !isDesktop && styles.objectivesGridMobile]}>
+        {[
+          { icon: 'scan', title: 'Real-Time Detection', body: 'Continuous monitoring of misinformation across major platforms and channels.', glow: 'blue' as const },
+          { icon: 'flask', title: 'AI Content Verification', body: 'State-of-the-art models to assess truthfulness, manipulation and provenance.', glow: 'purple' as const },
+          { icon: 'people-circle', title: 'Fact-Checking Network', body: 'Collaborative human-in-the-loop network for high-confidence verdicts.', glow: 'cyan' as const },
+          { icon: 'school', title: 'Education & Awareness', body: 'User-facing programmes to build long-term resilience to manipulation.', glow: 'blue' as const },
+        ].map((o) => (
+          <GlassCard key={o.title} glow={o.glow} style={styles.objCard}>
+            <View style={styles.objIcon}><Ionicons name={o.icon as any} size={22} color={colors.cyan} /></View>
+            <Text style={styles.objTitle}>{o.title}</Text>
+            <Text style={styles.objBody}>{o.body}</Text>
+          </GlassCard>
+        ))}
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionLabel}>WHY IT MATTERS</Text>
+        <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+          A structural problem demands a{' '}
+          <GradientText style={styles.sectionTitleGrad} colors={['#A855F7', '#EC4899']}>structural solution</GradientText>
+        </Text>
+        <Text style={styles.sectionBody}>
+          Disinformation is no longer just a content moderation problem — it is an infrastructure problem.
+          Synthetic media, AI-generated narratives and opaque feeds erode the shared reality societies depend
+          on. Tackling that requires verifiable provenance, transparent algorithms and a new layer of
+          machine-readable trust signals built into the fabric of the internet. That is what we are building.
+        </Text>
+      </View>
+
+      <View style={styles.ctaSection}>
+        <GlassCard glow="purple" style={styles.ctaCard}>
+          <LinearGradient
+            colors={['rgba(59,130,246,0.18)', 'rgba(168,85,247,0.18)', 'rgba(34,211,238,0.18)']}
+            start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+            style={StyleSheet.absoluteFill as any}
+          />
+          <Text style={styles.ctaEyebrow}>INVESTMENT OPPORTUNITY</Text>
+          <Text style={[styles.ctaTitle, !isDesktop && { fontSize: 28, lineHeight: 36 }]}>Help us rebuild trust at internet scale.</Text>
+          <Text style={styles.ctaBody}>We are seeking strategic partners and investors aligned with our vision of a more trustworthy digital information ecosystem.</Text>
+          <View style={styles.ctaRow}>
+            <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/investor-inquiry')}>
+              <Text style={styles.primaryBtnText}>Investor inquiry</Text>
+              <Ionicons name="arrow-forward" size={16} color="#fff" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/contact')}>
+              <Text style={styles.ghostBtnText}>Contact us</Text>
+            </TouchableOpacity>
+          </View>
+        </GlassCard>
+      </View>
+    </PageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 1,
-    width: '100%',
-    maxWidth: 1400,
-  },
-  scrollContent: {
-    paddingBottom: 40,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#D0EBFF',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  logo: {
-    width: 40,
-    height: 40,
-  },
-  backButton: {
-    padding: 4,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-  },
-  placeholder: {
-    width: 32,
-  },
-  content: {
-    paddingHorizontal: 16,
-  },
-  // Hero Image
-  heroContainer: {
-    marginTop: 20,
-    borderRadius: 16,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 6,
-  },
-  heroImage: {
-    width: '100%',
-    height: 220,
-    borderRadius: 16,
-  },
-  heroImageDesktop: {
-    height: 400,
-  },
-  // Main Card
-  mainCard: {
-    backgroundColor: '#D0EBFF',
-    padding: 24,
-    borderRadius: 16,
-    marginTop: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  logoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  projectLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 12,
-  },
-  statusBadge: {
-    backgroundColor: '#FFF4E5',
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  statusText: {
-    fontSize: 12,
-    color: '#FF8C00',
-    fontWeight: '600',
-  },
-  mainTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 8,
-  },
-  tagline: {
-    fontSize: 17,
-    color: '#0066CC',
-    fontWeight: '500',
-    marginBottom: 8,
-    fontStyle: 'italic',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#E0E0E0',
-    marginVertical: 20,
-  },
-  sectionHeading: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#0066CC',
-    marginBottom: 10,
-    marginTop: 4,
-  },
-  bodyText: {
-    fontSize: 15,
-    color: '#555',
-    lineHeight: 24,
-    marginBottom: 16,
-  },
-  // Cards
-  card: {
-    backgroundColor: '#D0EBFF',
-    padding: 24,
-    borderRadius: 16,
-    marginTop: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  cardTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 20,
-  },
-  // Objectives
-  objectivesList: {
-    gap: 16,
-  },
-  objectiveItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 14,
-  },
-  objectiveIconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    backgroundColor: '#2ECC71',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  objectiveContent: {
-    flex: 1,
-  },
-  objectiveTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#1A1A1A',
-    marginBottom: 4,
-  },
-  objectiveText: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 21,
-  },
-  // Technology Grid
-  techGrid: {
-    gap: 16,
-  },
-  techGridDesktop: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 16,
-  },
-  techItem: {
-    backgroundColor: '#F5F9FF',
-    padding: 20,
-    borderRadius: 12,
-    flex: 1,
-    minWidth: 200,
-  },
-  techTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#1A1A1A',
-    marginTop: 10,
-    marginBottom: 6,
-  },
-  techDescription: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-  },
-  // Impact Grid
-  impactGrid: {
-    flexDirection: 'row',
-    gap: 12,
-    marginTop: 8,
-  },
-  impactItem: {
-    flex: 1,
-    backgroundColor: '#F5F9FF',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  impactTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#1A1A1A',
-    marginTop: 8,
-    textAlign: 'center',
-  },
-  impactText: {
-    fontSize: 12,
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 4,
-    lineHeight: 16,
-  },
-  // Investor Card
-  investorCard: {
-    backgroundColor: '#0066CC',
-    padding: 28,
-    borderRadius: 16,
-    marginTop: 16,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  investorTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#FFF',
-    marginTop: 12,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  investorDescription: {
-    fontSize: 15,
-    color: '#D4E6F9',
-    lineHeight: 22,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  investorButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: '#FFF',
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    borderRadius: 8,
-  },
-  investorButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#0066CC',
-  },
-  // Website Card
-  websiteCard: {
-    alignItems: 'center',
-    marginTop: 20,
-    paddingVertical: 12,
-  },
-  websiteText: {
-    fontSize: 14,
-    color: '#FFF',
-    fontWeight: '500',
-    opacity: 0.9,
-  },
+  backWrap: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingTop: space.lg },
+  backBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 14, paddingVertical: 8, borderRadius: radii.pill, backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border },
+  backText: { color: colors.text, fontSize: 13, fontWeight: '600' },
+
+  hero: { maxWidth: 980, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingTop: space.xl, paddingBottom: space.lg },
+  tagRow: { flexDirection: 'row', gap: 8, flexWrap: 'wrap', marginBottom: 18 },
+  tag: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: colors.bgCard, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.border },
+  tagText: { color: colors.purple, fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
+  dot: { width: 6, height: 6, borderRadius: 6 },
+  title: { color: colors.text, fontSize: 60, lineHeight: 68, fontWeight: '900', letterSpacing: -2 },
+  titleMobile: { fontSize: 36, lineHeight: 42, letterSpacing: -0.8 },
+  titleGrad: { fontSize: 60, lineHeight: 68, fontWeight: '900', letterSpacing: -2 } as any,
+  subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, marginTop: 18, maxWidth: 820 },
+
+  objectivesGrid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 18 },
+  objectivesGridMobile: { flexDirection: 'column' },
+  objCard: { flex: 1, minWidth: 280, gap: 10 },
+  objIcon: { width: 42, height: 42, borderRadius: radii.md, backgroundColor: 'rgba(168,85,247,0.15)', alignItems: 'center', justifyContent: 'center' },
+  objTitle: { color: colors.text, fontSize: 18, fontWeight: '800' },
+  objBody: { color: colors.textMuted, fontSize: 14, lineHeight: 22 },
+
+  section: { maxWidth: 980, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xxxl },
+  sectionLabel: { color: colors.cyan, fontSize: 12, fontWeight: '800', letterSpacing: 2, marginBottom: 12 },
+  sectionTitle: { color: colors.text, fontSize: 40, lineHeight: 48, fontWeight: '900', letterSpacing: -1, marginBottom: 18 },
+  sectionTitleMobile: { fontSize: 28, lineHeight: 34, letterSpacing: -0.5 },
+  sectionTitleGrad: { fontSize: 40, lineHeight: 48, fontWeight: '900', letterSpacing: -1 } as any,
+  sectionBody: { color: colors.textMuted, fontSize: 16, lineHeight: 28, maxWidth: 760 },
+
+  ctaSection: { maxWidth: 980, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xxxl },
+  ctaCard: { paddingVertical: 44, paddingHorizontal: 32, position: 'relative', overflow: 'hidden', alignItems: 'center' },
+  ctaEyebrow: { color: colors.cyan, fontSize: 11, fontWeight: '800', letterSpacing: 1.8, marginBottom: 8 },
+  ctaTitle: { color: colors.text, fontSize: 34, fontWeight: '900', textAlign: 'center', letterSpacing: -0.8, lineHeight: 42 },
+  ctaBody: { color: colors.textMuted, fontSize: 16, lineHeight: 26, textAlign: 'center', marginTop: 14, marginBottom: 22, maxWidth: 580 },
+  ctaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'center' },
+  primaryBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#3B82F6', paddingHorizontal: 22, paddingVertical: 13, borderRadius: radii.pill },
+  primaryBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  ghostBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 18, paddingVertical: 12, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: 'rgba(255,255,255,0.02)' },
+  ghostBtnText: { color: colors.text, fontSize: 14, fontWeight: '600' },
 });

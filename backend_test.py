@@ -1,320 +1,329 @@
-#!/usr/bin/env python3
 """
-Backend API Testing for On Time Technology Ltd
-Tests all backend endpoints comprehensively
+Backend test suite for ON TIME TECHNOLOGY API.
+
+Focus: New AI blog endpoints (generate, generate-batch, list, get by slug).
+Smoke-checks existing endpoints (health, company-info, contact, investor-inquiry).
+
+Uses public URL from EXPO_PUBLIC_BACKEND_URL (frontend/.env), with /api prefix.
 """
 
-import requests
+import os
+import re
 import json
 import sys
-from datetime import datetime
+from pathlib import Path
 
-# Backend URL from environment
-BACKEND_URL = "https://fakenews-demo.preview.emergentagent.com/api"
+import requests
 
-def test_health_endpoint():
-    """Test GET /api/health endpoint"""
-    print("\n=== Testing Health Endpoint ===")
+FRONTEND_ENV = Path("/app/frontend/.env")
+BACKEND_URL = None
+if FRONTEND_ENV.exists():
+    for line in FRONTEND_ENV.read_text().splitlines():
+        if line.startswith("EXPO_PUBLIC_BACKEND_URL"):
+            BACKEND_URL = line.split("=", 1)[1].strip().strip('"').strip("'")
+            break
+
+if not BACKEND_URL:
+    print("ERROR: EXPO_PUBLIC_BACKEND_URL not found in frontend/.env")
+    sys.exit(1)
+
+API = BACKEND_URL.rstrip("/") + "/api"
+BLOG_DIR = Path("/app/frontend/public/blog")
+
+print(f"Testing against: {API}")
+print("=" * 80)
+
+results = []
+
+def record(name, ok, detail=""):
+    status = "PASS" if ok else "FAIL"
+    results.append((name, ok, detail))
+    print(f"[{status}] {name}")
+    if detail:
+        d = detail if len(detail) < 500 else detail[:500] + "...(truncated)"
+        print(f"        {d}")
+
+
+SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
+REQUIRED_ARTICLE_FIELDS = {
+    "id", "slug", "title", "excerpt", "content", "category",
+    "tags", "read_time", "cover_gradient", "author", "published_at", "featured",
+}
+
+
+def test_health():
     try:
-        response = requests.get(f"{BACKEND_URL}/health", timeout=10)
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.json()}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            if data.get("status") == "healthy":
-                print("✅ Health endpoint working correctly")
-                return True
+        r = requests.get(f"{API}/health", timeout=15)
+        ok = r.status_code == 200 and r.json().get("status") == "healthy"
+        record("GET /api/health", ok, f"status={r.status_code} body={r.text[:120]}")
+    except Exception as e:
+        record("GET /api/health", False, str(e))
+
+
+def test_company_info():
+    try:
+        r = requests.get(f"{API}/company-info", timeout=15)
+        data = r.json()
+        ok = (
+            r.status_code == 200
+            and data.get("name") == "ON TIME TECHNOLOGY LTD"
+            and len(data.get("services", [])) == 4
+            and len(data.get("special_projects", [])) == 2
+        )
+        record("GET /api/company-info", ok, f"status={r.status_code}")
+    except Exception as e:
+        record("GET /api/company-info", False, str(e))
+
+
+def test_contact():
+    try:
+        payload = {
+            "name": "Alessandro Rossi",
+            "email": "alessandro.rossi@futurevc.example",
+            "message": "Interested in learning more about your R&D capabilities.",
+            "form_type": "general",
+        }
+        r = requests.post(f"{API}/contact", json=payload, timeout=15)
+        ok = r.status_code == 200 and r.json().get("status") == "success"
+        record("POST /api/contact", ok, f"status={r.status_code} body={r.text[:160]}")
+    except Exception as e:
+        record("POST /api/contact", False, str(e))
+
+
+def test_investor_inquiry():
+    try:
+        payload = {
+            "company_name": "Helix Capital Partners",
+            "name": "Elena",
+            "surname": "Marchetti",
+            "email": "elena.marchetti@helixcap.example",
+            "phone": "+393331122334",
+            "message": "Evaluating an allocation into NoMoreFakeNews. Please share the deck.",
+        }
+        r = requests.post(f"{API}/investor-inquiry", json=payload, timeout=15)
+        ok = r.status_code == 200 and r.json().get("status") == "success"
+        record("POST /api/investor-inquiry", ok, f"status={r.status_code} body={r.text[:160]}")
+    except Exception as e:
+        record("POST /api/investor-inquiry", False, str(e))
+
+
+def validate_article_shape(article):
+    errs = []
+    missing = REQUIRED_ARTICLE_FIELDS - set(article.keys())
+    if missing:
+        errs.append(f"missing fields: {missing}")
+    if not isinstance(article.get("tags"), list):
+        errs.append("tags is not list")
+    if not isinstance(article.get("cover_gradient"), list) or len(article.get("cover_gradient", [])) < 2:
+        errs.append("cover_gradient invalid")
+    if not isinstance(article.get("read_time"), int):
+        errs.append("read_time not int")
+    slug = article.get("slug", "")
+    if not slug or not SLUG_RE.match(slug):
+        errs.append(f"slug not URL-friendly: '{slug}'")
+    if not article.get("title"):
+        errs.append("title empty")
+    if not article.get("content") or len(article.get("content", "")) < 200:
+        errs.append(f"content too short: {len(article.get('content', ''))}")
+    if not article.get("excerpt"):
+        errs.append("excerpt empty")
+    if not article.get("author"):
+        errs.append("author empty")
+    if not article.get("published_at"):
+        errs.append("published_at empty")
+    return (len(errs) == 0, errs)
+
+
+GENERATED_SLUG = None
+
+
+def test_blog_generate():
+    global GENERATED_SLUG
+    try:
+        payload = {
+            "topic": "Quantum-Safe Cryptography for Enterprise Data Vaults in 2026",
+            "category": "Cybersecurity",
+            "tone": "corporate, futuristic, authoritative",
+        }
+        r = requests.post(f"{API}/blog/generate", json=payload, timeout=180)
+        if r.status_code != 200:
+            record("POST /api/blog/generate", False, f"status={r.status_code} body={r.text[:400]}")
+            return
+        data = r.json()
+        if data.get("status") != "success":
+            record("POST /api/blog/generate", False, f"status field={data.get('status')} body={str(data)[:300]}")
+            return
+        article = data.get("article", {})
+        ok, errs = validate_article_shape(article)
+        if not ok:
+            record("POST /api/blog/generate (shape)", False, "; ".join(errs))
+            return
+        GENERATED_SLUG = article["slug"]
+        record(
+            "POST /api/blog/generate",
+            True,
+            f"slug={article['slug']} title={article['title'][:60]} content_len={len(article['content'])}",
+        )
+    except Exception as e:
+        record("POST /api/blog/generate", False, f"exception: {e}")
+
+
+def test_blog_list_contains_generated():
+    try:
+        r = requests.get(f"{API}/blog/articles", timeout=30)
+        if r.status_code != 200:
+            record("GET /api/blog/articles", False, f"status={r.status_code}")
+            return
+        data = r.json()
+        items = data.get("articles", [])
+        if not isinstance(items, list) or len(items) == 0:
+            record("GET /api/blog/articles", False, f"no articles returned: {str(data)[:200]}")
+            return
+        has_content_field = any("content" in i for i in items)
+        sorted_ok = True
+        try:
+            pub_dates = [i.get("published_at", "") for i in items if i.get("published_at")]
+            sorted_ok = pub_dates == sorted(pub_dates, reverse=True)
+        except Exception:
+            sorted_ok = True
+        contains = (GENERATED_SLUG is None) or any(i.get("slug") == GENERATED_SLUG for i in items)
+        ok = (not has_content_field) and contains and sorted_ok
+        detail = f"count={len(items)} has_content_field={has_content_field} contains_generated={contains} sorted_desc={sorted_ok}"
+        record("GET /api/blog/articles", ok, detail)
+    except Exception as e:
+        record("GET /api/blog/articles", False, str(e))
+
+
+def test_blog_get_by_slug():
+    slug = GENERATED_SLUG
+    if not slug:
+        existing = [p.stem for p in BLOG_DIR.glob("*.json") if p.stem != "articles"]
+        slug = existing[0] if existing else None
+    if not slug:
+        record("GET /api/blog/articles/{slug}", False, "no slug available to test")
+        return
+    try:
+        r = requests.get(f"{API}/blog/articles/{slug}", timeout=30)
+        if r.status_code != 200:
+            record("GET /api/blog/articles/{slug}", False, f"status={r.status_code} body={r.text[:200]}")
+            return
+        article = r.json()
+        ok, errs = validate_article_shape(article)
+        record(
+            "GET /api/blog/articles/{slug}",
+            ok,
+            f"slug={slug} " + ("ok" if ok else "; ".join(errs)),
+        )
+    except Exception as e:
+        record("GET /api/blog/articles/{slug}", False, str(e))
+
+
+def test_blog_get_404():
+    try:
+        r = requests.get(f"{API}/blog/articles/this-slug-definitely-does-not-exist-xyz-12345", timeout=15)
+        ok = r.status_code == 404
+        record("GET /api/blog/articles/{unknown} -> 404", ok, f"status={r.status_code}")
+    except Exception as e:
+        record("GET /api/blog/articles/{unknown} -> 404", False, str(e))
+
+
+BATCH_SLUGS = []
+
+
+def test_blog_generate_batch():
+    global BATCH_SLUGS
+    try:
+        payload = [
+            {"topic": "AI Agents Orchestrating Multi-Cloud Cost Optimisation", "category": "AI & Innovation"},
+            {"topic": "Zero-Knowledge Identity Layers for Financial KYC", "category": "Web3 & Fintech"},
+        ]
+        r = requests.post(f"{API}/blog/generate-batch", json=payload, timeout=300)
+        if r.status_code != 200:
+            record("POST /api/blog/generate-batch", False, f"status={r.status_code} body={r.text[:400]}")
+            return
+        data = r.json()
+        ok_resp = (
+            data.get("status") == "success"
+            and data.get("count") == 2
+            and isinstance(data.get("slugs"), list)
+            and len(data["slugs"]) == 2
+        )
+        if not ok_resp:
+            record("POST /api/blog/generate-batch", False, f"resp={str(data)[:300]}")
+            return
+        BATCH_SLUGS = data["slugs"]
+        missing_files = []
+        for s in BATCH_SLUGS:
+            if not (BLOG_DIR / f"{s}.json").exists():
+                missing_files.append(s)
+        index_file = BLOG_DIR / "articles.json"
+        index_ok = index_file.exists()
+        in_index = False
+        if index_ok:
+            try:
+                idx_data = json.loads(index_file.read_text())
+                idx_slugs = {a.get("slug") for a in idx_data}
+                in_index = all(s in idx_slugs for s in BATCH_SLUGS)
+            except Exception:
+                in_index = False
+        ok = (not missing_files) and index_ok and in_index
+        record(
+            "POST /api/blog/generate-batch",
+            ok,
+            f"slugs={BATCH_SLUGS} missing_files={missing_files} index_ok={index_ok} in_index={in_index}",
+        )
+    except Exception as e:
+        record("POST /api/blog/generate-batch", False, f"exception: {e}")
+
+
+def test_batch_articles_retrievable():
+    if not BATCH_SLUGS:
+        record("Batch articles retrievable via GET", False, "no batch slugs to verify")
+        return
+    all_ok = True
+    details = []
+    for s in BATCH_SLUGS:
+        try:
+            r = requests.get(f"{API}/blog/articles/{s}", timeout=20)
+            if r.status_code != 200:
+                all_ok = False
+                details.append(f"{s}:status={r.status_code}")
+                continue
+            article = r.json()
+            ok, errs = validate_article_shape(article)
+            if not ok:
+                all_ok = False
+                details.append(f"{s}:{errs}")
             else:
-                print("❌ Health endpoint returned incorrect status")
-                return False
-        else:
-            print(f"❌ Health endpoint failed with status {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Health endpoint error: {str(e)}")
-        return False
+                details.append(f"{s}:ok")
+        except Exception as e:
+            all_ok = False
+            details.append(f"{s}:exc={e}")
+    record("Batch articles retrievable via GET", all_ok, "; ".join(details))
 
-def test_company_info_endpoint():
-    """Test GET /api/company-info endpoint"""
-    print("\n=== Testing Company Info Endpoint ===")
-    try:
-        response = requests.get(f"{BACKEND_URL}/company-info", timeout=10)
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Company Name: {data.get('name')}")
-            print(f"Services Count: {len(data.get('services', []))}")
-            print(f"Special Projects Count: {len(data.get('special_projects', []))}")
-            
-            # Verify required fields
-            required_fields = ['name', 'services', 'special_projects']
-            missing_fields = [field for field in required_fields if field not in data]
-            
-            if missing_fields:
-                print(f"❌ Missing required fields: {missing_fields}")
-                return False
-            
-            # Verify services count (should be 4)
-            services = data.get('services', [])
-            if len(services) != 4:
-                print(f"❌ Expected 4 services, got {len(services)}")
-                return False
-            
-            # Verify special projects count (should be 2)
-            special_projects = data.get('special_projects', [])
-            if len(special_projects) != 2:
-                print(f"❌ Expected 2 special projects, got {len(special_projects)}")
-                return False
-            
-            # Check service titles
-            service_titles = [service.get('title') for service in services]
-            expected_services = ['Software Design', 'Software Development', 'R&D', 'Special Projects']
-            for expected in expected_services:
-                if expected not in service_titles:
-                    print(f"❌ Missing expected service: {expected}")
-                    return False
-            
-            # Check special project names
-            project_names = [project.get('name') for project in special_projects]
-            expected_projects = ['NoMoreFakeNews', 'Custodiy']
-            for expected in expected_projects:
-                if expected not in project_names:
-                    print(f"❌ Missing expected special project: {expected}")
-                    return False
-            
-            print("✅ Company info endpoint working correctly")
-            return True
-        else:
-            print(f"❌ Company info endpoint failed with status {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Company info endpoint error: {str(e)}")
-        return False
-
-def test_contact_form_valid():
-    """Test POST /api/contact with valid data"""
-    print("\n=== Testing Contact Form - Valid Data ===")
-    try:
-        valid_data = {
-            "name": "John Smith",
-            "email": "john.smith@example.com",
-            "message": "I am interested in your software development services.",
-            "form_type": "general"
-        }
-        
-        response = requests.post(f"{BACKEND_URL}/contact", 
-                               json=valid_data, 
-                               headers={"Content-Type": "application/json"},
-                               timeout=10)
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.json()}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            if data.get("status") == "success" and "id" in data:
-                print("✅ Contact form submission working correctly")
-                return True
-            else:
-                print("❌ Contact form response missing required fields")
-                return False
-        else:
-            print(f"❌ Contact form failed with status {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Contact form error: {str(e)}")
-        return False
-
-def test_contact_form_missing_fields():
-    """Test POST /api/contact with missing required fields"""
-    print("\n=== Testing Contact Form - Missing Fields ===")
-    try:
-        invalid_data = {
-            "name": "John Smith",
-            # Missing email and message
-            "form_type": "general"
-        }
-        
-        response = requests.post(f"{BACKEND_URL}/contact", 
-                               json=invalid_data, 
-                               headers={"Content-Type": "application/json"},
-                               timeout=10)
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 422:  # Validation error expected
-            print("✅ Contact form correctly rejects missing fields")
-            return True
-        else:
-            print(f"❌ Contact form should reject missing fields but returned {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Contact form missing fields test error: {str(e)}")
-        return False
-
-def test_contact_form_invalid_email():
-    """Test POST /api/contact with invalid email"""
-    print("\n=== Testing Contact Form - Invalid Email ===")
-    try:
-        invalid_data = {
-            "name": "John Smith",
-            "email": "invalid-email",
-            "message": "Test message",
-            "form_type": "general"
-        }
-        
-        response = requests.post(f"{BACKEND_URL}/contact", 
-                               json=invalid_data, 
-                               headers={"Content-Type": "application/json"},
-                               timeout=10)
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 422:  # Validation error expected
-            print("✅ Contact form correctly rejects invalid email")
-            return True
-        else:
-            print(f"❌ Contact form should reject invalid email but returned {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Contact form invalid email test error: {str(e)}")
-        return False
-
-def test_investor_inquiry_valid():
-    """Test POST /api/investor-inquiry with valid data"""
-    print("\n=== Testing Investor Inquiry - Valid Data ===")
-    try:
-        valid_data = {
-            "company_name": "Tech Innovations Inc",
-            "name": "Sarah",
-            "surname": "Johnson",
-            "email": "sarah.johnson@techinnovations.com",
-            "phone": "+1234567890",
-            "message": "We are interested in investing in your NoMoreFakeNews project."
-        }
-        
-        response = requests.post(f"{BACKEND_URL}/investor-inquiry", 
-                               json=valid_data, 
-                               headers={"Content-Type": "application/json"},
-                               timeout=10)
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.json()}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            if (data.get("status") == "success" and 
-                "id" in data and 
-                "luca@ott4fututre.com" in data.get("note", "")):
-                print("✅ Investor inquiry submission working correctly")
-                return True
-            else:
-                print("❌ Investor inquiry response missing required fields or note")
-                return False
-        else:
-            print(f"❌ Investor inquiry failed with status {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Investor inquiry error: {str(e)}")
-        return False
-
-def test_investor_inquiry_missing_fields():
-    """Test POST /api/investor-inquiry with missing required fields"""
-    print("\n=== Testing Investor Inquiry - Missing Fields ===")
-    try:
-        invalid_data = {
-            "company_name": "Tech Innovations Inc",
-            "name": "Sarah",
-            # Missing surname, email, phone, message
-        }
-        
-        response = requests.post(f"{BACKEND_URL}/investor-inquiry", 
-                               json=invalid_data, 
-                               headers={"Content-Type": "application/json"},
-                               timeout=10)
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 422:  # Validation error expected
-            print("✅ Investor inquiry correctly rejects missing fields")
-            return True
-        else:
-            print(f"❌ Investor inquiry should reject missing fields but returned {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Investor inquiry missing fields test error: {str(e)}")
-        return False
-
-def test_investor_inquiry_invalid_email():
-    """Test POST /api/investor-inquiry with invalid email"""
-    print("\n=== Testing Investor Inquiry - Invalid Email ===")
-    try:
-        invalid_data = {
-            "company_name": "Tech Innovations Inc",
-            "name": "Sarah",
-            "surname": "Johnson",
-            "email": "invalid-email-format",
-            "phone": "+1234567890",
-            "message": "Investment inquiry message"
-        }
-        
-        response = requests.post(f"{BACKEND_URL}/investor-inquiry", 
-                               json=invalid_data, 
-                               headers={"Content-Type": "application/json"},
-                               timeout=10)
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 422:  # Validation error expected
-            print("✅ Investor inquiry correctly rejects invalid email")
-            return True
-        else:
-            print(f"❌ Investor inquiry should reject invalid email but returned {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ Investor inquiry invalid email test error: {str(e)}")
-        return False
-
-def main():
-    """Run all backend tests"""
-    print("🚀 Starting On Time Technology Ltd Backend API Tests")
-    print(f"Backend URL: {BACKEND_URL}")
-    
-    test_results = []
-    
-    # Run all tests
-    test_results.append(("Health Endpoint", test_health_endpoint()))
-    test_results.append(("Company Info Endpoint", test_company_info_endpoint()))
-    test_results.append(("Contact Form - Valid Data", test_contact_form_valid()))
-    test_results.append(("Contact Form - Missing Fields", test_contact_form_missing_fields()))
-    test_results.append(("Contact Form - Invalid Email", test_contact_form_invalid_email()))
-    test_results.append(("Investor Inquiry - Valid Data", test_investor_inquiry_valid()))
-    test_results.append(("Investor Inquiry - Missing Fields", test_investor_inquiry_missing_fields()))
-    test_results.append(("Investor Inquiry - Invalid Email", test_investor_inquiry_invalid_email()))
-    
-    # Summary
-    print("\n" + "="*60)
-    print("📊 TEST SUMMARY")
-    print("="*60)
-    
-    passed = 0
-    failed = 0
-    
-    for test_name, result in test_results:
-        status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{test_name}: {status}")
-        if result:
-            passed += 1
-        else:
-            failed += 1
-    
-    print(f"\nTotal Tests: {len(test_results)}")
-    print(f"Passed: {passed}")
-    print(f"Failed: {failed}")
-    print(f"Success Rate: {(passed/len(test_results)*100):.1f}%")
-    
-    if failed > 0:
-        print("\n❌ Some tests failed. Check the detailed output above.")
-        sys.exit(1)
-    else:
-        print("\n✅ All tests passed successfully!")
-        sys.exit(0)
 
 if __name__ == "__main__":
-    main()
+    test_health()
+    test_company_info()
+    test_contact()
+    test_investor_inquiry()
+
+    test_blog_generate()
+    test_blog_list_contains_generated()
+    test_blog_get_by_slug()
+    test_blog_get_404()
+    test_blog_generate_batch()
+    test_batch_articles_retrievable()
+
+    print("=" * 80)
+    total = len(results)
+    passed = sum(1 for _, ok, _ in results if ok)
+    failed = total - passed
+    print(f"RESULTS: {passed}/{total} passed, {failed} failed")
+    if failed:
+        print("\nFailed tests:")
+        for name, ok, detail in results:
+            if not ok:
+                print(f"  - {name}: {detail}")
+    sys.exit(0 if failed == 0 else 1)

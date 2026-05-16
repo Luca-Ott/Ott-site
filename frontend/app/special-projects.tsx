@@ -1,552 +1,182 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Head from 'expo-router/head';
 
+import PageShell from '../src/components/PageShell';
+import GradientText from '../src/components/GradientText';
+import { colors, radii, space } from '../src/theme/tokens';
+
+const PROJECTS = [
+  {
+    title: 'NoMoreFakeNews',
+    category: 'AI · TRUST INFRASTRUCTURE',
+    tagline: 'AI-powered platform to detect, flag and dismantle disinformation in real time — protecting the integrity of public discourse.',
+    status: 'Open for investors',
+    gradient: ['#3B82F6', '#A855F7', '#22D3EE'],
+    route: '/nomorefakenews' as const,
+    external: false,
+  },
+  {
+    title: 'Custodiy',
+    category: 'WEB3 · COMMERCE',
+    tagline: 'A modular platform for OTC trading, escrow, marketplaces and secure document custody — v2.0 live and growing.',
+    status: 'v2.0 live',
+    gradient: ['#06B6D4', '#3B82F6', '#1E1B4B'],
+    href: 'https://custodiy.com',
+    external: true,
+  },
+  {
+    title: 'Freety',
+    category: 'COMMODITIES · AI',
+    tagline: 'Digital infrastructure for global commodity & energy trading with cargo tokenisation and AI-powered tooling.',
+    status: 'Active',
+    gradient: ['#10B981', '#22D3EE', '#3B82F6'],
+    route: '/freety' as const,
+    external: false,
+  },
+  {
+    title: 'Cyber Security',
+    category: 'ENTERPRISE · DEFENCE',
+    tagline: 'Advanced protection programmes designed to defend businesses and individuals against next-generation, AI-driven threats.',
+    status: 'In R&D',
+    gradient: ['#F472B6', '#A855F7', '#3B82F6'],
+    route: '/research-development' as const,
+    external: false,
+  },
+];
+
 export default function SpecialProjectsScreen() {
   const router = useRouter();
+  const dims = useWindowDimensions();
+  const width = dims.width || 1200;
+  const isDesktop = width >= 900;
 
-  const handleWebsite = (url: string) => {
-    Linking.openURL(url);
+  const open = (p: typeof PROJECTS[number]) => {
+    if (p.external && p.href) {
+      if (typeof window !== 'undefined') window.open(p.href, '_blank');
+      else Linking.openURL(p.href);
+    } else if (p.route) {
+      router.push(p.route);
+    }
   };
 
   return (
-    <LinearGradient
-      colors={['#2ECC71', '#3498DB', '#1E88E5']}
-      style={styles.gradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <PageShell>
       <Head>
-        <title>Special Projects - On Time Technology Ltd</title>
-        <meta name="description" content="Discover On Time Technology's special projects: NoMoreFakeNews AI platform, Custodiy digital economy solution, and Cyber Security initiatives." />
+        <title>Special Projects — On Time Technology</title>
+        <meta name="description" content="Special projects from On Time Technology Ltd — NoMoreFakeNews, Custodiy, Freety and Cyber Security R&D programmes." />
         <link rel="canonical" href="https://www.ott4future.com/special-projects" />
         <meta property="og:url" content="https://www.ott4future.com/special-projects" />
       </Head>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.mainContainer}>
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.headerLeft}>
-              <TouchableOpacity 
-                style={styles.backButton}
-                onPress={() => router.canGoBack() ? router.back() : router.replace('/')}
-              >
-                <Ionicons name="arrow-back" size={24} color="#0066CC" />
-              </TouchableOpacity>
-              <Image
-                source={{ uri: 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68' }}
-                style={styles.logo}
-                resizeMode="contain"
-              />
-            </View>
-            <Text style={styles.title}>Special Projects</Text>
-            <View style={styles.placeholder} />
-          </View>
 
-          <View style={styles.content}>
-            <Text style={styles.introText}>
-              We're committed to developing innovative solutions that tackle real-world challenges. 
-              Our special projects represent our vision for a better future.
-            </Text>
-
-            {/* NoMoreFakeNews Project */}
-            <View style={styles.projectCard}>
-              <View style={styles.projectHeader}>
-                <Image 
-                  source={require('../assets/nomorefakenews-logo.png')}
-                  style={styles.projectLogo}
-                  resizeMode="contain"
-              />
-              <View style={styles.statusBadge}>
-                <Text style={styles.statusText}>In Development</Text>
-              </View>
-            </View>
-
-            <Text style={styles.projectName}>NoMoreFakeNews</Text>
-            
-            <Text style={styles.projectDescription}>
-              NoMoreFakeNews is an groundbreaking project in active development, designed to combat 
-              the growing challenge of fake news and misinformation in today's digital landscape.
-            </Text>
-
-            <View style={styles.divider} />
-
-            <Text style={styles.subheading}>Our Mission</Text>
-            <Text style={styles.bodyText}>
-              Through advanced artificial intelligence, machine learning algorithms, and comprehensive 
-              verification technologies, we aim to identify, flag, and eventually eliminate fake news 
-              from digital platforms. Our solution will help restore trust in information and protect 
-              users from misleading content.
-            </Text>
-
-            <Text style={styles.subheading}>Key Objectives</Text>
-            <View style={styles.objectivesList}>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Real-time detection of misinformation across platforms
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Advanced AI-powered content verification
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Collaborative fact-checking network
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  User education and awareness programs
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.investorSection}>
-              <Text style={styles.investorHeading}>Investment Opportunity</Text>
-              <Text style={styles.investorText}>
-                We're seeking strategic partners and investors who share our vision of creating 
-                a more trustworthy digital information ecosystem. Join us in making a meaningful 
-                impact on global information integrity.
-              </Text>
-              <TouchableOpacity 
-                style={styles.investorButton}
-                onPress={() => router.push('/investor-inquiry')}
-              >
-                <Ionicons name="briefcase" size={24} color="#FFF" />
-                <Text style={styles.investorButtonText}>Investment Inquiry</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Custodiy Project */}
-          <View style={styles.projectCard}>
-            <View style={styles.projectHeader}>
-              <View style={styles.custodiyHeader}>
-                <Image
-                  source={require('../assets/custodiy-logo.png')}
-                  style={styles.custodiyLogo}
-                  resizeMode="contain"
-                />
-              </View>
-              <TouchableOpacity 
-                onPress={() => handleWebsite('https://custodiy.com')}
-              >
-                <Ionicons name="open-outline" size={24} color="#0066CC" />
-              </TouchableOpacity>
-            </View>
-
-            <Text style={styles.projectName}>Custodiy</Text>
-            
-            <Text style={styles.projectDescription}>
-              Custodiy is a comprehensive modular platform designed to empower individuals and 
-              businesses in the digital economy. Whether you're an entrepreneur looking to establish 
-              your own marketplace, a seller seeking to expand your reach, or an organization aiming 
-              to facilitate OTC transactions and fundraising, Custodiy provides the tools and support you need.
-            </Text>
-
-            <View style={styles.divider} />
-
-            <Text style={styles.subheading}>Platform Features</Text>
-            
-            <View style={styles.featureCard}>
-              <Ionicons name="swap-horizontal" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>OTC Service</Text>
-              <Text style={styles.featureDescription}>
-                Facilitate over-the-counter token trading with secure, transparent transactions. 
-                Perfect for projects looking to sell tokens directly.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="lock-closed" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Escrow Service</Text>
-              <Text style={styles.featureDescription}>
-                Secure transactions via smart contracts. Buyers send stablecoins to locked contracts, 
-                ensuring trust and security for all parties involved.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="storefront" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Marketplace</Text>
-              <Text style={styles.featureDescription}>
-                Comprehensive marketplace solution for merchants, producers, and sellers. Accept 
-                stablecoin payments and manage your online store with ease.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="folder" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Document Management</Text>
-              <Text style={styles.featureDescription}>
-                Secure storage and management for important documents, ensuring accessibility, 
-                security, and compliance.
-              </Text>
-            </View>
-
-            <TouchableOpacity 
-              style={styles.visitButton}
-              onPress={() => handleWebsite('https://custodiy.com')}
-            >
-              <Text style={styles.visitButtonText}>Visit Custodiy</Text>
-              <Ionicons name="arrow-forward" size={20} color="#FFF" />
-            </TouchableOpacity>
-          </View>
-
-          {/* Cyber Security Projects */}
-          <View style={styles.projectCard}>
-            <View style={styles.projectHeader}>
-              <Ionicons name="shield-checkmark-outline" size={48} color="#0066CC" />
-            </View>
-
-            <Text style={styles.projectName}>Cyber Security Projects</Text>
-            
-            <Text style={styles.projectDescription}>
-              In today's interconnected digital landscape, cybersecurity has become paramount. 
-              Our Cyber Security Projects division focuses on developing cutting-edge solutions 
-              to protect businesses, organizations, and individuals from evolving cyber threats.
-            </Text>
-
-            <View style={styles.divider} />
-
-            <Text style={styles.subheading}>Our Mission</Text>
-            <Text style={styles.bodyText}>
-              We are committed to creating a safer digital environment by developing innovative 
-              cybersecurity solutions that anticipate and neutralize threats before they impact 
-              our clients. Our team of security experts combines deep technical knowledge with 
-              real-world experience to deliver comprehensive protection across all digital touchpoints.
-            </Text>
-
-            <Text style={styles.subheading}>Core Focus Areas</Text>
-            
-            <View style={styles.featureCard}>
-              <Ionicons name="lock-closed" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Advanced Threat Detection</Text>
-              <Text style={styles.featureDescription}>
-                Utilizing artificial intelligence and machine learning algorithms to identify and 
-                respond to sophisticated cyber threats in real-time. Our systems continuously monitor 
-                network traffic, user behavior, and system anomalies to detect potential security breaches 
-                before they cause damage.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="shield" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Data Protection & Encryption</Text>
-              <Text style={styles.featureDescription}>
-                Implementing state-of-the-art encryption technologies to safeguard sensitive data both 
-                at rest and in transit. We develop custom encryption solutions tailored to specific 
-                industry requirements, ensuring compliance with international data protection regulations 
-                including GDPR, HIPAA, and PCI-DSS.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="bug" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Vulnerability Assessment & Penetration Testing</Text>
-              <Text style={styles.featureDescription}>
-                Comprehensive security audits that identify weaknesses in your infrastructure before 
-                malicious actors can exploit them. Our ethical hacking teams simulate real-world attack 
-                scenarios to test your defenses and provide actionable recommendations for improvement.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="eye" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Security Monitoring & Incident Response</Text>
-              <Text style={styles.featureDescription}>
-                24/7 security operations center (SOC) services providing continuous monitoring and rapid 
-                response to security incidents. Our incident response team is equipped to contain threats, 
-                minimize damage, and restore normal operations with minimal downtime.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="people" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Security Awareness Training</Text>
-              <Text style={styles.featureDescription}>
-                Human error remains one of the largest security vulnerabilities. We provide comprehensive 
-                training programs to educate employees about cybersecurity best practices, phishing 
-                awareness, and safe online behavior, creating a culture of security within your organization.
-              </Text>
-            </View>
-
-            <View style={styles.featureCard}>
-              <Ionicons name="cloud-done" size={32} color="#0066CC" />
-              <Text style={styles.featureTitle}>Cloud Security Solutions</Text>
-              <Text style={styles.featureDescription}>
-                As businesses migrate to cloud infrastructure, we ensure seamless security integration 
-                across hybrid and multi-cloud environments. Our solutions include secure cloud 
-                architecture design, identity and access management, and continuous compliance monitoring.
-              </Text>
-            </View>
-
-            <Text style={styles.subheading}>Industries We Serve</Text>
-            <Text style={styles.bodyText}>
-              Our cybersecurity solutions are trusted by organizations across various sectors including 
-              financial services, healthcare, government, retail, technology, and critical infrastructure. 
-              We understand that each industry faces unique security challenges and regulatory requirements, 
-              and we tailor our solutions accordingly.
-            </Text>
-
-            <Text style={styles.subheading}>Why Choose Our Cyber Security Solutions</Text>
-            <View style={styles.objectivesList}>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Proven track record with zero successful breaches across protected clients
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  ISO 27001 certified security practices and methodologies
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Dedicated security team with extensive industry certifications (CISSP, CEH, CISM)
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Rapid response times with average incident containment under 2 hours
-                </Text>
-              </View>
-              <View style={styles.objectiveItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#00AA00" />
-                <Text style={styles.objectiveText}>
-                  Continuous innovation with regular updates to address emerging threats
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        </ScrollView>
+      <View style={styles.backWrap}>
+        <TouchableOpacity
+          style={styles.backBtn}
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+        >
+          <Ionicons name="arrow-back" size={16} color={colors.text} />
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
-    </LinearGradient>
+
+      <View style={styles.hero}>
+        <Text style={styles.eyebrow}>SPECIAL PROJECTS</Text>
+        <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
+          Visionary bets on{' '}
+          <GradientText style={styles.titleGrad} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
+            the next decade
+          </GradientText>
+        </Text>
+        <Text style={styles.subtitle}>
+          Beyond client work, On Time Technology invests in long-horizon projects at the frontier of AI,
+          Web3 and global trust infrastructure. These are our flagship initiatives — working systems, not
+          slideware.
+        </Text>
+      </View>
+
+      <View style={[styles.grid, !isDesktop && styles.gridMobile]}>
+        {PROJECTS.map((p, idx) => (
+          <TouchableOpacity
+            key={p.title}
+            activeOpacity={0.9}
+            onPress={() => open(p)}
+            style={[styles.card, !isDesktop && styles.cardMobile]}
+          >
+            <LinearGradient colors={p.gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+            <View style={styles.overlay} />
+            <View style={styles.cardInner}>
+              <View style={styles.cardTop}>
+                <Text style={styles.cardCategory}>{p.category}</Text>
+                <View style={styles.statusPill}>
+                  <View style={styles.statusDot} />
+                  <Text style={styles.statusText}>{p.status}</Text>
+                </View>
+              </View>
+              <Text style={styles.cardTitle}>{p.title}</Text>
+              <Text style={styles.cardTagline}>{p.tagline}</Text>
+              <View style={styles.cardFooter}>
+                <Text style={styles.cardLink}>{p.external ? 'Visit site' : 'Discover'}</Text>
+                <Ionicons name={p.external ? 'open-outline' : 'arrow-forward'} size={16} color="#fff" />
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <View style={styles.ctaSection}>
+        <Text style={[styles.ctaTitle, !isDesktop && { fontSize: 28, lineHeight: 36 }]}>
+          Interested in partnering on a project?
+        </Text>
+        <View style={styles.ctaRow}>
+          <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/investor-inquiry')}>
+            <Text style={styles.primaryBtnText}>Investor inquiry</Text>
+            <Ionicons name="arrow-forward" size={16} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/contact')}>
+            <Text style={styles.ghostBtnText}>Get in touch</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </PageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 1,
-    width: '100%',
-    maxWidth: 1400,
-  },
-  scrollContent: {
-    paddingBottom: 32,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#D0EBFF',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  logo: {
-    width: 40,
-    height: 40,
-  },
-  backButton: {
-    padding: 4,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-  },
-  placeholder: {
-    width: 32,
-  },
-  content: {
-    paddingHorizontal: 16,
-  },
-  introText: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 24,
-    marginVertical: 24,
-    textAlign: 'center',
-  },
-  projectCard: {
-    backgroundColor: '#D0EBFF',
-    padding: 24,
-    borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    marginBottom: 24,
-  },
-  projectHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  custodiyHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-  },
-  custodiyLogo: {
-    width: 80,
-    height: 80,
-  },
-  projectLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 12,
-  },
-  statusBadge: {
-    backgroundColor: '#FFF4E5',
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  statusText: {
-    fontSize: 12,
-    color: '#FF8C00',
-    fontWeight: '600',
-  },
-  projectName: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 12,
-  },
-  projectDescription: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 24,
-    marginBottom: 20,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#E0E0E0',
-    marginVertical: 20,
-  },
-  subheading: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#1A1A1A',
-    marginBottom: 12,
-  },
-  bodyText: {
-    fontSize: 15,
-    color: '#666',
-    lineHeight: 22,
-    marginBottom: 20,
-  },
-  objectivesList: {
-    gap: 12,
-    marginBottom: 24,
-  },
-  objectiveItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 12,
-  },
-  objectiveText: {
-    flex: 1,
-    fontSize: 15,
-    color: '#666',
-    lineHeight: 22,
-  },
-  investorSection: {
-    backgroundColor: '#E6F2FF',
-    padding: 20,
-    borderRadius: 12,
-    marginTop: 8,
-  },
-  investorHeading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0066CC',
-    marginBottom: 12,
-  },
-  investorText: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-    marginBottom: 16,
-  },
-  investorButton: {
-    backgroundColor: '#0066CC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-    paddingVertical: 16,
-    borderRadius: 8,
-  },
-  investorButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFF',
-  },
-  featureCard: {
-    backgroundColor: '#F9F9F9',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  featureTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1A1A1A',
-    marginTop: 8,
-    marginBottom: 8,
-  },
-  featureDescription: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-  },
-  visitButton: {
-    backgroundColor: '#0066CC',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 16,
-    borderRadius: 8,
-    marginTop: 8,
-  },
-  visitButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFF',
-  },
+  backWrap: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingTop: space.lg },
+  backBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 14, paddingVertical: 8, borderRadius: radii.pill, backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border },
+  backText: { color: colors.text, fontSize: 13, fontWeight: '600' },
+
+  hero: { maxWidth: 980, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingTop: space.xl, paddingBottom: space.lg },
+  eyebrow: { color: colors.cyan, fontSize: 12, fontWeight: '800', letterSpacing: 2, marginBottom: 14 },
+  title: { color: colors.text, fontSize: 56, lineHeight: 64, fontWeight: '900', letterSpacing: -1.5 },
+  titleMobile: { fontSize: 36, lineHeight: 42, letterSpacing: -0.8 },
+  titleGrad: { fontSize: 56, lineHeight: 64, fontWeight: '900', letterSpacing: -1.5 } as any,
+  subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, marginTop: 18, maxWidth: 820 },
+
+  grid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 20 },
+  gridMobile: { flexDirection: 'column' },
+  card: { flex: 1, minWidth: 320, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border },
+  cardMobile: { minHeight: 260 },
+  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5,6,15,0.5)' },
+  cardInner: { padding: 26, gap: 8, flex: 1, justifyContent: 'space-between' },
+  cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
+  cardCategory: { color: 'rgba(255,255,255,0.95)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
+  statusPill: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.45)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
+  statusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
+  statusText: { color: '#fff', fontSize: 11, fontWeight: '700' },
+  cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
+  cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },
+  cardFooter: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  cardLink: { color: '#fff', fontSize: 14, fontWeight: '700' },
+
+  ctaSection: { maxWidth: 980, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xxxl, alignItems: 'center', gap: 20 },
+  ctaTitle: { color: colors.text, fontSize: 36, lineHeight: 44, fontWeight: '900', letterSpacing: -0.8, textAlign: 'center' },
+  ctaRow: { flexDirection: 'row', gap: 12, flexWrap: 'wrap', justifyContent: 'center' },
+  primaryBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#3B82F6', paddingHorizontal: 22, paddingVertical: 13, borderRadius: radii.pill, },
+  primaryBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  ghostBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 18, paddingVertical: 12, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: 'rgba(255,255,255,0.02)' },
+  ghostBtnText: { color: colors.text, fontSize: 14, fontWeight: '600' },
 });

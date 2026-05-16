@@ -1,0 +1,46 @@
+[
+  {
+    "id": "9af20b72-b6e2-499b-ae93-34a9af49eff4",
+    "slug": "ai-agents-as-cloud-conductors-orchestrating-multi-cloud-cost-intelligence",
+    "title": "AI Agents as Cloud Conductors: Orchestrating Multi-Cloud Cost Intelligence",
+    "excerpt": "As cloud sprawl collides with economic pressure, autonomous AI agents are emerging as the new control plane for multi-cloud cost optimisation.",
+    "category": "AI & Innovation",
+    "tags": [
+      "ai",
+      "cloud",
+      "finops",
+      "multi-cloud"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#7C3AED",
+      "#2563EB",
+      "#06B6D4"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:55:09.531390Z",
+    "featured": true
+  },
+  {
+    "id": "3365a64e-9fc4-4f8a-a451-433332984201",
+    "slug": "zero-knowledge-identity-layers-rethinking-kyc-for-institutional-finance",
+    "title": "Zero-Knowledge Identity Layers: Rethinking KYC for Institutional Finance",
+    "excerpt": "As regulation tightens and data breaches escalate, zero-knowledge identity layers promise KYC with radically less data exposure and radically more assurance.",
+    "category": "Web3 & Fintech",
+    "tags": [
+      "web3",
+      "fintech",
+      "identity",
+      "kyc"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#0EA5E9",
+      "#6366F1",
+      "#8B5CF6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:55:31.695330Z",
+    "featured": true
+  }
+]

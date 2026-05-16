@@ -59,8 +59,16 @@ export default function Root({ children }: PropsWithChildren) {
 
         {/* Override Expo body overflow hidden for SEO crawlers */}
         <style dangerouslySetInnerHTML={{ __html: `
-          body { overflow: visible !important; overflow-y: auto !important; }
+          body { overflow: visible !important; overflow-y: auto !important; background-color: #05060F; }
           #root { overflow: visible !important; }
+          @keyframes ott-reveal {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes ott-fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
         ` }} />
         
         {/* Vercel Analytics */}
