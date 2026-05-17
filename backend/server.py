@@ -263,31 +263,47 @@ Critical: output MUST be parseable JSON. No prose outside the JSON."""
 
 
 def write_articles_to_disk(articles: List[dict]) -> None:
-    """Persist articles as static JSON for the frontend (bundled with Vercel export)."""
+    """Persist articles as static JSON for the frontend (bundled with Vercel export).
+
+    Merges with the existing index so calling this with a small batch does NOT
+    wipe out previously-generated articles. Each article still gets its own
+    per-slug JSON file as a source of truth.
+    """
     BLOG_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    index_payload = [
-        {
-            "id": a["id"],
-            "slug": a["slug"],
-            "title": a["title"],
-            "excerpt": a["excerpt"],
-            "category": a["category"],
-            "tags": a["tags"],
-            "read_time": a["read_time"],
-            "cover_gradient": a["cover_gradient"],
-            "author": a["author"],
-            "published_at": a["published_at"],
-            "featured": a.get("featured", False),
-        }
-        for a in articles
-    ]
-    (BLOG_OUTPUT_DIR / "articles.json").write_text(
-        json.dumps(index_payload, indent=2, ensure_ascii=False), encoding="utf-8"
-    )
+
+    # 1) Write each article's full JSON
     for a in articles:
         (BLOG_OUTPUT_DIR / f"{a['slug']}.json").write_text(
             json.dumps(a, indent=2, ensure_ascii=False), encoding="utf-8"
         )
+
+    # 2) Rebuild the global index by scanning ALL article files in the folder
+    index_payload: List[dict] = []
+    for path in sorted(BLOG_OUTPUT_DIR.glob("*.json")):
+        if path.name == "articles.json":
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        index_payload.append({
+            "id": data.get("id", path.stem),
+            "slug": data.get("slug", path.stem),
+            "title": data.get("title", ""),
+            "excerpt": data.get("excerpt", ""),
+            "category": data.get("category", "Insights"),
+            "tags": data.get("tags", []),
+            "read_time": int(data.get("read_time", 6)),
+            "cover_gradient": data.get("cover_gradient", ["#3B82F6", "#A855F7", "#22D3EE"]),
+            "author": data.get("author", "On Time Technology Editorial"),
+            "published_at": data.get("published_at", ""),
+            "featured": data.get("featured", False),
+        })
+    # newest first
+    index_payload.sort(key=lambda a: a.get("published_at", ""), reverse=True)
+    (BLOG_OUTPUT_DIR / "articles.json").write_text(
+        json.dumps(index_payload, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
 
 
 @app.post("/api/blog/generate")

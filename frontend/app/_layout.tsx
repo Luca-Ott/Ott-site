@@ -2,8 +2,15 @@ import { Stack } from 'expo-router';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { View, Platform } from 'react-native';
 import { useEffect } from 'react';
+import { useFonts } from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function RootLayout() {
+  // Explicitly load vector-icon fonts so glyphs render on every page.
+  const [fontsLoaded] = useFonts({
+    ...Ionicons.font,
+  });
+
   // Inject global CSS (keyframes + body background) on web. Works in dev and prod.
   useEffect(() => {
     if (Platform.OS !== 'web') return;

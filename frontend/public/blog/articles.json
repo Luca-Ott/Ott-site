@@ -1,5 +1,27 @@
 [
   {
+    "id": "3365a64e-9fc4-4f8a-a451-433332984201",
+    "slug": "zero-knowledge-identity-layers-rethinking-kyc-for-institutional-finance",
+    "title": "Zero-Knowledge Identity Layers: Rethinking KYC for Institutional Finance",
+    "excerpt": "As regulation tightens and data breaches escalate, zero-knowledge identity layers promise KYC with radically less data exposure and radically more assurance.",
+    "category": "Web3 & Fintech",
+    "tags": [
+      "web3",
+      "fintech",
+      "identity",
+      "kyc"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#0EA5E9",
+      "#6366F1",
+      "#8B5CF6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:55:31.695330Z",
+    "featured": true
+  },
+  {
     "id": "9af20b72-b6e2-499b-ae93-34a9af49eff4",
     "slug": "ai-agents-as-cloud-conductors-orchestrating-multi-cloud-cost-intelligence",
     "title": "AI Agents as Cloud Conductors: Orchestrating Multi-Cloud Cost Intelligence",
@@ -22,16 +44,149 @@
     "featured": true
   },
   {
-    "id": "3365a64e-9fc4-4f8a-a451-433332984201",
-    "slug": "zero-knowledge-identity-layers-rethinking-kyc-for-institutional-finance",
-    "title": "Zero-Knowledge Identity Layers: Rethinking KYC for Institutional Finance",
-    "excerpt": "As regulation tightens and data breaches escalate, zero-knowledge identity layers promise KYC with radically less data exposure and radically more assurance.",
-    "category": "Web3 & Fintech",
+    "id": "fd798f99-41fd-4971-978d-1eb2558fbb07",
+    "slug": "designing-software-that-ages-well-architectures-for-mission-critical-longevity",
+    "title": "Designing Software That Ages Well: Architectures for Mission-Critical Longevity",
+    "excerpt": "Mission‑critical software should outlive its first architecture. Here is how to design systems that stay reliable, adaptable and secure over decades, not release cycles.",
+    "category": "Software Design",
+    "tags": [
+      "software architecture",
+      "mission-critical",
+      "maintainability",
+      "enterprise systems"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#06B6D4",
+      "#3B82F6",
+      "#1E1B4B"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:09:54.386521Z",
+    "featured": false
+  },
+  {
+    "id": "bd97b9ae-d7d4-4322-9eac-76b5bdf437d5",
+    "slug": "why-strategic-special-projects-are-the-rd-engine-of-the-next-decade",
+    "title": "Why Strategic Special Projects Are the R&D Engine of the Next Decade",
+    "excerpt": "The next decade’s breakthrough platforms will not emerge from BAU roadmaps, but from disciplined, visionary side bets treated as strategic R&D.",
+    "category": "Strategy & Vision",
+    "tags": [
+      "innovation",
+      "r&d",
+      "strategy",
+      "special projects"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#A855F7",
+      "#EC4899",
+      "#F97316"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:09:39.846885Z",
+    "featured": false
+  },
+  {
+    "id": "d7118481-55c4-4bb8-a336-9a24cf4086af",
+    "slug": "from-lab-to-live-systems-industrialising-research-in-software-engineering",
+    "title": "From Lab to Live Systems: Industrialising Research in Software Engineering",
+    "excerpt": "How modern software companies turn experimental R&D into reliable, revenue-generating products at pace.",
+    "category": "R&D & Engineering",
+    "tags": [
+      "r&d",
+      "software engineering",
+      "innovation culture",
+      "ai"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#22D3EE",
+      "#3B82F6",
+      "#0F172A"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:09:23.380341Z",
+    "featured": false
+  },
+  {
+    "id": "5a010f5f-6fdd-4260-9a66-5ddfd2f0b708",
+    "slug": "cyber-resilience-vs-autonomous-attackers-redesigning-defence-for-ai-threats",
+    "title": "Cyber Resilience vs Autonomous Attackers: Redesigning Defence for AI Threats",
+    "excerpt": "As AI-powered attackers learn, adapt and persist at machine speed, cyber resilience must evolve from static protection to self-defending, self-healing digital infrastructure.",
+    "category": "Cyber Security",
+    "tags": [
+      "cyber security",
+      "ai",
+      "autonomous threats",
+      "resilience"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#F59E0B",
+      "#EF4444",
+      "#8B5CF6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:09:04.278976Z",
+    "featured": false
+  },
+  {
+    "id": "a224d64e-f139-4a4b-9c78-d74670987059",
+    "slug": "modular-escrow-and-otc-platforms-programmable-trust-for-digital-commerce",
+    "title": "Modular Escrow and OTC Platforms: Programmable Trust for Digital Commerce",
+    "excerpt": "As assets go on‑chain, modular escrow and OTC rails are emerging as the programmable trust layer underpinning the next phase of digital commerce.",
+    "category": "Web3 & FinTech",
     "tags": [
       "web3",
       "fintech",
-      "identity",
-      "kyc"
+      "escrow",
+      "otc",
+      "tokenisation"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#10B981",
+      "#06B6D4",
+      "#3B82F6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:08:48.054088Z",
+    "featured": false
+  },
+  {
+    "id": "694f5d01-736e-4494-a2be-7d4ba5537b87",
+    "slug": "tokenising-commodities-when-cargo-energy-and-metals-go-onchain",
+    "title": "Tokenising Commodities: When Cargo, Energy and Metals Go On‑Chain",
+    "excerpt": "Tokenised commodities are turning ships, barrels and metal stockpiles into programmable assets, quietly rewiring global trade.",
+    "category": "Web3 & FinTech",
+    "tags": [
+      "tokenisation",
+      "commodities",
+      "web3",
+      "trade finance"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#F472B6",
+      "#A855F7",
+      "#3B82F6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:08:28.885955Z",
+    "featured": false
+  },
+  {
+    "id": "ca53096f-8bdc-4acd-b97d-01580d217e25",
+    "slug": "beyond-fake-news-architecting-trust-infrastructure-for-the-posttruth-internet",
+    "title": "Beyond Fake News: Architecting Trust Infrastructure for the Post‑Truth Internet",
+    "excerpt": "The next internet will not be defined by content volume, but by verifiable trust. Here’s how AI, cryptography and provenance signals can make that real.",
+    "category": "AI & Innovation",
+    "tags": [
+      "ai",
+      "trust",
+      "provenance",
+      "governance"
     ],
     "read_time": 6,
     "cover_gradient": [
@@ -40,7 +195,29 @@
       "#8B5CF6"
     ],
     "author": "On Time Technology Editorial",
-    "published_at": "2026-05-16T21:55:31.695330Z",
+    "published_at": "2026-05-16T21:08:10.113896Z",
+    "featured": true
+  },
+  {
+    "id": "17741b1c-acb9-433a-b6c2-2f26e961a589",
+    "slug": "how-generative-ai-agents-are-rearchitecting-enterprise-software-in-2026",
+    "title": "How Generative AI Agents Are Re‑Architecting Enterprise Software in 2026",
+    "excerpt": "In 2026, generative AI has moved from coding novelty to a new engineering stack built on copilots, autonomous agents and AI-native delivery pipelines.",
+    "category": "AI & Innovation",
+    "tags": [
+      "generative ai",
+      "enterprise software",
+      "devops",
+      "innovation"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#7C3AED",
+      "#2563EB",
+      "#06B6D4"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-16T21:07:54.034885Z",
     "featured": true
   }
 ]

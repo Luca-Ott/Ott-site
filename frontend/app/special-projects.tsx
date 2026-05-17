@@ -156,9 +156,9 @@ const styles = StyleSheet.create({
   titleGrad: { fontSize: 56, lineHeight: 64, fontWeight: '900', letterSpacing: -1.5 } as any,
   subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, marginTop: 18, maxWidth: 820 },
 
-  grid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 20 },
+  grid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 20, justifyContent: 'center' },
   gridMobile: { flexDirection: 'column' },
-  card: { flex: 1, minWidth: 320, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border },
+  card: { flexBasis: '48%' as any, flexGrow: 1, minWidth: 320, maxWidth: 560, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border },
   cardMobile: { minHeight: 260 },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5,6,15,0.5)' },
   cardInner: { padding: 26, gap: 8, flex: 1, justifyContent: 'space-between' },
