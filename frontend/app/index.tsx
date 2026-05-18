@@ -26,6 +26,7 @@ import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
 import SiteHeader from '../src/components/SiteHeader';
 import SiteFooter from '../src/components/SiteFooter';
+import OrbitVisual from '../src/components/OrbitVisual';
 import PageSEO, { softwareAppSchema } from '../src/components/PageSEO';
 import { getAllArticles, formatDate } from '../src/data/blog';
 import { colors, radii, space } from '../src/theme/tokens';
@@ -183,26 +184,7 @@ export default function HomeScreen() {
             </View>
 
             {/* Floating orbit visual (desktop only) */}
-            {isDesktop && (
-              <Animated.View
-                pointerEvents="none"
-                style={[
-                  styles.orbitWrap,
-                  {
-                    transform: [
-                      {
-                        translateY: pulse.interpolate({ inputRange: [0, 1], outputRange: [0, -10] }),
-                      },
-                    ],
-                  },
-                ]}
-              >
-                <View style={styles.orbitRing1} />
-                <View style={styles.orbitRing2} />
-                <View style={styles.orbitRing3} />
-                <View style={styles.orbitCore} />
-              </Animated.View>
-            )}
+            {isDesktop && <OrbitVisual size={520} />}
 
             {/* Scroll indicator */}
             <View style={styles.scrollHint}>

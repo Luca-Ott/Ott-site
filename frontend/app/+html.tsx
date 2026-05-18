@@ -130,7 +130,12 @@ export default function Root({ children }: PropsWithChildren) {
             to { opacity: 1; transform: translateY(0); }
           }
           @keyframes ott-fade { from { opacity: 0; } to { opacity: 1; } }
-          @keyframes ott-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+          @keyframes ott-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+          @keyframes ott-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+          @keyframes ott-spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+          @keyframes ott-pulse-glow { 0%,100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+          @keyframes ott-pulse-aura { 0%,100% { opacity: 0.35; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.18); } }
+          @keyframes ott-twinkle { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
         ` }} />
 
         {/* Vercel Analytics */}
