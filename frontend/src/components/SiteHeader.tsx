@@ -12,6 +12,7 @@ const NAV_ITEMS: { label: string; route: string }[] = [
   { label: 'Projects', route: '/special-projects' },
   { label: 'AI Act', route: '/ai-act-compliance' },
   { label: 'Blog', route: '/blog' },
+  { label: 'Careers', route: '/careers' },
   { label: 'Contact', route: '/contact' },
 ];
 

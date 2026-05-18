@@ -38,6 +38,7 @@ export default function SiteFooter() {
             <FooterLink label="Contact" onPress={() => router.push('/contact')} />
             <FooterLink label="Investor Inquiry" onPress={() => router.push('/investor-inquiry')} />
             <FooterLink label="Blog" onPress={() => router.push('/blog')} />
+            <FooterLink label="Careers" onPress={() => router.push('/careers')} />
             <FooterLink label="Resources" onPress={() => router.push('/resources')} />
           </View>
 

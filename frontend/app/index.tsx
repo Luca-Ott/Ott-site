@@ -437,6 +437,74 @@ export default function HomeScreen() {
             </View>
           </View>
 
+          {/* ============================ CAREERS TEASER ============================ */}
+          <View style={styles.section}>
+            <ScrollReveal>
+              <View style={styles.blogHeader}>
+                <View>
+                  <Text style={styles.sectionLabel}>WORK WITH US</Text>
+                  <Text style={[styles.sectionTitle, { fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs }]}>
+                    Join the{' '}
+                    <GradientText style={{ fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs, fontWeight: '900' }} colors={['#22D3EE', '#A855F7']}>
+                      mission
+                    </GradientText>
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/careers')}>
+                  <Text style={styles.ghostBtnText}>All positions</Text>
+                  <Ionicons name="arrow-forward" size={14} color={colors.text} />
+                </TouchableOpacity>
+              </View>
+            </ScrollReveal>
+
+            <ScrollReveal>
+              <GlassCard glow="cyan" style={styles.careersCard}>
+                <LinearGradient
+                  colors={['rgba(34,211,238,0.10)', 'rgba(59,130,246,0.10)', 'rgba(168,85,247,0.10)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={StyleSheet.absoluteFill}
+                />
+                <Text style={styles.careersIntro}>
+                  We are hiring senior freelance specialists — 100% remote, EU-friendly, frontier R&D work.
+                </Text>
+                <View style={[styles.careersGrid, !isDesktop && styles.careersGridMobile]}>
+                  {[
+                    { t: 'Senior AI Engineer', s: 'Python · PyTorch · LLMs · RAG', icon: 'sparkles' as const, c: '#60A5FA' },
+                    { t: 'React Developer', s: 'React · React Native · Expo · TS', icon: 'logo-react' as const, c: '#22D3EE' },
+                    { t: 'Blockchain Engineer', s: 'Solidity · EVM · Smart Contracts', icon: 'cube' as const, c: '#A855F7' },
+                  ].map((p) => (
+                    <TouchableOpacity
+                      key={p.t}
+                      activeOpacity={0.85}
+                      onPress={() => router.push('/careers')}
+                      style={[styles.careerChipCard, { flex: 1, minWidth: 240 }]}
+                    >
+                      <View style={[styles.careerChipIcon, { backgroundColor: `${p.c}24` }]}>
+                        <Ionicons name={p.icon} size={20} color={p.c} />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={styles.careerChipTitle}>{p.t}</Text>
+                        <Text style={styles.careerChipSub}>{p.s}</Text>
+                      </View>
+                      <Ionicons name="arrow-forward" size={16} color={colors.textMuted} />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <View style={styles.careersFooter}>
+                  <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/careers')}>
+                    <Text style={styles.primaryBtnText}>Apply now</Text>
+                    <Ionicons name="arrow-forward" size={16} color="#fff" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.ghostBtn} onPress={() => Linking.openURL('mailto:info@ott4future.com?subject=Application%20%E2%80%94%20On%20Time%20Technology')}>
+                    <Ionicons name="mail-outline" size={14} color={colors.text} />
+                    <Text style={styles.ghostBtnText}>info@ott4future.com</Text>
+                  </TouchableOpacity>
+                </View>
+              </GlassCard>
+            </ScrollReveal>
+          </View>
+
           {/* ============================ CTA ============================ */}
           <View style={[styles.section, styles.ctaSection]}>
             <ScrollReveal>
@@ -652,4 +720,22 @@ const styles = StyleSheet.create({
   ctaTitleGrad: { fontSize: 44, fontWeight: '900', letterSpacing: -1, lineHeight: 52 } as any,
   ctaSub: { color: colors.textMuted, fontSize: 16, lineHeight: 26, textAlign: 'center', maxWidth: 620, marginTop: 18, marginBottom: 28 },
   ctaButtons: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'center' },
+
+  // CAREERS TEASER
+  careersCard: { padding: 32, gap: 18, overflow: 'hidden' },
+  careersIntro: { color: colors.textMuted, fontSize: 15.5, lineHeight: 24, maxWidth: 720 },
+  careersGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 14, marginTop: 4 },
+  careersGridMobile: { flexDirection: 'column' },
+  careerChipCard: {
+    flexDirection: 'row', alignItems: 'center', gap: 14,
+    paddingHorizontal: 16, paddingVertical: 16,
+    borderRadius: radii.md,
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderWidth: 1, borderColor: colors.border,
+    ...(Platform.OS === 'web' ? { transition: 'transform 0.2s ease, border-color 0.2s ease' } as any : {}),
+  },
+  careerChipIcon: { width: 40, height: 40, borderRadius: radii.sm, alignItems: 'center', justifyContent: 'center' },
+  careerChipTitle: { color: colors.text, fontSize: 15, fontWeight: '800' },
+  careerChipSub: { color: colors.textMuted, fontSize: 12.5, marginTop: 2 },
+  careersFooter: { flexDirection: 'row', gap: 12, flexWrap: 'wrap', marginTop: 8 },
 });
