@@ -3,17 +3,15 @@ import { View, Platform, StyleSheet } from 'react-native';
 
 type Props = { size?: number };
 
-const LOGO_URL =
-  'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68';
-
 /**
- * Cinematic AI/space orbit visual with the OTT logo rendered as a floating
- * puzzle of small tiles at the centre of perfectly concentric rings.
- *  - 4 tilted rings, all sharing the SAME rotation axis (perfectly centred)
- *  - Glowing satellites travelling along each ring at different speeds
- *  - Twinkling stars
- *  - Pulsing aura behind the logo
- *  - 7\u00d77 = 49 puzzle tiles forming the OTT logo, each wobbling independently
+ * Cinematic AI/space orbit visual with a CSS-only REALISTIC 3D PLANET
+ * at the centre of perfectly concentric orbital rings.
+ *
+ *  - Spherical planet (Earth-like) with rotating continents, drifting clouds,
+ *    day/night terminator, specular highlight and atmospheric rim glow.
+ *  - 4 tilted orbital rings (perfectly concentric), satellites orbiting at
+ *    different speeds and directions, glowing trails.
+ *  - Twinkling stars sprinkled around the system.
  *
  * Web-only \u2014 returns null on native.
  */
@@ -22,11 +20,8 @@ export default function OrbitVisual({ size = 520 }: Props) {
 
   const center = size / 2;
 
-  // Shared tilt for ALL rings so they remain perfectly concentric
-  // around the centre point where the puzzle logo sits.
+  // ---- Orbital rings (all share the same tilt for true concentricity) ----
   const SHARED_TILT = 'rotateX(68deg) rotateZ(-8deg)';
-
-  // Rings: diameter, duration (s), direction, colours
   const rings = [
     { d: size * 0.96, dur: 90, reverse: false, color: 'rgba(96,165,250,0.7)',  satColor: '#60A5FA', satSize: 8,  stroke: 'rgba(96,165,250,0.18)' },
     { d: size * 0.78, dur: 60, reverse: true,  color: 'rgba(168,85,247,0.75)', satColor: '#A855F7', satSize: 10, stroke: 'rgba(168,85,247,0.22)' },
@@ -34,12 +29,8 @@ export default function OrbitVisual({ size = 520 }: Props) {
     { d: size * 0.42, dur: 24, reverse: true,  color: 'rgba(236,72,153,0.85)', satColor: '#EC4899', satSize: 6,  stroke: 'rgba(236,72,153,0.28)' },
   ];
 
-  // Puzzle config — small 3D globe of OTT logo tiles
-  const LOGO_BOX = Math.round(size * 0.22); // ~114px for size=520 — smaller & more elegant
-  const GRID = 6;
-  const PIECE = LOGO_BOX / GRID;
-  const LOGO_LEFT = center - LOGO_BOX / 2;
-  const LOGO_TOP = center - LOGO_BOX / 2;
+  // ---- Planet config ----
+  const PLANET_SIZE = Math.round(size * 0.26); // ~135px
 
   const abs = (left: number | string, top: number | string): React.CSSProperties => ({
     position: 'absolute',
@@ -53,20 +44,14 @@ export default function OrbitVisual({ size = 520 }: Props) {
     width: size,
     height: size,
     pointerEvents: 'none',
-    animation: 'ott-float 7s ease-in-out infinite',
+    animation: 'ott-float 8s ease-in-out infinite',
     transformStyle: 'preserve-3d',
-  };
-
-  // Deterministic pseudo-random so pieces don't reshuffle on every render
-  const prand = (seed: number) => {
-    const x = Math.sin(seed * 9301 + 49297) * 233280;
-    return x - Math.floor(x);
   };
 
   return (
     <View pointerEvents="none" style={styles.outer}>
       {React.createElement('div', { style: wrapperStyle }, [
-        // Atmospheric background glow
+        // Background atmospheric glow (very wide, soft)
         React.createElement('div', {
           key: 'aura-bg',
           style: {
@@ -75,13 +60,13 @@ export default function OrbitVisual({ size = 520 }: Props) {
             height: size * 1.05,
             borderRadius: '50%',
             background:
-              'radial-gradient(circle, rgba(59,130,246,0.20) 0%, rgba(168,85,247,0.12) 40%, rgba(0,0,0,0) 70%)',
+              'radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(168,85,247,0.10) 40%, rgba(0,0,0,0) 70%)',
             filter: 'blur(20px)',
             animation: 'ott-pulse-aura 6s ease-in-out infinite',
           } as React.CSSProperties,
         }),
 
-        // Twinkling stars sprinkled around the orbits
+        // Twinkling stars
         ...Array.from({ length: 14 }).map((_, i) => {
           const angle = (i / 14) * Math.PI * 2 + (i % 3) * 0.2;
           const radius = size * (0.46 + (i % 3) * 0.04);
@@ -101,7 +86,7 @@ export default function OrbitVisual({ size = 520 }: Props) {
           });
         }),
 
-        // Orbital rings (all share SHARED_TILT \u2192 perfectly concentric)
+        // Orbital rings (all concentric)
         ...rings.flatMap((r, i) => {
           const ringStyle: React.CSSProperties = {
             ...abs(center, center),
@@ -150,111 +135,153 @@ export default function OrbitVisual({ size = 520 }: Props) {
           ];
         }),
 
-        // Halo behind the 3D logo globe
+        // ============================================================
+        // REALISTIC 3D PLANET (Earth-like) \u2014 centred on the orbits
+        // ============================================================
         React.createElement('div', {
-          key: 'logo-halo',
+          key: 'planet-wrap',
           style: {
             ...abs(center, center),
-            width: LOGO_BOX * 2.4,
-            height: LOGO_BOX * 2.4,
+            width: PLANET_SIZE,
+            height: PLANET_SIZE,
             borderRadius: '50%',
-            background:
-              'radial-gradient(circle, rgba(96,165,250,0.55) 0%, rgba(168,85,247,0.30) 35%, rgba(0,0,0,0) 70%)',
-            filter: 'blur(14px)',
-            animation: 'ott-pulse-aura 5s ease-in-out infinite',
+            overflow: 'hidden',
+            // Outer atmosphere glow + inner deep shadow for sphere depth
+            boxShadow:
+              '0 0 30px rgba(96,165,250,0.7), 0 0 70px rgba(34,211,238,0.5), 0 0 110px rgba(168,85,247,0.35), inset -16px -22px 38px rgba(0,0,0,0.6), inset 14px 10px 24px rgba(255,255,255,0.08)',
           } as React.CSSProperties,
-        }),
-
-        // 3D LOGO GLOBE — rotating sphere of puzzle tiles with sphere shading
-        React.createElement('div', {
-          key: 'globe',
-          style: {
-            ...abs(center, center),
-            width: LOGO_BOX,
-            height: LOGO_BOX,
-            perspective: '600px',
-            transformStyle: 'preserve-3d',
-          } as React.CSSProperties,
-        },
+        }, [
+          // 1) Ocean base \u2014 deep blue with subtle radial shading
           React.createElement('div', {
-            key: 'globe-spin',
+            key: 'ocean',
+            style: {
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at 30% 28%, #60A5FA 0%, #1D4ED8 35%, #1E3A8A 70%, #0B1E5C 100%)',
+            } as React.CSSProperties,
+          }),
+
+          // 2) Continents \u2014 wide texture strip that scrolls horizontally
+          React.createElement('div', {
+            key: 'continents',
+            style: {
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '200%',
+              height: '100%',
+              backgroundRepeat: 'repeat-x',
+              backgroundSize: '50% 100%',
+              backgroundImage: `
+                radial-gradient(ellipse 9% 14% at 6% 32%, #15803D 0%, #14532D 55%, transparent 78%),
+                radial-gradient(ellipse 12% 18% at 14% 58%, #16A34A 0%, #14532D 55%, transparent 80%),
+                radial-gradient(ellipse 7% 11% at 22% 22%, #15803D 0%, #14532D 55%, transparent 80%),
+                radial-gradient(ellipse 11% 16% at 30% 70%, #166534 0%, #14532D 55%, transparent 82%),
+                radial-gradient(ellipse 8% 12% at 38% 40%, #15803D 0%, #14532D 55%, transparent 80%),
+                radial-gradient(ellipse 6% 9% at 44% 18%, #166534 0%, #14532D 55%, transparent 80%)
+              `,
+              animation: 'planet-rotate 42s linear infinite',
+            } as React.CSSProperties,
+          }),
+
+          // 3) Polar ice caps
+          React.createElement('div', {
+            key: 'ice',
+            style: {
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(ellipse 70% 10% at 50% 2%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%),' +
+                'radial-gradient(ellipse 60% 8% at 50% 98%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 70%)',
+              pointerEvents: 'none',
+            } as React.CSSProperties,
+          }),
+
+          // 4) Clouds \u2014 also a scrolling strip, slower for parallax
+          React.createElement('div', {
+            key: 'clouds',
+            style: {
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '200%',
+              height: '100%',
+              backgroundRepeat: 'repeat-x',
+              backgroundSize: '50% 100%',
+              backgroundImage: `
+                radial-gradient(ellipse 16% 4% at 8% 28%, rgba(255,255,255,0.55) 0%, transparent 65%),
+                radial-gradient(ellipse 14% 5% at 18% 52%, rgba(255,255,255,0.45) 0%, transparent 70%),
+                radial-gradient(ellipse 20% 4% at 30% 18%, rgba(255,255,255,0.55) 0%, transparent 70%),
+                radial-gradient(ellipse 14% 5% at 40% 65%, rgba(255,255,255,0.5) 0%, transparent 70%),
+                radial-gradient(ellipse 12% 3% at 46% 38%, rgba(255,255,255,0.42) 0%, transparent 70%)
+              `,
+              animation: 'planet-clouds 80s linear infinite',
+              filter: 'blur(1px)',
+              opacity: 0.85,
+              mixBlendMode: 'screen',
+            } as React.CSSProperties,
+          }),
+
+          // 5) Day / night terminator \u2014 darkens the right side
+          React.createElement('div', {
+            key: 'terminator',
+            style: {
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at 30% 30%, transparent 0%, transparent 40%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0.78) 100%)',
+              pointerEvents: 'none',
+            } as React.CSSProperties,
+          }),
+
+          // 6) Specular highlight (sun reflection)
+          React.createElement('div', {
+            key: 'spec',
+            style: {
+              position: 'absolute',
+              top: '10%',
+              left: '18%',
+              width: '34%',
+              height: '22%',
+              borderRadius: '50%',
+              background:
+                'radial-gradient(ellipse, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 65%)',
+              filter: 'blur(3px)',
+              pointerEvents: 'none',
+              mixBlendMode: 'screen',
+            } as React.CSSProperties,
+          }),
+
+          // 7) Atmospheric rim (inner glow on the edge)
+          React.createElement('div', {
+            key: 'rim',
             style: {
               position: 'absolute',
               inset: 0,
               borderRadius: '50%',
-              transformStyle: 'preserve-3d',
-              animation: 'ott-globe-tilt 9s ease-in-out infinite',
+              boxShadow:
+                'inset 0 0 18px rgba(147,197,253,0.65), inset 0 0 38px rgba(96,165,250,0.35)',
+              pointerEvents: 'none',
             } as React.CSSProperties,
-          }, [
-            // PUZZLE TILES forming the OTT brand mark
-            ...Array.from({ length: GRID * GRID }).map((_, i) => {
-              const row = Math.floor(i / GRID);
-              const col = i % GRID;
-              const wobbleDur = 2.4 + prand(i) * 2.2;
-              const delay = prand(i + 100) * 4;
-              return React.createElement('div', {
-                key: `tile-${i}`,
-                style: {
-                  position: 'absolute',
-                  left: col * PIECE,
-                  top: row * PIECE,
-                  width: PIECE,
-                  height: PIECE,
-                  backgroundImage: `url(${LOGO_URL})`,
-                  backgroundSize: `${LOGO_BOX}px ${LOGO_BOX}px`,
-                  backgroundPosition: `-${col * PIECE}px -${row * PIECE}px`,
-                  backgroundRepeat: 'no-repeat',
-                  animation: `ott-puzzle-wobble ${wobbleDur.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite`,
-                  transformOrigin: 'center center',
-                  boxShadow: 'inset 0 0 0 0.5px rgba(255,255,255,0.06), 0 0 0 0.5px rgba(0,0,0,0.5)',
-                  borderRadius: 1,
-                } as React.CSSProperties,
-              });
-            }),
-            // Sphere shading (darkens edges + lit top-left → 3D depth)
-            React.createElement('div', {
-              key: 'sphere-shade',
-              style: {
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '50%',
-                background:
-                  'radial-gradient(circle at 32% 28%, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0) 35%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.6) 100%)',
-                pointerEvents: 'none',
-                mixBlendMode: 'overlay',
-              } as React.CSSProperties,
-            }),
-            // Specular highlight (glass sphere feel)
-            React.createElement('div', {
-              key: 'sphere-spec',
-              style: {
-                position: 'absolute',
-                top: '6%',
-                left: '14%',
-                width: '36%',
-                height: '22%',
-                borderRadius: '50%',
-                background:
-                  'radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
-                filter: 'blur(3px)',
-                pointerEvents: 'none',
-                mixBlendMode: 'screen',
-              } as React.CSSProperties,
-            }),
-            // Rim glow (atmospheric edge)
-            React.createElement('div', {
-              key: 'sphere-rim',
-              style: {
-                position: 'absolute',
-                inset: -2,
-                borderRadius: '50%',
-                boxShadow:
-                  '0 0 24px rgba(96,165,250,0.65), 0 0 48px rgba(168,85,247,0.4), inset 0 0 14px rgba(34,211,238,0.3)',
-                pointerEvents: 'none',
-              } as React.CSSProperties,
-            }),
-          ])
-        ),
+          }),
+        ]),
+
+        // Outer atmospheric halo (rendered AFTER planet, around it)
+        React.createElement('div', {
+          key: 'planet-halo',
+          style: {
+            ...abs(center, center),
+            width: PLANET_SIZE + 36,
+            height: PLANET_SIZE + 36,
+            borderRadius: '50%',
+            pointerEvents: 'none',
+            background:
+              'radial-gradient(circle, rgba(96,165,250,0) 48%, rgba(96,165,250,0.35) 51%, rgba(96,165,250,0) 60%)',
+            filter: 'blur(2px)',
+            animation: 'ott-pulse-aura 5s ease-in-out infinite',
+          } as React.CSSProperties,
+        }),
       ])}
     </View>
   );
@@ -267,6 +294,6 @@ const styles = StyleSheet.create({
     top: 40,
     width: 520,
     height: 520,
-    opacity: 0.95,
+    opacity: 0.98,
   },
 });

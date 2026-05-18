@@ -70,6 +70,14 @@ export default function RootLayout() {
         0%, 100% { transform: rotateY(-22deg) rotateX(4deg); }
         50%      { transform: rotateY(22deg)  rotateX(-4deg); }
       }
+      @keyframes planet-rotate {
+        from { transform: translateX(0%); }
+        to   { transform: translateX(-50%); }
+      }
+      @keyframes planet-clouds {
+        from { transform: translateX(0%); }
+        to   { transform: translateX(-50%); }
+      }
       @keyframes ott-orbit-tilt {
         0%, 100% { transform: rotateX(60deg) rotateZ(0deg); }
         50% { transform: rotateX(62deg) rotateZ(2deg); }
