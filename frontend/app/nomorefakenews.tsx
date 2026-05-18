@@ -8,6 +8,7 @@ import Head from 'expo-router/head';
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
 export default function NoMoreFakeNewsScreen() {
@@ -18,12 +19,26 @@ export default function NoMoreFakeNewsScreen() {
 
   return (
     <PageShell>
-      <Head>
-        <title>NoMoreFakeNews — On Time Technology</title>
-        <meta name="description" content="NoMoreFakeNews — AI-powered platform to detect, flag and dismantle disinformation in real time, restoring trust in public discourse." />
-        <link rel="canonical" href="https://www.ott4future.com/nomorefakenews" />
-        <meta property="og:url" content="https://www.ott4future.com/nomorefakenews" />
-      </Head>
+      <PageSEO
+        title="NoMoreFakeNews — AI Fake News & Deepfake Detector"
+        description="NoMoreFakeNews is an AI-powered platform engineered to detect fake news and deepfakes in real time, with provenance signals and a human-in-the-loop verification network."
+        canonical="https://www.ott4future.com/nomorefakenews"
+        keywords="AI fake news detector, deepfake detection AI 2026, NoMoreFakeNews, strumento AI per combattere fake news, disinformation detection, AI trust infrastructure"
+        ogType="product"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'Special Projects', url: 'https://www.ott4future.com/special-projects' },
+            { name: 'NoMoreFakeNews', url: 'https://www.ott4future.com/nomorefakenews' },
+          ]),
+          softwareAppSchema({
+            name: 'NoMoreFakeNews',
+            url: 'https://www.ott4future.com/nomorefakenews',
+            description: 'AI-powered platform to detect, flag and dismantle fake news, manipulated media and deepfakes in real time.',
+            applicationSubCategory: 'AI Trust Infrastructure',
+          }),
+        ]}
+      />
 
       <View style={styles.backWrap}>
         <TouchableOpacity style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>

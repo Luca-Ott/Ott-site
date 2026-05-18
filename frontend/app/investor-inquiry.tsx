@@ -7,6 +7,7 @@ import Head from 'expo-router/head';
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
 export default function InvestorInquiryScreen() {
@@ -57,12 +58,18 @@ export default function InvestorInquiryScreen() {
 
   return (
     <PageShell>
-      <Head>
-        <title>Investor Inquiry — On Time Technology</title>
-        <meta name="description" content="Investor inquiry form for On Time Technology Ltd — connect with our team about strategic partnerships and investment opportunities." />
-        <link rel="canonical" href="https://www.ott4future.com/investor-inquiry" />
-        <meta property="og:url" content="https://www.ott4future.com/investor-inquiry" />
-      </Head>
+      <PageSEO
+        title="Investor Inquiry — On Time Technology"
+        description="Connect with On Time Technology for investment opportunities in our special projects — NoMoreFakeNews (AI trust), Custodiy (Web3), Freety (commodities). Talk to our team."
+        canonical="https://www.ott4future.com/investor-inquiry"
+        keywords="On Time Technology investors, NoMoreFakeNews investment, Custodiy investment, Freety investment, Irish AI startup investor, Dublin AI investment"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'Investor Inquiry', url: 'https://www.ott4future.com/investor-inquiry' },
+          ]),
+        ]}
+      />
 
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ width: '100%' }}>
         <View style={styles.backWrap}>

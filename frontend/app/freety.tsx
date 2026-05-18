@@ -8,6 +8,7 @@ import Head from 'expo-router/head';
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
 export default function FreetyScreen() {
@@ -18,12 +19,26 @@ export default function FreetyScreen() {
 
   return (
     <PageShell>
-      <Head>
-        <title>Freety — On Time Technology</title>
-        <meta name="description" content="Freety — digital B2B infrastructure for global commodity & energy trading, with marketplace technology, financial settlement and AI-driven trading tools." />
-        <link rel="canonical" href="https://www.ott4future.com/freety" />
-        <meta property="og:url" content="https://www.ott4future.com/freety" />
-      </Head>
+      <PageSEO
+        title="Freety — Tokenised Commodities & AI Trading Platform"
+        description="Freety is digital B2B infrastructure for global commodity & energy trading — marketplace technology, financial settlement, cargo tokenisation and AI-driven trading tools."
+        canonical="https://www.ott4future.com/freety"
+        keywords="tokenized commodities trading, AI trading platform energy commodities, B2B commodity marketplace, cargo tokenisation, energy trading software"
+        ogType="product"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'Special Projects', url: 'https://www.ott4future.com/special-projects' },
+            { name: 'Freety', url: 'https://www.ott4future.com/freety' },
+          ]),
+          softwareAppSchema({
+            name: 'Freety',
+            url: 'https://www.ott4future.com/freety',
+            description: 'B2B digital infrastructure for global commodity & energy trading with cargo tokenisation, AI tooling and integrated settlement.',
+            applicationSubCategory: 'Commodities Trading Platform',
+          }),
+        ]}
+      />
 
       <View style={styles.backWrap}>
         <TouchableOpacity style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>

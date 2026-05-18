@@ -10,8 +10,8 @@ const NAV_ITEMS: { label: string; route: string }[] = [
   { label: 'Home', route: '/' },
   { label: 'Services', route: '/software-development' },
   { label: 'Projects', route: '/special-projects' },
+  { label: 'AI Act', route: '/ai-act-compliance' },
   { label: 'Blog', route: '/blog' },
-  { label: 'About', route: '/about' },
   { label: 'Contact', route: '/contact' },
 ];
 

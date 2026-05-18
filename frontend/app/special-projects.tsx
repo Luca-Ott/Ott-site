@@ -7,6 +7,7 @@ import Head from 'expo-router/head';
 
 import PageShell from '../src/components/PageShell';
 import GradientText from '../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
 const PROJECTS = [
@@ -65,12 +66,21 @@ export default function SpecialProjectsScreen() {
 
   return (
     <PageShell>
-      <Head>
-        <title>Special Projects — On Time Technology</title>
-        <meta name="description" content="Special projects from On Time Technology Ltd — NoMoreFakeNews, Custodiy, Freety and Cyber Security R&D programmes." />
-        <link rel="canonical" href="https://www.ott4future.com/special-projects" />
-        <meta property="og:url" content="https://www.ott4future.com/special-projects" />
-      </Head>
+      <PageSEO
+        title="Special Projects — NoMoreFakeNews, Custodiy, Freety & Cyber"
+        description="Explore On Time Technology's flagship special projects: NoMoreFakeNews (AI anti-disinformation), Custodiy (Web3 OTC & escrow), Freety (commodity trading) and Cyber Security R&D."
+        canonical="https://www.ott4future.com/special-projects"
+        keywords="special projects On Time Technology, NoMoreFakeNews, Custodiy, Freety, AI anti-disinformation, custodial wallet Ireland, tokenized commodities trading, cyber security R&D"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'Special Projects', url: 'https://www.ott4future.com/special-projects' },
+          ]),
+          softwareAppSchema({ name: 'NoMoreFakeNews', url: 'https://www.ott4future.com/nomorefakenews', description: 'AI-powered platform to detect and dismantle disinformation in real time.', applicationSubCategory: 'AI Trust Infrastructure' }),
+          softwareAppSchema({ name: 'Custodiy', url: 'https://custodiy.com', description: 'Modular Web3 OTC trading, escrow and document custody platform.', applicationSubCategory: 'Web3 Commerce Platform' }),
+          softwareAppSchema({ name: 'Freety', url: 'https://www.ott4future.com/freety', description: 'Digital infrastructure for global commodity & energy trading with AI tooling.', applicationSubCategory: 'Commodities Trading Platform' }),
+        ]}
+      />
 
       <View style={styles.backWrap}>
         <TouchableOpacity

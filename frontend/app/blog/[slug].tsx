@@ -13,6 +13,8 @@ import SiteHeader from '../../src/components/SiteHeader';
 import SiteFooter from '../../src/components/SiteFooter';
 import MarkdownView from '../../src/components/MarkdownView';
 import ScrollReveal from '../../src/components/ScrollReveal';
+import PageSEO, { breadcrumbsSchema, articleSchema } from '../../src/components/PageSEO';
+import Breadcrumbs from '../../src/components/Breadcrumbs';
 import { getAllArticles, getArticleBySlug, formatDate, type FullArticle, type ArticleSummary } from '../../src/data/blog';
 import { colors, radii, space } from '../../src/theme/tokens';
 
@@ -55,15 +57,39 @@ export default function ArticleScreen() {
 
   return (
     <View style={styles.root}>
-      <Head>
-        <title>{article ? `${article.title} — On Time Technology` : 'Article — On Time Technology'}</title>
-        <meta name="description" content={article?.excerpt || 'On Time Technology insights & analysis.'} />
-        <link rel="canonical" href={`https://www.ott4future.com/blog/${article?.slug || ''}`} />
-        <meta property="og:url" content={`https://www.ott4future.com/blog/${article?.slug || ''}`} />
-        <meta property="og:type" content="article" />
-        {article && <meta property="og:title" content={article.title} />}
-        {article && <meta property="og:description" content={article.excerpt} />}
-      </Head>
+      <PageSEO
+        title={article ? `${article.title} — On Time Technology` : 'Article — On Time Technology'}
+        description={article?.excerpt || 'On Time Technology insights & analysis on AI, EU AI Act, Web3 and frontier software.'}
+        canonical={`https://www.ott4future.com/blog/${article?.slug || ''}`}
+        ogType="article"
+        publishedTime={article?.published_at}
+        modifiedTime={article?.published_at}
+        author={article?.author || 'On Time Technology Editorial'}
+        articleSection={article?.category}
+        articleTags={article?.tags}
+        keywords={article?.tags?.join(', ')}
+        schema={
+          article
+            ? [
+                breadcrumbsSchema([
+                  { name: 'Home', url: 'https://www.ott4future.com/' },
+                  { name: 'Blog', url: 'https://www.ott4future.com/blog' },
+                  { name: article.title, url: `https://www.ott4future.com/blog/${article.slug}` },
+                ]),
+                articleSchema({
+                  headline: article.title,
+                  description: article.excerpt,
+                  url: `https://www.ott4future.com/blog/${article.slug}`,
+                  datePublished: article.published_at,
+                  author: article.author,
+                  section: article.category,
+                  keywords: article.tags,
+                  wordCount: article.content ? article.content.split(/\s+/).length : undefined,
+                }),
+              ]
+            : undefined
+        }
+      />
 
       <MeshBackground />
       <ParticleField density={40} />

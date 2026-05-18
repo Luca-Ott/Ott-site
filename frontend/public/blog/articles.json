@@ -1,5 +1,185 @@
 [
   {
+    "id": "724d8b80-92fe-4a65-911b-3ac6255e21ea",
+    "slug": "why-dublin-is-emerging-as-europes-most-strategic-hub-for-applied-ai",
+    "title": "Why Dublin Is Emerging as Europe’s Most Strategic Hub for Applied AI",
+    "excerpt": "Dublin is rapidly becoming the execution layer for European AI—where talent, regulation, and capital align for software teams that want to build responsibly at scale.",
+    "category": "Company & Ireland",
+    "tags": [
+      "ireland",
+      "ai",
+      "dublin",
+      "r&d",
+      "software"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#06B6D4",
+      "#3B82F6",
+      "#1E1B4B"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:50:42.021178Z",
+    "featured": false
+  },
+  {
+    "id": "c6b3deda-d444-40c9-a988-f057633e8bad",
+    "slug": "tokenised-commodities-in-2026-onchain-markets-ai-risk-engines-and-eu-rules",
+    "title": "Tokenised Commodities in 2026: On‑Chain Markets, AI Risk Engines and EU Rules",
+    "excerpt": "In 2026, cargo, energy and metals are moving on‑chain. Here is how tokenisation, AI and EU regulation are reshaping commodities trading architectures.",
+    "category": "Web3 & FinTech",
+    "tags": [
+      "tokenisation",
+      "commodities",
+      "web3",
+      "ai",
+      "regulation"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#A855F7",
+      "#EC4899",
+      "#F97316"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:50:13.027691Z",
+    "featured": false
+  },
+  {
+    "id": "2bd2103b-5a85-44fa-a49a-ce2a7890b624",
+    "slug": "custodial-crypto-wallets-in-ireland-mica-casp-licensing-and-architecture-in-2026",
+    "title": "Custodial Crypto Wallets in Ireland: MiCA, CASP Licensing and Architecture in 2026",
+    "excerpt": "MiCA turns Irish crypto custody into a regulated financial infrastructure play. Here is what CASP licensing, AML/KYC and technical architecture mean for institutional-grade custodial wallets.",
+    "category": "Web3 & FinTech",
+    "tags": [
+      "crypto custody",
+      "mica",
+      "ireland",
+      "web3",
+      "fintech"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#22D3EE",
+      "#3B82F6",
+      "#0F172A"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:49:41.433302Z",
+    "featured": false
+  },
+  {
+    "id": "43c63bb3-8740-44c3-991e-c9a013d4e9a1",
+    "slug": "inside-an-ai-fake-news-detector-pipelines-graphs-and-human-oversight",
+    "title": "Inside an AI Fake News Detector: Pipelines, Graphs and Human Oversight",
+    "excerpt": "A practical, under‑the‑hood look at how modern AI fake news detectors really work, from classification pipelines to human-in-the-loop review.",
+    "category": "AI Fake News",
+    "tags": [
+      "fake news",
+      "ai verification",
+      "misinformation",
+      "nlp"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#F59E0B",
+      "#EF4444",
+      "#8B5CF6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:49:11.251971Z",
+    "featured": false
+  },
+  {
+    "id": "6d37d132-acfe-4990-ad02-72171250c6d8",
+    "slug": "deepfake-defence-in-2026-multimodal-ai-watermarks-and-provenance-at-scale",
+    "title": "Deepfake Defence in 2026: Multimodal AI, Watermarks and Provenance at Scale",
+    "excerpt": "In 2026, defending against deepfakes means fusing multimodal detection AI, cryptographic watermarking and C2PA provenance into a single, engineered trust stack.",
+    "category": "AI Fake News",
+    "tags": [
+      "deepfakes",
+      "ai security",
+      "provenance",
+      "watermarking"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#10B981",
+      "#06B6D4",
+      "#3B82F6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:48:29.125285Z",
+    "featured": false
+  },
+  {
+    "id": "9c59f818-1517-4cfd-8ef5-7f5c6b82430a",
+    "slug": "a-7step-eu-ai-act-gap-analysis-methodology-for-existing-ai-products",
+    "title": "A 7‑Step EU AI Act Gap Analysis Methodology for Existing AI Products",
+    "excerpt": "A precise, engineering-ready 7‑step method to assess your existing AI product against the EU AI Act and prioritise remediation before enforcement bites.",
+    "category": "AI Act Compliance",
+    "tags": [
+      "eu ai act",
+      "compliance",
+      "ai risk",
+      "governance"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#F472B6",
+      "#A855F7",
+      "#3B82F6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:48:00.506145Z",
+    "featured": false
+  },
+  {
+    "id": "ca3d9e55-dbd3-43c2-bd84-2217ad423fb6",
+    "slug": "highrisk-ai-under-the-eu-ai-act-a-practical-conformity-blueprint-for-ireland",
+    "title": "High‑Risk AI Under the EU AI Act: A Practical Conformity Blueprint for Ireland",
+    "excerpt": "How engineering teams in Ireland can operationalise EU AI Act high‑risk requirements and evidence conformity without paralysing innovation.",
+    "category": "AI Act Compliance",
+    "tags": [
+      "eu ai act",
+      "compliance",
+      "ireland",
+      "high-risk ai",
+      "governance"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#0EA5E9",
+      "#6366F1",
+      "#8B5CF6"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:47:26.675781Z",
+    "featured": false
+  },
+  {
+    "id": "ccfde4b8-664e-45b2-a99b-4e38de233e4f",
+    "slug": "eu-ai-act-compliance-for-irish-startups-in-2026-a-practical-engineering-playbook",
+    "title": "EU AI Act Compliance for Irish Startups in 2026: A Practical Engineering Playbook",
+    "excerpt": "A precise, engineering-focused checklist to navigate EU AI Act obligations for Irish startups and scale-ups by 2026.",
+    "category": "AI Act Compliance",
+    "tags": [
+      "ai act",
+      "compliance",
+      "startups",
+      "ireland"
+    ],
+    "read_time": 6,
+    "cover_gradient": [
+      "#7C3AED",
+      "#2563EB",
+      "#06B6D4"
+    ],
+    "author": "On Time Technology Editorial",
+    "published_at": "2026-05-18T11:46:53.876136Z",
+    "featured": false
+  },
+  {
     "id": "3365a64e-9fc4-4f8a-a451-433332984201",
     "slug": "zero-knowledge-identity-layers-rethinking-kyc-for-institutional-finance",
     "title": "Zero-Knowledge Identity Layers: Rethinking KYC for Institutional Finance",

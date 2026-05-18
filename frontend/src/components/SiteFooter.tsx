@@ -38,6 +38,7 @@ export default function SiteFooter() {
             <FooterLink label="Contact" onPress={() => router.push('/contact')} />
             <FooterLink label="Investor Inquiry" onPress={() => router.push('/investor-inquiry')} />
             <FooterLink label="Blog" onPress={() => router.push('/blog')} />
+            <FooterLink label="Resources" onPress={() => router.push('/resources')} />
           </View>
 
           <View style={styles.col}>
@@ -45,6 +46,7 @@ export default function SiteFooter() {
             <FooterLink label="Software Design" onPress={() => router.push('/software-design')} />
             <FooterLink label="Software Development" onPress={() => router.push('/software-development')} />
             <FooterLink label="R&D" onPress={() => router.push('/research-development')} />
+            <FooterLink label="AI Act Compliance" onPress={() => router.push('/ai-act-compliance')} />
             <FooterLink label="Special Projects" onPress={() => router.push('/special-projects')} />
           </View>
 

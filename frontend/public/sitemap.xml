@@ -2,61 +2,187 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.ott4future.com/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/about</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/contact</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/special-projects</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/freety</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/nomorefakenews</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.ott4future.com/special-projects</loc>
-    <lastmod>2026-04-19</lastmod>
+    <loc>https://www.ott4future.com/ai-act-compliance</loc>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/software-design</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/software-development</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/research-development</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ott4future.com/investor-inquiry</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/resources</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/a-7step-eu-ai-act-gap-analysis-methodology-for-existing-ai-products</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/ai-agents-as-cloud-conductors-orchestrating-multi-cloud-cost-intelligence</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/beyond-fake-news-architecting-trust-infrastructure-for-the-posttruth-internet</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/custodial-crypto-wallets-in-ireland-mica-casp-licensing-and-architecture-in-2026</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/cyber-resilience-vs-autonomous-attackers-redesigning-defence-for-ai-threats</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/deepfake-defence-in-2026-multimodal-ai-watermarks-and-provenance-at-scale</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/designing-software-that-ages-well-architectures-for-mission-critical-longevity</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/eu-ai-act-compliance-for-irish-startups-in-2026-a-practical-engineering-playbook</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/from-lab-to-live-systems-industrialising-research-in-software-engineering</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/highrisk-ai-under-the-eu-ai-act-a-practical-conformity-blueprint-for-ireland</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/how-generative-ai-agents-are-rearchitecting-enterprise-software-in-2026</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/inside-an-ai-fake-news-detector-pipelines-graphs-and-human-oversight</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/modular-escrow-and-otc-platforms-programmable-trust-for-digital-commerce</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/tokenised-commodities-in-2026-onchain-markets-ai-risk-engines-and-eu-rules</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/tokenising-commodities-when-cargo-energy-and-metals-go-onchain</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/why-dublin-is-emerging-as-europes-most-strategic-hub-for-applied-ai</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/why-strategic-special-projects-are-the-rd-engine-of-the-next-decade</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ott4future.com/blog/zero-knowledge-identity-layers-rethinking-kyc-for-institutional-finance</loc>
+    <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

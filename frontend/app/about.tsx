@@ -7,6 +7,7 @@ import Head from 'expo-router/head';
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
 const VALUES = [
@@ -31,12 +32,24 @@ export default function AboutScreen() {
 
   return (
     <PageShell>
-      <Head>
-        <title>About — On Time Technology</title>
-        <meta name="description" content="Learn about On Time Technology Ltd — a UK-based IT company building the digital infrastructure of tomorrow through software, R&D and special projects." />
-        <link rel="canonical" href="https://www.ott4future.com/about" />
-        <meta property="og:url" content="https://www.ott4future.com/about" />
-      </Head>
+      <PageSEO
+        title="About On Time Technology — Future-Ready Software & R&D"
+        description="On Time Technology is a UK-registered Irish AI software company based in Dublin. We craft software, R&D programmes and visionary special projects shaping the next decade."
+        canonical="https://www.ott4future.com/about"
+        keywords="about On Time Technology, Irish AI software company, Dublin IT company, UK software house Ireland, ott4future, Luca On Time Technology"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'About', url: 'https://www.ott4future.com/about' },
+          ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'AboutPage',
+            name: 'About On Time Technology',
+            url: 'https://www.ott4future.com/about',
+          },
+        ]}
+      />
 
       <View style={styles.backWrap}>
         <TouchableOpacity

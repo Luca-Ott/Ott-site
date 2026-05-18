@@ -26,6 +26,7 @@ import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
 import SiteHeader from '../src/components/SiteHeader';
 import SiteFooter from '../src/components/SiteFooter';
+import PageSEO, { softwareAppSchema } from '../src/components/PageSEO';
 import { getAllArticles, formatDate } from '../src/data/blog';
 import { colors, radii, space } from '../src/theme/tokens';
 
@@ -93,12 +94,32 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.root}>
-      <Head>
-        <title>On Time Technology Ltd — Future-Ready Software & R&D</title>
-        <meta name="description" content="On Time Technology Ltd is a UK-based IT company building the digital infrastructure of tomorrow — software design, development, R&D and visionary special projects." />
-        <link rel="canonical" href="https://www.ott4future.com/" />
-        <meta property="og:url" content="https://www.ott4future.com/" />
-      </Head>
+      <PageSEO
+        title="On Time Technology — AI-Native Software, R&D & Special Projects"
+        description="UK & Ireland IT company building the digital infrastructure of tomorrow — AI fake-news detection, EU AI Act compliance, custodial wallet, tokenised commodities and visionary special projects."
+        canonical="https://www.ott4future.com/"
+        keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, Freety, custodial wallet Ireland, tokenized commodities trading"
+        schema={[
+          softwareAppSchema({
+            name: 'NoMoreFakeNews',
+            url: 'https://www.ott4future.com/nomorefakenews',
+            description: 'AI-powered platform to detect, flag and dismantle disinformation in real time.',
+            applicationSubCategory: 'AI Trust Infrastructure',
+          }),
+          softwareAppSchema({
+            name: 'Freety',
+            url: 'https://www.ott4future.com/freety',
+            description: 'Digital infrastructure for global commodity & energy trading with AI tooling.',
+            applicationSubCategory: 'Commodities Trading Platform',
+          }),
+          softwareAppSchema({
+            name: 'Custodiy',
+            url: 'https://custodiy.com',
+            description: 'Modular OTC trading, escrow, marketplace and document custody platform.',
+            applicationSubCategory: 'Custodial Wallet & Web3',
+          }),
+        ]}
+      />
 
       <MeshBackground />
       <ParticleField density={70} />

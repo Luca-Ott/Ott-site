@@ -7,6 +7,7 @@ import Head from 'expo-router/head';
 import PageShell from './PageShell';
 import GlassCard from './GlassCard';
 import GradientText from './GradientText';
+import PageSEO, { breadcrumbsSchema } from './PageSEO';
 import { colors, radii, space } from '../theme/tokens';
 
 export type ServiceFeature = { icon: any; title: string; body: string };
@@ -33,12 +34,26 @@ export default function ServicePageShell({
 
   return (
     <PageShell>
-      <Head>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDescription} />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:url" content={canonical} />
-      </Head>
+      <PageSEO
+        title={seoTitle}
+        description={seoDescription}
+        canonical={canonical}
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: eyebrow.split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' '), url: canonical },
+          ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            serviceType: eyebrow,
+            provider: { '@type': 'Organization', name: 'On Time Technology Ltd' },
+            areaServed: ['IE', 'GB', 'EU', 'Worldwide'],
+            url: canonical,
+            description: seoDescription,
+          },
+        ]}
+      />
 
       <View style={styles.backWrap}>
         <TouchableOpacity style={styles.backBtn} onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}>

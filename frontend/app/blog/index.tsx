@@ -13,6 +13,8 @@ import ScrollReveal from '../../src/components/ScrollReveal';
 import SiteHeader from '../../src/components/SiteHeader';
 import SiteFooter from '../../src/components/SiteFooter';
 import GradientText from '../../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema } from '../../src/components/PageSEO';
+import Breadcrumbs from '../../src/components/Breadcrumbs';
 import { getAllArticles, formatDate } from '../../src/data/blog';
 import { colors, radii, space } from '../../src/theme/tokens';
 
@@ -50,12 +52,26 @@ export default function BlogIndex() {
 
   return (
     <View style={styles.root}>
-      <Head>
-        <title>Blog — On Time Technology Ltd</title>
-        <meta name="description" content="Insights, analysis and forward-looking essays from the On Time Technology editorial team on AI, software engineering, Web3 and innovation." />
-        <link rel="canonical" href="https://www.ott4future.com/blog" />
-        <meta property="og:url" content="https://www.ott4future.com/blog" />
-      </Head>
+      <PageSEO
+        title="Blog — AI, EU AI Act, Web3 & Software Engineering | On Time Technology"
+        description="Long-form analysis & essays from On Time Technology on AI fake-news detection, EU AI Act compliance, custodial wallet infrastructure, tokenised commodities and frontier software engineering."
+        canonical="https://www.ott4future.com/blog"
+        keywords="On Time Technology blog, EU AI Act blog, AI fake news detector, deepfake detection, tokenized commodities trading, custodial wallet Ireland, Irish AI software company"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'Blog', url: 'https://www.ott4future.com/blog' },
+          ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Blog',
+            name: 'On Time Technology Blog',
+            url: 'https://www.ott4future.com/blog',
+            publisher: { '@type': 'Organization', name: 'On Time Technology Ltd' },
+            inLanguage: 'en-GB',
+          },
+        ]}
+      />
 
       <MeshBackground />
       <ParticleField density={50} />

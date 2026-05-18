@@ -8,6 +8,7 @@ import Head from 'expo-router/head';
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
+import PageSEO from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
 export default function ContactSuccessScreen() {
@@ -18,10 +19,12 @@ export default function ContactSuccessScreen() {
 
   return (
     <PageShell hideFooter>
-      <Head>
-        <title>Thank you — On Time Technology</title>
-        <meta name="description" content="Thank you for contacting On Time Technology Ltd — our team will be in touch shortly." />
-      </Head>
+      <PageSEO
+        title="Thank You — Message Received | On Time Technology"
+        description="Thank you for contacting On Time Technology. Our team will be in touch shortly."
+        canonical="https://www.ott4future.com/contact-success"
+        noindex
+      />
 
       <View style={styles.wrap}>
         <GlassCard glow="cyan" style={styles.card}>

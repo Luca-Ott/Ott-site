@@ -4,5 +4,29 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Disallow common low-value paths
+Disallow: /api/
+Disallow: /_vercel/
+Disallow: /_expo/
+
+# Specific bot policies
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap location (primary discovery hint)
 Sitemap: https://www.ott4future.com/sitemap.xml
+
+# Host preference
+Host: https://www.ott4future.com

@@ -7,6 +7,8 @@ import Head from 'expo-router/head';
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
+import PageSEO, { breadcrumbsSchema, faqSchema } from '../src/components/PageSEO';
+import Breadcrumbs from '../src/components/Breadcrumbs';
 import { colors, radii, space } from '../src/theme/tokens';
 
 export default function ContactScreen() {
@@ -49,12 +51,24 @@ export default function ContactScreen() {
 
   return (
     <PageShell>
-      <Head>
-        <title>Contact — On Time Technology</title>
-        <meta name="description" content="Get in touch with On Time Technology Ltd — talk to our team about software design, development, R&D and special projects." />
-        <link rel="canonical" href="https://www.ott4future.com/contact" />
-        <meta property="og:url" content="https://www.ott4future.com/contact" />
-      </Head>
+      <PageSEO
+        title="Contact On Time Technology — Talk to Our Team"
+        description="Get in touch with On Time Technology — Dublin & UK IT company. Talk to us about software design, development, AI projects, EU AI Act compliance or special-projects partnerships."
+        canonical="https://www.ott4future.com/contact"
+        keywords="contact On Time Technology, Dublin IT company contact, Irish AI software company, ott4future contact"
+        schema={[
+          breadcrumbsSchema([
+            { name: 'Home', url: 'https://www.ott4future.com/' },
+            { name: 'Contact', url: 'https://www.ott4future.com/contact' },
+          ]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ContactPage',
+            name: 'Contact On Time Technology',
+            url: 'https://www.ott4future.com/contact',
+          },
+        ]}
+      />
 
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ width: '100%' }}>
         <View style={styles.backWrap}>
