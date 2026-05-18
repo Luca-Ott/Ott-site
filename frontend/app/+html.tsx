@@ -136,6 +136,12 @@ export default function Root({ children }: PropsWithChildren) {
           @keyframes ott-pulse-glow { 0%,100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
           @keyframes ott-pulse-aura { 0%,100% { opacity: 0.35; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.18); } }
           @keyframes ott-twinkle { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+          @keyframes ott-puzzle-wobble {
+            0%,100% { transform: rotate(-1.5deg) translate(-0.5px, -0.5px) scale(1); }
+            25%      { transform: rotate(1.5deg)  translate(0.5px,  -0.5px) scale(1.02); }
+            50%      { transform: rotate(1deg)    translate(0.5px,   0.5px) scale(1.04); }
+            75%      { transform: rotate(-1deg)   translate(-0.5px,  0.5px) scale(1.02); }
+          }
         ` }} />
 
         {/* Vercel Analytics */}

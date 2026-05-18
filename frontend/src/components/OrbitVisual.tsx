@@ -3,30 +3,44 @@ import { View, Platform, StyleSheet } from 'react-native';
 
 type Props = { size?: number };
 
+const LOGO_URL =
+  'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68';
+
 /**
- * Cinematic AI/space orbit visual.
- * - Tilted 3D rings rotating at different speeds and directions
- * - Glowing satellites traveling along each ring
- * - Pulsing core sphere with multi-layer aura
- * - Subtle floating motion on the whole rig
+ * Cinematic AI/space orbit visual with the OTT logo rendered as a floating
+ * puzzle of small tiles at the centre of perfectly concentric rings.
+ *  - 4 tilted rings, all sharing the SAME rotation axis (perfectly centred)
+ *  - Glowing satellites travelling along each ring at different speeds
+ *  - Twinkling stars
+ *  - Pulsing aura behind the logo
+ *  - 7\u00d77 = 49 puzzle tiles forming the OTT logo, each wobbling independently
  *
- * Web-only (CSS-driven). On native it returns null \u2014 mobile uses the
- * gradient hero already.
+ * Web-only \u2014 returns null on native.
  */
 export default function OrbitVisual({ size = 520 }: Props) {
   if (Platform.OS !== 'web') return null;
 
   const center = size / 2;
 
-  // Ring spec: diameter, rotation duration (s), direction, satellite color, satellite size
+  // Shared tilt for ALL rings so they remain perfectly concentric
+  // around the centre point where the puzzle logo sits.
+  const SHARED_TILT = 'rotateX(68deg) rotateZ(-8deg)';
+
+  // Rings: diameter, duration (s), direction, colours
   const rings = [
-    { d: size * 0.96, dur: 90, reverse: false, color: 'rgba(96,165,250,0.7)', satColor: '#60A5FA', satSize: 8, stroke: 'rgba(96,165,250,0.18)' },
+    { d: size * 0.96, dur: 90, reverse: false, color: 'rgba(96,165,250,0.7)',  satColor: '#60A5FA', satSize: 8,  stroke: 'rgba(96,165,250,0.18)' },
     { d: size * 0.78, dur: 60, reverse: true,  color: 'rgba(168,85,247,0.75)', satColor: '#A855F7', satSize: 10, stroke: 'rgba(168,85,247,0.22)' },
-    { d: size * 0.6,  dur: 38, reverse: false, color: 'rgba(34,211,238,0.85)', satColor: '#22D3EE', satSize: 7, stroke: 'rgba(34,211,238,0.26)' },
-    { d: size * 0.42, dur: 24, reverse: true,  color: 'rgba(236,72,153,0.85)', satColor: '#EC4899', satSize: 6, stroke: 'rgba(236,72,153,0.28)' },
+    { d: size * 0.6,  dur: 38, reverse: false, color: 'rgba(34,211,238,0.85)', satColor: '#22D3EE', satSize: 7,  stroke: 'rgba(34,211,238,0.26)' },
+    { d: size * 0.42, dur: 24, reverse: true,  color: 'rgba(236,72,153,0.85)', satColor: '#EC4899', satSize: 6,  stroke: 'rgba(236,72,153,0.28)' },
   ];
 
-  // Position helper for inline web styles
+  // Puzzle config
+  const LOGO_BOX = Math.round(size * 0.32); // ~166px for size=520
+  const GRID = 7;
+  const PIECE = LOGO_BOX / GRID;
+  const LOGO_LEFT = center - LOGO_BOX / 2;
+  const LOGO_TOP = center - LOGO_BOX / 2;
+
   const abs = (left: number | string, top: number | string): React.CSSProperties => ({
     position: 'absolute',
     left,
@@ -43,10 +57,16 @@ export default function OrbitVisual({ size = 520 }: Props) {
     transformStyle: 'preserve-3d',
   };
 
+  // Deterministic pseudo-random so pieces don't reshuffle on every render
+  const prand = (seed: number) => {
+    const x = Math.sin(seed * 9301 + 49297) * 233280;
+    return x - Math.floor(x);
+  };
+
   return (
     <View pointerEvents="none" style={styles.outer}>
       {React.createElement('div', { style: wrapperStyle }, [
-        // Background atmospheric glow (large soft blob behind everything)
+        // Atmospheric background glow
         React.createElement('div', {
           key: 'aura-bg',
           style: {
@@ -55,18 +75,18 @@ export default function OrbitVisual({ size = 520 }: Props) {
             height: size * 1.05,
             borderRadius: '50%',
             background:
-              'radial-gradient(circle, rgba(59,130,246,0.22) 0%, rgba(168,85,247,0.12) 40%, rgba(0,0,0,0) 70%)',
+              'radial-gradient(circle, rgba(59,130,246,0.20) 0%, rgba(168,85,247,0.12) 40%, rgba(0,0,0,0) 70%)',
             filter: 'blur(20px)',
             animation: 'ott-pulse-aura 6s ease-in-out infinite',
           } as React.CSSProperties,
         }),
 
-        // Twinkling stars around the rig (sparse)
+        // Twinkling stars sprinkled around the orbits
         ...Array.from({ length: 14 }).map((_, i) => {
           const angle = (i / 14) * Math.PI * 2 + (i % 3) * 0.2;
           const radius = size * (0.46 + (i % 3) * 0.04);
           const x = center + Math.cos(angle) * radius;
-          const y = center + Math.sin(angle) * radius * 0.6; // squashed for tilt
+          const y = center + Math.sin(angle) * radius * 0.6;
           return React.createElement('div', {
             key: `star-${i}`,
             style: {
@@ -81,33 +101,25 @@ export default function OrbitVisual({ size = 520 }: Props) {
           });
         }),
 
-        // The four orbital rings (tilted via parent perspective)
+        // Orbital rings (all share SHARED_TILT \u2192 perfectly concentric)
         ...rings.flatMap((r, i) => {
-          // Ring container: tilted ellipse
           const ringStyle: React.CSSProperties = {
             ...abs(center, center),
             width: r.d,
             height: r.d,
             borderRadius: '50%',
-            transform: `translate(-50%, -50%) rotateX(68deg) rotateZ(${i * 8 - 12}deg)`,
+            transform: `translate(-50%, -50%) ${SHARED_TILT}`,
             transformStyle: 'preserve-3d',
             pointerEvents: 'none',
           };
-
-          // Spinning inner that holds the satellite
           const spinStyle: React.CSSProperties = {
             position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
+            inset: 0,
             borderRadius: '50%',
             border: `1.5px solid ${r.stroke}`,
             boxShadow: `inset 0 0 32px ${r.stroke}, 0 0 12px ${r.stroke}`,
             animation: `${r.reverse ? 'ott-spin-reverse' : 'ott-spin'} ${r.dur}s linear infinite`,
           };
-
-          // Satellite: a glowing dot at the right edge of the ring
           const satStyle: React.CSSProperties = {
             position: 'absolute',
             top: '50%',
@@ -119,21 +131,15 @@ export default function OrbitVisual({ size = 520 }: Props) {
             boxShadow: `0 0 12px ${r.satColor}, 0 0 24px ${r.satColor}88, 0 0 40px ${r.satColor}55`,
             transform: 'translateY(-50%)',
           };
-
-          // Trailing arc (gradient highlight on the ring, on the satellite side)
           const trailStyle: React.CSSProperties = {
             position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
+            inset: 0,
             borderRadius: '50%',
             background: `conic-gradient(from 0deg, ${r.color} 0deg, ${r.color}00 90deg, ${r.color}00 360deg)`,
             mask: 'radial-gradient(circle, transparent 49%, #000 49.5%, #000 50.5%, transparent 51%)',
             WebkitMask: 'radial-gradient(circle, transparent 49%, #000 49.5%, #000 50.5%, transparent 51%)',
             opacity: 0.55,
           };
-
           return [
             React.createElement('div', { key: `ring-${i}`, style: ringStyle },
               React.createElement('div', { key: `spin-${i}`, style: spinStyle }, [
@@ -144,48 +150,48 @@ export default function OrbitVisual({ size = 520 }: Props) {
           ];
         }),
 
-        // Core aura (large soft halo)
+        // Halo behind the puzzle logo
         React.createElement('div', {
-          key: 'core-aura',
+          key: 'logo-halo',
           style: {
             ...abs(center, center),
-            width: 160,
-            height: 160,
+            width: LOGO_BOX * 1.5,
+            height: LOGO_BOX * 1.5,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(96,165,250,0.55) 0%, rgba(168,85,247,0.25) 40%, rgba(0,0,0,0) 70%)',
-            filter: 'blur(8px)',
-            animation: 'ott-pulse-aura 4s ease-in-out infinite',
+            background:
+              'radial-gradient(circle, rgba(96,165,250,0.55) 0%, rgba(168,85,247,0.30) 35%, rgba(0,0,0,0) 70%)',
+            filter: 'blur(14px)',
+            animation: 'ott-pulse-aura 5s ease-in-out infinite',
           } as React.CSSProperties,
         }),
 
-        // Core sphere
-        React.createElement('div', {
-          key: 'core-sphere',
-          style: {
-            ...abs(center, center),
-            width: 78,
-            height: 78,
-            borderRadius: '50%',
-            background:
-              'radial-gradient(circle at 30% 30%, #FFFFFF 0%, #93C5FD 18%, #3B82F6 45%, #1E3A8A 90%)',
-            boxShadow:
-              '0 0 30px #3B82F6, 0 0 60px rgba(59,130,246,0.7), 0 0 90px rgba(168,85,247,0.45), inset -10px -14px 22px rgba(0,0,0,0.45)',
-            animation: 'ott-pulse-glow 3.4s ease-in-out infinite',
-          } as React.CSSProperties,
-        }),
-
-        // Specular highlight on the core
-        React.createElement('div', {
-          key: 'core-highlight',
-          style: {
-            ...abs(center - 18, center - 18),
-            width: 22,
-            height: 22,
-            borderRadius: '50%',
-            background:
-              'radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%)',
-            filter: 'blur(2px)',
-          } as React.CSSProperties,
+        // PUZZLE LOGO \u2014 49 tiles forming the OTT brand mark
+        ...Array.from({ length: GRID * GRID }).map((_, i) => {
+          const row = Math.floor(i / GRID);
+          const col = i % GRID;
+          const wobbleDur = 2.4 + prand(i) * 2.2;          // 2.4\u20134.6s
+          const delay = prand(i + 100) * 4;                // 0\u20134s offset
+          return React.createElement('div', {
+            key: `tile-${i}`,
+            style: {
+              position: 'absolute',
+              left: LOGO_LEFT + col * PIECE,
+              top: LOGO_TOP + row * PIECE,
+              width: PIECE,
+              height: PIECE,
+              backgroundImage: `url(${LOGO_URL})`,
+              backgroundSize: `${LOGO_BOX}px ${LOGO_BOX}px`,
+              backgroundPosition: `-${col * PIECE}px -${row * PIECE}px`,
+              backgroundRepeat: 'no-repeat',
+              filter: 'drop-shadow(0 0 4px rgba(96,165,250,0.55)) drop-shadow(0 0 12px rgba(34,211,238,0.35))',
+              animation: `ott-puzzle-wobble ${wobbleDur.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite`,
+              transformOrigin: 'center center',
+              // Tiny visible gap between pieces \u2192 puzzle look
+              boxShadow:
+                'inset 0 0 0 0.5px rgba(255,255,255,0.04), 0 0 0 0.5px rgba(0,0,0,0.4)',
+              borderRadius: 1,
+            } as React.CSSProperties,
+          });
         }),
       ])}
     </View>
@@ -199,6 +205,6 @@ const styles = StyleSheet.create({
     top: 40,
     width: 520,
     height: 520,
-    opacity: 0.85,
+    opacity: 0.95,
   },
 });

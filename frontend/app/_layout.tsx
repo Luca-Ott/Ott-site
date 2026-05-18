@@ -56,6 +56,12 @@ export default function RootLayout() {
         0%, 100% { opacity: 0.4; }
         50% { opacity: 1; }
       }
+      @keyframes ott-puzzle-wobble {
+        0%, 100% { transform: rotate(-1.5deg) translate(-0.5px, -0.5px) scale(1); }
+        25%       { transform: rotate(1.5deg)  translate(0.5px,  -0.5px) scale(1.02); }
+        50%       { transform: rotate(1deg)    translate(0.5px,   0.5px) scale(1.04); }
+        75%       { transform: rotate(-1deg)   translate(-0.5px,  0.5px) scale(1.02); }
+      }
       @keyframes ott-orbit-tilt {
         0%, 100% { transform: rotateX(60deg) rotateZ(0deg); }
         50% { transform: rotateX(62deg) rotateZ(2deg); }
