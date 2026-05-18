@@ -30,7 +30,7 @@ export default function OrbitVisual({ size = 520 }: Props) {
   ];
 
   // ---- Planet config ----
-  const PLANET_SIZE = Math.round(size * 0.26); // ~135px
+  const PLANET_SIZE = Math.round(size * 0.12); // ~62px – small, jewel-like
 
   const abs = (left: number | string, top: number | string): React.CSSProperties => ({
     position: 'absolute',
@@ -148,7 +148,7 @@ export default function OrbitVisual({ size = 520 }: Props) {
             overflow: 'hidden',
             // Outer atmosphere glow + inner deep shadow for sphere depth
             boxShadow:
-              '0 0 30px rgba(96,165,250,0.7), 0 0 70px rgba(34,211,238,0.5), 0 0 110px rgba(168,85,247,0.35), inset -16px -22px 38px rgba(0,0,0,0.6), inset 14px 10px 24px rgba(255,255,255,0.08)',
+              '0 0 18px rgba(96,165,250,0.7), 0 0 36px rgba(34,211,238,0.5), 0 0 60px rgba(168,85,247,0.35), inset -8px -10px 18px rgba(0,0,0,0.6), inset 6px 5px 12px rgba(255,255,255,0.08)',
           } as React.CSSProperties,
         }, [
           // 1) Ocean base \u2014 deep blue with subtle radial shading
@@ -272,8 +272,8 @@ export default function OrbitVisual({ size = 520 }: Props) {
           key: 'planet-halo',
           style: {
             ...abs(center, center),
-            width: PLANET_SIZE + 36,
-            height: PLANET_SIZE + 36,
+            width: PLANET_SIZE + 18,
+            height: PLANET_SIZE + 18,
             borderRadius: '50%',
             pointerEvents: 'none',
             background:
