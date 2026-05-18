@@ -62,6 +62,14 @@ export default function RootLayout() {
         50%       { transform: rotate(1deg)    translate(0.5px,   0.5px) scale(1.04); }
         75%       { transform: rotate(-1deg)   translate(-0.5px,  0.5px) scale(1.02); }
       }
+      @keyframes ott-globe-spin {
+        from { transform: rotateY(0deg); }
+        to   { transform: rotateY(360deg); }
+      }
+      @keyframes ott-globe-tilt {
+        0%, 100% { transform: rotateY(-22deg) rotateX(4deg); }
+        50%      { transform: rotateY(22deg)  rotateX(-4deg); }
+      }
       @keyframes ott-orbit-tilt {
         0%, 100% { transform: rotateX(60deg) rotateZ(0deg); }
         50% { transform: rotateX(62deg) rotateZ(2deg); }

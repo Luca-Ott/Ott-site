@@ -34,9 +34,9 @@ export default function OrbitVisual({ size = 520 }: Props) {
     { d: size * 0.42, dur: 24, reverse: true,  color: 'rgba(236,72,153,0.85)', satColor: '#EC4899', satSize: 6,  stroke: 'rgba(236,72,153,0.28)' },
   ];
 
-  // Puzzle config
-  const LOGO_BOX = Math.round(size * 0.32); // ~166px for size=520
-  const GRID = 7;
+  // Puzzle config — small 3D globe of OTT logo tiles
+  const LOGO_BOX = Math.round(size * 0.22); // ~114px for size=520 — smaller & more elegant
+  const GRID = 6;
   const PIECE = LOGO_BOX / GRID;
   const LOGO_LEFT = center - LOGO_BOX / 2;
   const LOGO_TOP = center - LOGO_BOX / 2;
@@ -150,13 +150,13 @@ export default function OrbitVisual({ size = 520 }: Props) {
           ];
         }),
 
-        // Halo behind the puzzle logo
+        // Halo behind the 3D logo globe
         React.createElement('div', {
           key: 'logo-halo',
           style: {
             ...abs(center, center),
-            width: LOGO_BOX * 1.5,
-            height: LOGO_BOX * 1.5,
+            width: LOGO_BOX * 2.4,
+            height: LOGO_BOX * 2.4,
             borderRadius: '50%',
             background:
               'radial-gradient(circle, rgba(96,165,250,0.55) 0%, rgba(168,85,247,0.30) 35%, rgba(0,0,0,0) 70%)',
@@ -165,34 +165,96 @@ export default function OrbitVisual({ size = 520 }: Props) {
           } as React.CSSProperties,
         }),
 
-        // PUZZLE LOGO \u2014 49 tiles forming the OTT brand mark
-        ...Array.from({ length: GRID * GRID }).map((_, i) => {
-          const row = Math.floor(i / GRID);
-          const col = i % GRID;
-          const wobbleDur = 2.4 + prand(i) * 2.2;          // 2.4\u20134.6s
-          const delay = prand(i + 100) * 4;                // 0\u20134s offset
-          return React.createElement('div', {
-            key: `tile-${i}`,
+        // 3D LOGO GLOBE — rotating sphere of puzzle tiles with sphere shading
+        React.createElement('div', {
+          key: 'globe',
+          style: {
+            ...abs(center, center),
+            width: LOGO_BOX,
+            height: LOGO_BOX,
+            perspective: '600px',
+            transformStyle: 'preserve-3d',
+          } as React.CSSProperties,
+        },
+          React.createElement('div', {
+            key: 'globe-spin',
             style: {
               position: 'absolute',
-              left: LOGO_LEFT + col * PIECE,
-              top: LOGO_TOP + row * PIECE,
-              width: PIECE,
-              height: PIECE,
-              backgroundImage: `url(${LOGO_URL})`,
-              backgroundSize: `${LOGO_BOX}px ${LOGO_BOX}px`,
-              backgroundPosition: `-${col * PIECE}px -${row * PIECE}px`,
-              backgroundRepeat: 'no-repeat',
-              filter: 'drop-shadow(0 0 4px rgba(96,165,250,0.55)) drop-shadow(0 0 12px rgba(34,211,238,0.35))',
-              animation: `ott-puzzle-wobble ${wobbleDur.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite`,
-              transformOrigin: 'center center',
-              // Tiny visible gap between pieces \u2192 puzzle look
-              boxShadow:
-                'inset 0 0 0 0.5px rgba(255,255,255,0.04), 0 0 0 0.5px rgba(0,0,0,0.4)',
-              borderRadius: 1,
+              inset: 0,
+              borderRadius: '50%',
+              transformStyle: 'preserve-3d',
+              animation: 'ott-globe-tilt 9s ease-in-out infinite',
             } as React.CSSProperties,
-          });
-        }),
+          }, [
+            // PUZZLE TILES forming the OTT brand mark
+            ...Array.from({ length: GRID * GRID }).map((_, i) => {
+              const row = Math.floor(i / GRID);
+              const col = i % GRID;
+              const wobbleDur = 2.4 + prand(i) * 2.2;
+              const delay = prand(i + 100) * 4;
+              return React.createElement('div', {
+                key: `tile-${i}`,
+                style: {
+                  position: 'absolute',
+                  left: col * PIECE,
+                  top: row * PIECE,
+                  width: PIECE,
+                  height: PIECE,
+                  backgroundImage: `url(${LOGO_URL})`,
+                  backgroundSize: `${LOGO_BOX}px ${LOGO_BOX}px`,
+                  backgroundPosition: `-${col * PIECE}px -${row * PIECE}px`,
+                  backgroundRepeat: 'no-repeat',
+                  animation: `ott-puzzle-wobble ${wobbleDur.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite`,
+                  transformOrigin: 'center center',
+                  boxShadow: 'inset 0 0 0 0.5px rgba(255,255,255,0.06), 0 0 0 0.5px rgba(0,0,0,0.5)',
+                  borderRadius: 1,
+                } as React.CSSProperties,
+              });
+            }),
+            // Sphere shading (darkens edges + lit top-left → 3D depth)
+            React.createElement('div', {
+              key: 'sphere-shade',
+              style: {
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                background:
+                  'radial-gradient(circle at 32% 28%, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0) 35%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.6) 100%)',
+                pointerEvents: 'none',
+                mixBlendMode: 'overlay',
+              } as React.CSSProperties,
+            }),
+            // Specular highlight (glass sphere feel)
+            React.createElement('div', {
+              key: 'sphere-spec',
+              style: {
+                position: 'absolute',
+                top: '6%',
+                left: '14%',
+                width: '36%',
+                height: '22%',
+                borderRadius: '50%',
+                background:
+                  'radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
+                filter: 'blur(3px)',
+                pointerEvents: 'none',
+                mixBlendMode: 'screen',
+              } as React.CSSProperties,
+            }),
+            // Rim glow (atmospheric edge)
+            React.createElement('div', {
+              key: 'sphere-rim',
+              style: {
+                position: 'absolute',
+                inset: -2,
+                borderRadius: '50%',
+                boxShadow:
+                  '0 0 24px rgba(96,165,250,0.65), 0 0 48px rgba(168,85,247,0.4), inset 0 0 14px rgba(34,211,238,0.3)',
+                pointerEvents: 'none',
+              } as React.CSSProperties,
+            }),
+          ])
+        ),
       ])}
     </View>
   );

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  Dimensions,
+  useWindowDimensions,
   Platform,
   Image,
   Linking,
@@ -42,16 +42,23 @@ const newsItems = [
 
 export default function HomeScreen() {
   const router = useRouter();
-  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const dims = useWindowDimensions();
+  const width = dims.width || (typeof window !== 'undefined' ? window.innerWidth : 1200);
   const articles = getAllArticles().slice(0, 3);
-
-  useEffect(() => {
-    const sub = Dimensions.addEventListener('change', ({ window }) => setWidth(window.width));
-    return () => sub?.remove();
-  }, []);
 
   const isDesktop = width >= 900;
   const isTablet = width >= 640;
+
+  // Responsive type scale to avoid overflow on small phones
+  const heroFs = isDesktop ? 76 : width < 400 ? 32 : width < 600 ? 40 : 52;
+  const heroLh = Math.round(heroFs * 1.12);
+  const heroLs = isDesktop ? -2 : width < 400 ? -0.5 : -1;
+  const sectionFs = isDesktop ? 48 : width < 400 ? 26 : width < 600 ? 32 : 40;
+  const sectionLh = Math.round(sectionFs * 1.18);
+  const sectionLs = isDesktop ? -1.2 : width < 400 ? -0.4 : -0.8;
+  const ctaFs = isDesktop ? 44 : width < 400 ? 26 : 34;
+  const ctaLh = Math.round(ctaFs * 1.18);
+  const ctaLs = isDesktop ? -1 : -0.5;
 
   // Hero parallax & breathing animation
   const pulse = useRef(new Animated.Value(0)).current;
@@ -145,9 +152,9 @@ export default function HomeScreen() {
                 <Text style={styles.eyebrowText}>IRELAND · IT COMPANY · EST. 2010</Text>
               </View>
 
-              <Text style={[styles.heroTitle, !isDesktop && styles.heroTitleMobile]}>
+              <Text style={[styles.heroTitle, { fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs }]}>
                 Building the digital{'\n'}
-                <GradientText style={styles.heroTitleGrad} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
+                <GradientText style={{ fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs, fontWeight: '900' }} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
                   infrastructure of tomorrow
                 </GradientText>
               </Text>
@@ -229,9 +236,9 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <ScrollReveal>
               <Text style={styles.sectionLabel}>OUR MISSION</Text>
-              <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+              <Text style={[styles.sectionTitle, { fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs }]}>
                 Engineering tomorrow,{'\n'}
-                <GradientText style={styles.sectionTitleGrad} colors={['#22D3EE', '#3B82F6']}>
+                <GradientText style={{ fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs, fontWeight: '900' }} colors={['#22D3EE', '#3B82F6']}>
                   delivered today
                 </GradientText>
               </Text>
@@ -275,9 +282,9 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <ScrollReveal>
               <Text style={styles.sectionLabel}>TECH STACK</Text>
-              <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+              <Text style={[styles.sectionTitle, { fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs }]}>
                 The frameworks behind{'\n'}
-                <GradientText style={styles.sectionTitleGrad} colors={['#A855F7', '#EC4899']}>
+                <GradientText style={{ fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs, fontWeight: '900' }} colors={['#A855F7', '#EC4899']}>
                   our craft
                 </GradientText>
               </Text>
@@ -308,9 +315,9 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <ScrollReveal>
               <Text style={styles.sectionLabel}>FEATURED PROJECTS</Text>
-              <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+              <Text style={[styles.sectionTitle, { fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs }]}>
                 Special projects with{'\n'}
-                <GradientText style={styles.sectionTitleGrad} colors={['#60A5FA', '#22D3EE']}>
+                <GradientText style={{ fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs, fontWeight: '900' }} colors={['#60A5FA', '#22D3EE']}>
                   outsized ambition
                 </GradientText>
               </Text>
@@ -382,9 +389,9 @@ export default function HomeScreen() {
               <View style={styles.blogHeader}>
                 <View>
                   <Text style={styles.sectionLabel}>INSIGHTS</Text>
-                  <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+                  <Text style={[styles.sectionTitle, { fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs }]}>
                     From the{' '}
-                    <GradientText style={styles.sectionTitleGrad} colors={['#22D3EE', '#A855F7']}>
+                    <GradientText style={{ fontSize: sectionFs, lineHeight: sectionLh, letterSpacing: sectionLs, fontWeight: '900' }} colors={['#22D3EE', '#A855F7']}>
                       OTT lab
                     </GradientText>
                   </Text>
@@ -440,9 +447,9 @@ export default function HomeScreen() {
                   end={{ x: 1, y: 1 }}
                   style={StyleSheet.absoluteFill}
                 />
-                <Text style={[styles.ctaTitle, !isDesktop && { fontSize: 32 }]}>
+                <Text style={[styles.ctaTitle, { fontSize: ctaFs, lineHeight: ctaLh, letterSpacing: ctaLs }]}>
                   Have a vision that needs{' '}
-                  <GradientText style={styles.ctaTitleGrad} colors={['#22D3EE', '#A855F7']}>
+                  <GradientText style={{ fontSize: ctaFs, lineHeight: ctaLh, letterSpacing: ctaLs, fontWeight: '900' }} colors={['#22D3EE', '#A855F7']}>
                     elite engineering?
                   </GradientText>
                 </Text>
