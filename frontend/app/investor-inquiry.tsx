@@ -98,7 +98,7 @@ export default function InvestorInquiryScreen() {
             <Text style={styles.sideTitle}>Why On Time Technology?</Text>
             {[
               { icon: 'flash-outline', text: 'Working software, not slideware. Every project ships to production.' },
-              { icon: 'shield-checkmark-outline', text: 'UK-registered. Transparent governance, audit-ready financials.' },
+              { icon: 'shield-checkmark-outline', text: 'Ireland-registered. Transparent governance, audit-ready financials.' },
               { icon: 'planet-outline', text: 'Frontier focus: AI, Web3, trust infrastructure, global trade.' },
               { icon: 'rocket-outline', text: 'R&D-driven culture with a proven 15+ year delivery track record.' },
             ].map((b, idx) => (

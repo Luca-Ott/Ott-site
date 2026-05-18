@@ -294,7 +294,7 @@ export default function AIActComplianceScreen() {
       {/* 7. HOW WE HELP */}
       <Section title="7. How On Time Technology helps" subtitle="Compliance as engineering, not paperwork.">
         <Para>
-          On Time Technology is a UK-registered IT company based between Dublin and London. We have built
+          On Time Technology is an Irish-registered IT company based in Dublin. We have built
           AI-native platforms in production — including <Bold>NoMoreFakeNews</Bold> (real-time disinformation
           detection), <Bold>Freety</Bold> (AI-driven commodity trading) and special-projects R&D — which gives us
           a working understanding of where AI Act obligations meet day-to-day engineering reality.

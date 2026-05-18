@@ -96,7 +96,7 @@ export default function HomeScreen() {
     <View style={styles.root}>
       <PageSEO
         title="On Time Technology — AI-Native Software, R&D & Special Projects"
-        description="UK & Ireland IT company building the digital infrastructure of tomorrow — AI fake-news detection, EU AI Act compliance, custodial wallet, tokenised commodities and visionary special projects."
+        description="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI fake-news detection, EU AI Act compliance, custodial wallet, tokenised commodities and visionary special projects."
         canonical="https://www.ott4future.com/"
         keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, Freety, custodial wallet Ireland, tokenized commodities trading"
         schema={[
@@ -141,7 +141,7 @@ export default function HomeScreen() {
                     },
                   ]}
                 />
-                <Text style={styles.eyebrowText}>UK · IT COMPANY · EST. 2010</Text>
+                <Text style={styles.eyebrowText}>IRELAND · IT COMPANY · EST. 2010</Text>
               </View>
 
               <Text style={[styles.heroTitle, !isDesktop && styles.heroTitleMobile]}>
@@ -169,7 +169,7 @@ export default function HomeScreen() {
               <View style={styles.heroBadges}>
                 <View style={styles.heroBadge}>
                   <Ionicons name="shield-checkmark" size={14} color={colors.cyan} />
-                  <Text style={styles.heroBadgeText}>UK Registered</Text>
+                  <Text style={styles.heroBadgeText}>Irish Registered</Text>
                 </View>
                 <View style={styles.heroBadge}>
                   <Ionicons name="rocket" size={14} color={colors.purple} />

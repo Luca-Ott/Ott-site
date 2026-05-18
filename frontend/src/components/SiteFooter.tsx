@@ -18,7 +18,7 @@ export default function SiteFooter() {
               <Image source={{ uri: LOGO_URL }} style={styles.logo} resizeMode="contain" />
               <Text style={styles.brandName}>ON TIME TECHNOLOGY LTD</Text>
             </View>
-            <Text style={styles.brandCopy}>UK-based IT company specialising in Software Design, Development and R&D. Building the digital infrastructure of tomorrow.</Text>
+            <Text style={styles.brandCopy}>Irish IT company based in Dublin, specialising in Software Design, Development and R&D. Building the digital infrastructure of tomorrow.</Text>
             <View style={styles.socials}>
               <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')} style={styles.socialBtn}>
                 <Ionicons name="logo-twitter" size={16} color={colors.text} />

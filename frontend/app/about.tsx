@@ -34,7 +34,7 @@ export default function AboutScreen() {
     <PageShell>
       <PageSEO
         title="About On Time Technology — Future-Ready Software & R&D"
-        description="On Time Technology is a UK-registered Irish AI software company based in Dublin. We craft software, R&D programmes and visionary special projects shaping the next decade."
+        description="On Time Technology is an Irish AI software company based in Dublin. We craft software, R&D programmes and visionary special projects shaping the next decade."
         canonical="https://www.ott4future.com/about"
         keywords="about On Time Technology, Irish AI software company, Dublin IT company, UK software house Ireland, ott4future, Luca On Time Technology"
         schema={[
@@ -70,7 +70,7 @@ export default function AboutScreen() {
           </GradientText>
         </Text>
         <Text style={styles.subtitle}>
-          On Time Technology Ltd is a UK-registered IT company specialising in software design, development
+          On Time Technology Ltd is an Irish-registered IT company based in Dublin, specialising in software design, development
           and applied research. We craft exceptional solutions that drive business growth — from product-ready
           platforms to visionary special projects redefining trust, commerce and information online.
         </Text>

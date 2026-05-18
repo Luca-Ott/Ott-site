@@ -114,7 +114,7 @@ export const ORG_SCHEMA = {
   url: 'https://www.ott4future.com',
   logo: 'https://www.ott4future.com/favicon-512x512.png',
   description:
-    'UK-registered IT company specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety).',
+    'Irish-registered IT company based in Dublin, specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety).',
   email: 'Info@ott4future.com',
   telephone: '+44-7775-682831',
   address: {

@@ -13,7 +13,7 @@ const ORG_LD = {
   url: SITE_URL,
   logo: { '@type': 'ImageObject', url: LOGO, width: 512, height: 512 },
   description:
-    'UK-registered IT company specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety) — building the digital infrastructure of tomorrow.',
+    'Irish-registered IT company based in Dublin, specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety) — building the digital infrastructure of tomorrow.',
   email: 'Info@ott4future.com',
   telephone: '+44-7775-682831',
   address: {
@@ -65,7 +65,7 @@ export default function Root({ children }: PropsWithChildren) {
         {/* Default Primary Meta — overridden by per-page PageSEO */}
         <title>On Time Technology — Future-Ready Software & R&D</title>
         <meta name="application-name" content="On Time Technology" />
-        <meta name="description" content="On Time Technology Ltd is a UK-based IT company building the digital infrastructure of tomorrow — software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety)." />
+        <meta name="description" content="On Time Technology Ltd is an Irish IT company based in Dublin building the digital infrastructure of tomorrow — software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety)." />
         <meta name="keywords" content="On Time Technology, ott4future, EU AI Act compliance, AI fake news detector, deepfake detection 2026, NoMoreFakeNews, Custodiy, Freety, custodial wallet Ireland, tokenized commodities trading, Irish AI software company, Dublin IT company, software design, software development, R&D" />
         <meta name="author" content="On Time Technology Ltd" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -76,7 +76,7 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:site_name" content="On Time Technology" />
         <meta property="og:locale" content="en_GB" />
         <meta property="og:title" content="On Time Technology — Future-Ready Software & R&D" />
-        <meta property="og:description" content="UK-based IT company building the digital infrastructure of tomorrow — AI, software, R&D and special projects." />
+        <meta property="og:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI, software, R&D and special projects." />
         <meta property="og:image" content={LOGO} />
         <meta property="og:image:width" content="512" />
         <meta property="og:image:height" content="512" />
@@ -87,7 +87,7 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="twitter:site" content="@OnTechnolo1200" />
         <meta name="twitter:creator" content="@OnTechnolo1200" />
         <meta name="twitter:title" content="On Time Technology — Future-Ready Software & R&D" />
-        <meta name="twitter:description" content="UK-based IT company building the digital infrastructure of tomorrow." />
+        <meta name="twitter:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow." />
         <meta name="twitter:image" content={LOGO} />
 
         {/* Theme + Geo */}
