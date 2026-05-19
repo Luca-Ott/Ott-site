@@ -21,7 +21,7 @@ export default function SiteFooter() {
             <Text style={styles.brandCopy}>Irish IT company based in Dublin, specialising in Software Design, Development and R&D. Building the digital infrastructure of tomorrow.</Text>
             <View style={styles.socials}>
               <TouchableOpacity onPress={() => Linking.openURL('https://x.com/OnTechnolo1200')} style={styles.socialBtn}>
-                <Ionicons name="logo-twitter" size={16} color={colors.text} />
+                <Ionicons name="logo-x" size={16} color={colors.text} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Linking.openURL('mailto:Info@ott4future.com')} style={styles.socialBtn}>
                 <Ionicons name="mail-outline" size={16} color={colors.text} />
