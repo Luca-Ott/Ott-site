@@ -3,6 +3,7 @@ import type { PropsWithChildren } from 'react';
 
 const SITE_URL = 'https://www.ott4future.com';
 const LOGO = SITE_URL + '/favicon-512x512.png';
+const OG_IMAGE = SITE_URL + '/og-image.jpg';
 
 const ORG_LD = {
   '@context': 'https://schema.org',
@@ -77,10 +78,10 @@ export default function Root({ children }: PropsWithChildren) {
         <meta property="og:locale" content="en_GB" />
         <meta property="og:title" content="On Time Technology — Future-Ready Software & R&D" />
         <meta property="og:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI, software, R&D and special projects." />
-        <meta property="og:image" content={LOGO} />
-        <meta property="og:image:width" content="512" />
-        <meta property="og:image:height" content="512" />
-        <meta property="og:image:alt" content="On Time Technology logo" />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="On Time Technology — Building the digital infrastructure of tomorrow" />
 
         {/* Twitter Card defaults */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -88,7 +89,8 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="twitter:creator" content="@OnTechnolo1200" />
         <meta name="twitter:title" content="On Time Technology — Future-Ready Software & R&D" />
         <meta name="twitter:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow." />
-        <meta name="twitter:image" content={LOGO} />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:image:alt" content="On Time Technology — Building the digital infrastructure of tomorrow" />
 
         {/* Theme + Geo */}
         <meta name="theme-color" content="#05060F" />
