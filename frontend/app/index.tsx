@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -72,33 +72,29 @@ export default function HomeScreen() {
     ).start();
   }, [pulse]);
 
-  // Ticker
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const [tickerWidth, setTickerWidth] = useState(0);
-  const tickerAnimRef = useRef<Animated.CompositeAnimation | null>(null);
-  const tickerText = newsItems.map((t) => `◆  ${t}`).join('     ');
-  const onTickerLayout = useCallback((e: any) => {
-    const w = e.nativeEvent.layout.width;
-    if (w > 0 && w !== tickerWidth) setTickerWidth(w);
-  }, [tickerWidth]);
+  // Ticker — rotating box (one news at a time, fade + slide)
+  const [tickerIndex, setTickerIndex] = useState(0);
+  const tickerFade = useRef(new Animated.Value(1)).current;
+  const tickerSlide = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (tickerWidth <= 0) return;
-    if (tickerAnimRef.current) tickerAnimRef.current.stop();
-    scrollX.setValue(0);
-    const duration = (tickerWidth / 60) * 1000;
-    const anim = Animated.loop(
-      Animated.timing(scrollX, {
-        toValue: -tickerWidth,
-        duration,
-        useNativeDriver: true,
-        easing: (t) => t,
-      })
-    );
-    tickerAnimRef.current = anim;
-    anim.start();
-    return () => anim.stop();
-  }, [tickerWidth, scrollX]);
+    const interval = setInterval(() => {
+      // Fade out + slide up
+      Animated.parallel([
+        Animated.timing(tickerFade, { toValue: 0, duration: 350, useNativeDriver: true }),
+        Animated.timing(tickerSlide, { toValue: -14, duration: 350, useNativeDriver: true }),
+      ]).start(() => {
+        setTickerIndex((i) => (i + 1) % newsItems.length);
+        tickerSlide.setValue(14);
+        // Fade in + slide down to 0
+        Animated.parallel([
+          Animated.timing(tickerFade, { toValue: 1, duration: 350, useNativeDriver: true }),
+          Animated.timing(tickerSlide, { toValue: 0, duration: 350, useNativeDriver: true }),
+        ]).start();
+      });
+    }, 4200);
+    return () => clearInterval(interval);
+  }, [tickerFade, tickerSlide]);
 
   return (
     <View style={styles.root}>
@@ -221,14 +217,29 @@ export default function HomeScreen() {
               <Text style={styles.tickerLabelText}>LIVE</Text>
             </View>
             <View style={styles.tickerTrack}>
-              <Animated.View style={[styles.tickerInner, { transform: [{ translateX: scrollX }] }]}>
-                <Text style={styles.tickerText} numberOfLines={1} onLayout={onTickerLayout}>
-                  {tickerText}
-                </Text>
-                <Text style={styles.tickerText} numberOfLines={1}>
-                  {tickerText}
-                </Text>
-              </Animated.View>
+              <Animated.Text
+                numberOfLines={2}
+                style={[
+                  styles.tickerText,
+                  {
+                    opacity: tickerFade,
+                    transform: [{ translateY: tickerSlide }],
+                  },
+                ]}
+              >
+                ◆  {newsItems[tickerIndex]}
+              </Animated.Text>
+            </View>
+            <View style={styles.tickerDots}>
+              {newsItems.map((_, i) => (
+                <View
+                  key={i}
+                  style={[
+                    styles.tickerDot,
+                    i === tickerIndex && styles.tickerDotActive,
+                  ]}
+                />
+              ))}
             </View>
           </View>
 
@@ -643,14 +654,61 @@ const styles = StyleSheet.create({
   ghostBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 18, paddingVertical: 12, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: 'rgba(255,255,255,0.02)' },
   ghostBtnText: { color: colors.text, fontSize: 14, fontWeight: '600' },
 
-  // TICKER
-  ticker: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(11,13,27,0.9)', borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.border, marginVertical: 0 },
-  tickerLabel: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#3B82F6', paddingHorizontal: 16, paddingVertical: 12 },
+  // TICKER — compact rotating "live news" box
+  ticker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    alignSelf: 'center',
+    maxWidth: 980,
+    width: '92%',
+    marginTop: -28,
+    marginBottom: 8,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    borderRadius: radii.lg,
+    backgroundColor: 'rgba(11,13,27,0.85)',
+    borderWidth: 1,
+    borderColor: 'rgba(96,165,250,0.22)',
+    ...(Platform.OS === 'web' ? ({
+      backdropFilter: 'blur(14px)',
+      WebkitBackdropFilter: 'blur(14px)',
+      boxShadow: '0 18px 50px rgba(59,130,246,0.18), 0 0 0 1px rgba(255,255,255,0.04) inset',
+    } as any) : {}),
+    zIndex: 5,
+  },
+  tickerLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#EF4444',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: radii.pill,
+    ...(Platform.OS === 'web' ? ({ boxShadow: '0 0 12px rgba(239,68,68,0.55)' } as any) : {}),
+  },
   tickerPulse: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#fff' },
-  tickerLabelText: { color: '#fff', fontSize: 11, fontWeight: '900', letterSpacing: 1.5 },
-  tickerTrack: { flex: 1, overflow: 'hidden' },
-  tickerInner: { flexDirection: 'row', paddingVertical: 12 },
-  tickerText: { color: colors.text, fontSize: 13, fontWeight: '500', paddingHorizontal: 16, whiteSpace: 'nowrap' as any },
+  tickerLabelText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 1.5 },
+  tickerTrack: { flex: 1, overflow: 'hidden', minHeight: 22, justifyContent: 'center' },
+  tickerInner: { flexDirection: 'row' },
+  tickerText: {
+    color: colors.text,
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+  },
+  tickerDots: { flexDirection: 'row', gap: 5 },
+  tickerDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 6,
+    backgroundColor: 'rgba(255,255,255,0.18)',
+  },
+  tickerDotActive: {
+    backgroundColor: colors.cyan,
+    width: 18,
+    ...(Platform.OS === 'web' ? ({ boxShadow: '0 0 6px #22D3EE' } as any) : {}),
+  },
 
   // SECTIONS
   section: { paddingHorizontal: space.lg, paddingVertical: space.xxxl, maxWidth: 1280, width: '100%', marginHorizontal: 'auto' as any },
