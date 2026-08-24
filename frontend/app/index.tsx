@@ -34,6 +34,7 @@ import { colors, radii, space } from '../src/theme/tokens';
 const newsItems = [
   'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
   'Custodiy v2.0 of the web app is now live',
+  'SmartTrust — Programmable escrow and conditional digital-asset distribution',
   'Freety — Digital infrastructure for global commodity & energy trading',
   'Cyber Security Projects — Advanced protection for enterprise',
   'R&D division expanding with cutting-edge AI innovation',
@@ -102,13 +103,19 @@ export default function HomeScreen() {
         title="On Time Technology — AI-Native Software, R&D & Special Projects"
         description="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI fake-news detection, EU AI Act compliance, custodial wallet, tokenised commodities and visionary special projects."
         canonical="https://www.ott4future.com/"
-        keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, Freety, custodial wallet Ireland, tokenized commodities trading"
+        keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, SmartTrust, Freety, custodial wallet Ireland, tokenized commodities trading"
         schema={[
           softwareAppSchema({
             name: 'NoMoreFakeNews',
             url: 'https://www.ott4future.com/nomorefakenews',
             description: 'AI-powered platform to detect, flag and dismantle disinformation in real time.',
             applicationSubCategory: 'AI Trust Infrastructure',
+          }),
+          softwareAppSchema({
+            name: 'SmartTrust',
+            url: 'https://maker-studio-164.emergent.host',
+            description: 'Programmable trust infrastructure for smart-contract escrow and conditional digital-asset distribution.',
+            applicationSubCategory: 'Smart Contract Escrow Platform',
           }),
           softwareAppSchema({
             name: 'Freety',
@@ -355,6 +362,16 @@ export default function HomeScreen() {
                 external
               />
               <ProjectCard
+                title="SmartTrust"
+                category="SMART CONTRACT · TRUST"
+                tagline="Programmable escrow infrastructure for conditional digital-asset distribution, transparent milestones and beneficiary control."
+                gradient={['#6366F1', '#8B5CF6']}
+                status="In development"
+                onPress={() => Linking.openURL('https://maker-studio-164.emergent.host')}
+                isDesktop={isDesktop}
+                external
+              />
+              <ProjectCard
                 title="Freety"
                 category="COMMODITIES · AI"
                 tagline="Digital infrastructure for global commodity & energy trading, with cargo tokenisation and AI tooling."
@@ -389,7 +406,7 @@ export default function HomeScreen() {
                 <StatItem to={15} suffix="+" label="Years of Engineering" />
                 <StatItem to={50} suffix="+" label="Specialists Network" />
                 <StatItem to={20} suffix="+" label="Active Clients" />
-                <StatItem to={4} suffix="" label="Special Projects" />
+                <StatItem to={5} suffix="" label="Special Projects" />
               </View>
             </GlassCard>
           </View>
