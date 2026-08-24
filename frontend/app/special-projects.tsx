@@ -44,8 +44,8 @@ const PROJECTS = [
     tagline: 'Programmable trust infrastructure for smart-contract escrow, conditional digital-asset distribution, transparent milestones and beneficiary control.',
     status: 'In development',
     gradient: ['#6366F1', '#8B5CF6', '#22D3EE'],
-    href: 'https://maker-studio-164.emergent.host',
-    external: true,
+    route: '/smarttrust' as const,
+    external: false,
   },
   {
     title: 'Cyber Security',
@@ -87,7 +87,7 @@ export default function SpecialProjectsScreen() {
           ]),
           softwareAppSchema({ name: 'NoMoreFakeNews', url: 'https://www.ott4future.com/nomorefakenews', description: 'AI-powered platform to detect and dismantle disinformation in real time.', applicationSubCategory: 'AI Trust Infrastructure' }),
           softwareAppSchema({ name: 'Custodiy', url: 'https://custodiy.com', description: 'Modular Web3 OTC trading, escrow and document custody platform.', applicationSubCategory: 'Web3 Commerce Platform' }),
-          softwareAppSchema({ name: 'SmartTrust', url: 'https://maker-studio-164.emergent.host', description: 'Programmable smart-contract escrow and conditional digital-asset distribution platform.', applicationSubCategory: 'Smart Contract Escrow Platform' }),
+          softwareAppSchema({ name: 'SmartTrust', url: 'https://www.ott4future.com/smarttrust', description: 'Programmable smart-contract escrow and conditional digital-asset distribution platform.', applicationSubCategory: 'Smart Contract Escrow Platform' }),
           softwareAppSchema({ name: 'Freety', url: 'https://www.ott4future.com/freety', description: 'Digital infrastructure for global commodity & energy trading with AI tooling.', applicationSubCategory: 'Commodities Trading Platform' }),
         ]}
       />
