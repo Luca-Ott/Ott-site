@@ -316,7 +316,11 @@ export default function HomeScreen() {
                 { name: 'MongoDB', icon: 'server-outline' as const },
                 { name: 'AWS · Vercel', icon: 'cloud-outline' as const },
                 { name: 'OpenAI · LLMs', icon: 'sparkles-outline' as const },
+                { name: 'AI Agents · RAG', icon: 'hardware-chip-outline' as const },
                 { name: 'Ethereum · Web3', icon: 'cube-outline' as const },
+                { name: 'Smart Contracts · Solidity', icon: 'link-outline' as const },
+                { name: 'Docker · Kubernetes', icon: 'layers-outline' as const },
+                { name: 'PostgreSQL · Redis', icon: 'server-outline' as const },
                 { name: 'CI / CD', icon: 'git-branch-outline' as const },
               ].map((s, idx) => (
                 <ScrollReveal key={s.name} delay={idx * 60} style={{ flex: 1, minWidth: 150 }}>
