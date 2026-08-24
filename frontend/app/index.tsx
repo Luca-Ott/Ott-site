@@ -34,7 +34,7 @@ import { colors, radii, space } from '../src/theme/tokens';
 const newsItems = [
   'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
   'Custodiy v2.0 of the web app is now live',
-  'SmartTrust — Programmable escrow and conditional digital-asset distribution',
+  'NEW PROJECT — SMARTTRUST: programmable escrow and conditional digital-asset distribution',
   'Freety — Digital infrastructure for global commodity & energy trading',
   'Cyber Security Projects — Advanced protection for enterprise',
   'R&D division expanding with cutting-edge AI innovation',
