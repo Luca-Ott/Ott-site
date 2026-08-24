@@ -113,7 +113,7 @@ export default function HomeScreen() {
           }),
           softwareAppSchema({
             name: 'SmartTrust',
-            url: 'https://maker-studio-164.emergent.host',
+            url: 'https://www.ott4future.com/smarttrust',
             description: 'Programmable trust infrastructure for smart-contract escrow and conditional digital-asset distribution.',
             applicationSubCategory: 'Smart Contract Escrow Platform',
           }),
@@ -367,9 +367,8 @@ export default function HomeScreen() {
                 tagline="Programmable escrow infrastructure for conditional digital-asset distribution, transparent milestones and beneficiary control."
                 gradient={['#6366F1', '#8B5CF6']}
                 status="In development"
-                onPress={() => Linking.openURL('https://maker-studio-164.emergent.host')}
+                onPress={() => router.push('/smarttrust')}
                 isDesktop={isDesktop}
-                external
               />
               <ProjectCard
                 title="Freety"
