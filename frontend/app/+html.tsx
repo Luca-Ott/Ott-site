@@ -10,6 +10,7 @@ const ORG_LD = {
   '@type': 'Organization',
   '@id': SITE_URL + '/#organization',
   name: 'On Time Technology Ltd',
+  legalName: 'On Time Technology Ltd',
   alternateName: ['On Time Technology', 'OTT', 'ott4future'],
   url: SITE_URL,
   logo: { '@type': 'ImageObject', url: LOGO, width: 512, height: 512 },
@@ -43,8 +44,8 @@ const WEBSITE_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   '@id': SITE_URL + '/#website',
-  name: 'On Time Technology',
-  alternateName: ['OTT', 'ott4future', 'On Time Technology Ltd'],
+  name: 'On Time Technology Ltd',
+  alternateName: ['On Time Technology', 'OTT', 'ott4future'],
   url: SITE_URL,
   inLanguage: 'en-GB',
   publisher: { '@id': SITE_URL + '/#organization' },
@@ -65,7 +66,7 @@ export default function Root({ children }: PropsWithChildren) {
 
         {/* Default Primary Meta — overridden by per-page PageSEO */}
         <title>On Time Technology — Future-Ready Software & R&D</title>
-        <meta name="application-name" content="On Time Technology" />
+        <meta name="application-name" content="On Time Technology Ltd" />
         <meta name="description" content="On Time Technology Ltd is an Irish IT company based in Dublin building the digital infrastructure of tomorrow — software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety)." />
         <meta name="keywords" content="On Time Technology, ott4future, EU AI Act compliance, AI fake news detector, deepfake detection 2026, NoMoreFakeNews, Custodiy, Freety, custodial wallet Ireland, tokenized commodities trading, Irish AI software company, Dublin IT company, software design, software development, R&D" />
         <meta name="author" content="On Time Technology Ltd" />
@@ -74,7 +75,7 @@ export default function Root({ children }: PropsWithChildren) {
 
         {/* Open Graph defaults */}
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="On Time Technology" />
+        <meta property="og:site_name" content="On Time Technology Ltd" />
         <meta property="og:locale" content="en_GB" />
         <meta property="og:title" content="On Time Technology — Future-Ready Software & R&D" />
         <meta property="og:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI, software, R&D and special projects." />
