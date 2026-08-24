@@ -30,7 +30,16 @@ export default function OrbitVisual({ size = 520 }: Props) {
   ];
 
   // ---- Planet config ----
-  const PLANET_SIZE = Math.round(size * 0.12); // ~62px – small, jewel-like
+  const PLANET_SIZE = Math.round(size * 0.12); // small, jewel-like planet
+
+  // Project labels positioned along the visible orbital paths.
+  const projectLabels = [
+    { name: 'NoMoreFakeNews', x: 47, y: 13, color: '#60A5FA' },
+    { name: 'SmartTrust', x: 79, y: 31, color: '#A855F7' },
+    { name: 'Custodiy', x: 81, y: 67, color: '#22D3EE' },
+    { name: 'Freety', x: 48, y: 86, color: '#34D399' },
+    { name: 'Cyber Security', x: 18, y: 61, color: '#EC4899' },
+  ];
 
   const abs = (left: number | string, top: number | string): React.CSSProperties => ({
     position: 'absolute',
@@ -136,6 +145,41 @@ export default function OrbitVisual({ size = 520 }: Props) {
         }),
 
         // ============================================================
+        // Project names — glass labels anchored visually to the orbital system
+        ...projectLabels.map((project, i) =>
+          React.createElement('div', {
+            key: `project-label-${project.name}`,
+            style: {
+              position: 'absolute', left: `${project.x}%`, top: `${project.y}%`,
+              transform: 'translate(-50%, -50%)',
+              display: 'flex', alignItems: 'center', gap: 7,
+              padding: '6px 10px', borderRadius: 999,
+              color: '#F8FAFC',
+              fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              fontSize: project.name.length > 13 ? 10 : 11,
+              fontWeight: 750,
+              letterSpacing: project.name === 'SmartTrust' ? '0.055em' : '0.025em',
+              textTransform: project.name === 'SmartTrust' ? 'uppercase' : 'none',
+              whiteSpace: 'nowrap',
+              background: 'linear-gradient(135deg, rgba(15,23,42,0.82), rgba(30,41,59,0.58))',
+              border: `1px solid ${project.color}66`,
+              boxShadow: `0 0 14px ${project.color}26, inset 0 1px 0 rgba(255,255,255,0.09)`,
+              backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+              zIndex: 8, opacity: 0.94,
+            } as React.CSSProperties,
+          }, [
+            React.createElement('span', {
+              key: `project-dot-${i}`,
+              style: {
+                display: 'block', width: 6, height: 6, flex: '0 0 6px',
+                borderRadius: '50%', background: project.color,
+                boxShadow: `0 0 8px ${project.color}, 0 0 16px ${project.color}99`,
+              } as React.CSSProperties,
+            }),
+            React.createElement('span', { key: `project-name-${i}` }, project.name),
+          ])
+        ),
+
         // REALISTIC 3D PLANET (Earth-like) \u2014 centred on the orbits
         // ============================================================
         React.createElement('div', {
