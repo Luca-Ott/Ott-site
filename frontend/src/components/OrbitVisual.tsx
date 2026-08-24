@@ -32,13 +32,28 @@ export default function OrbitVisual({ size = 520 }: Props) {
   // ---- Planet config ----
   const PLANET_SIZE = Math.round(size * 0.12); // small, jewel-like planet
 
-  // Project labels positioned along the visible orbital paths.
+  // Project labels are projected from the same 3D tilt as the CSS rings,
+  // so every anchor sits mathematically on an orbital ellipse.
+  const orbitPoint = (diameterRatio: number, angleDeg: number) => {
+    const angle = (angleDeg * Math.PI) / 180;
+    const tilt = (68 * Math.PI) / 180;
+    const rotation = (-8 * Math.PI) / 180;
+    const radiusX = (diameterRatio * 100) / 2;
+    const radiusY = radiusX * Math.cos(tilt);
+    const localX = radiusX * Math.cos(angle);
+    const localY = radiusY * Math.sin(angle);
+    return {
+      xPct: 50 + localX * Math.cos(rotation) - localY * Math.sin(rotation),
+      yPct: 50 + localX * Math.sin(rotation) + localY * Math.cos(rotation),
+    };
+  };
+
   const projectLabels = [
-    { name: 'NoMoreFakeNews', x: 47, y: 13, color: '#60A5FA' },
-    { name: 'SmartTrust', x: 79, y: 31, color: '#A855F7' },
-    { name: 'Custodiy', x: 81, y: 67, color: '#22D3EE' },
-    { name: 'Freety', x: 48, y: 86, color: '#34D399' },
-    { name: 'Cyber Security', x: 18, y: 61, color: '#EC4899' },
+    { name: 'NoMoreFakeNews', ...orbitPoint(0.96, 205), color: '#60A5FA' },
+    { name: 'SmartTrust', ...orbitPoint(0.96, 335), color: '#A855F7' },
+    { name: 'Custodiy', ...orbitPoint(0.78, 35), color: '#22D3EE' },
+    { name: 'Freety', ...orbitPoint(0.6, 150), color: '#34D399' },
+    { name: 'Cyber Security', ...orbitPoint(0.42, 285), color: '#EC4899' },
   ];
 
   const abs = (left: number | string, top: number | string): React.CSSProperties => ({
@@ -150,7 +165,7 @@ export default function OrbitVisual({ size = 520 }: Props) {
           React.createElement('div', {
             key: `project-label-${project.name}`,
             style: {
-              position: 'absolute', left: `${project.x}%`, top: `${project.y}%`,
+              position: 'absolute', left: `${project.xPct}%`, top: `${project.yPct}%`,
               transform: 'translate(-50%, -50%)',
               display: 'flex', alignItems: 'center', gap: 7,
               padding: '6px 10px', borderRadius: 999,
