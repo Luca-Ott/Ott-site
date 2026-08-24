@@ -39,6 +39,15 @@ const PROJECTS = [
     external: false,
   },
   {
+    title: 'SmartTrust',
+    category: 'SMART CONTRACT · TRUST',
+    tagline: 'Programmable trust infrastructure for smart-contract escrow, conditional digital-asset distribution, transparent milestones and beneficiary control.',
+    status: 'In development',
+    gradient: ['#6366F1', '#8B5CF6', '#22D3EE'],
+    href: 'https://maker-studio-164.emergent.host',
+    external: true,
+  },
+  {
     title: 'Cyber Security',
     category: 'ENTERPRISE · DEFENCE',
     tagline: 'Advanced protection programmes designed to defend businesses and individuals against next-generation, AI-driven threats.',
@@ -67,10 +76,10 @@ export default function SpecialProjectsScreen() {
   return (
     <PageShell>
       <PageSEO
-        title="Special Projects — NoMoreFakeNews, Custodiy, Freety & Cyber"
-        description="Explore On Time Technology's flagship special projects: NoMoreFakeNews (AI anti-disinformation), Custodiy (Web3 OTC & escrow), Freety (commodity trading) and Cyber Security R&D."
+        title="Special Projects — NoMoreFakeNews, Custodiy, SmartTrust, Freety & Cyber"
+        description="Explore On Time Technology's flagship projects: NoMoreFakeNews, Custodiy, SmartTrust programmable escrow, Freety commodity trading and Cyber Security R&D."
         canonical="https://www.ott4future.com/special-projects"
-        keywords="special projects On Time Technology, NoMoreFakeNews, Custodiy, Freety, AI anti-disinformation, custodial wallet Ireland, tokenized commodities trading, cyber security R&D"
+        keywords="special projects On Time Technology, NoMoreFakeNews, Custodiy, SmartTrust, smart contract escrow, Freety, AI anti-disinformation, custodial wallet Ireland, tokenized commodities trading, cyber security R&D"
         schema={[
           breadcrumbsSchema([
             { name: 'Home', url: 'https://www.ott4future.com/' },
@@ -78,6 +87,7 @@ export default function SpecialProjectsScreen() {
           ]),
           softwareAppSchema({ name: 'NoMoreFakeNews', url: 'https://www.ott4future.com/nomorefakenews', description: 'AI-powered platform to detect and dismantle disinformation in real time.', applicationSubCategory: 'AI Trust Infrastructure' }),
           softwareAppSchema({ name: 'Custodiy', url: 'https://custodiy.com', description: 'Modular Web3 OTC trading, escrow and document custody platform.', applicationSubCategory: 'Web3 Commerce Platform' }),
+          softwareAppSchema({ name: 'SmartTrust', url: 'https://maker-studio-164.emergent.host', description: 'Programmable smart-contract escrow and conditional digital-asset distribution platform.', applicationSubCategory: 'Smart Contract Escrow Platform' }),
           softwareAppSchema({ name: 'Freety', url: 'https://www.ott4future.com/freety', description: 'Digital infrastructure for global commodity & energy trading with AI tooling.', applicationSubCategory: 'Commodities Trading Platform' }),
         ]}
       />
