@@ -2,7 +2,7 @@ import { ScrollViewStyleReset } from 'expo-router/html';
 import type { PropsWithChildren } from 'react';
 
 const SITE_URL = 'https://www.ott4future.com';
-const LOGO = SITE_URL + '/favicon-512x512.png';
+const LOGO = SITE_URL + '/icon-512.png';
 const OG_IMAGE = SITE_URL + '/og-image.jpg';
 
 const ORG_LD = {

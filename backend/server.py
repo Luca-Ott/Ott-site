@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -21,6 +21,15 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 load_dotenv()
 
 EMERGENT_LLM_KEY = os.getenv("EMERGENT_LLM_KEY", "")
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "")
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "https://www.ott4future.com,https://ott4future.com",
+    ).split(",")
+    if origin.strip()
+]
 BLOG_OUTPUT_DIR = Path(__file__).parent.parent / "frontend" / "public" / "blog"
 BLOG_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -29,8 +38,8 @@ app = FastAPI(title="ON TIME TECHNOLOGY API")
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=CORS_ORIGINS,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -64,6 +73,14 @@ class BlogGenerateRequest(BaseModel):
     topic: str
     category: str = "AI & Innovation"
     tone: str = "corporate, futuristic, authoritative"
+
+
+def require_admin_api_key(x_api_key: Optional[str]) -> None:
+    """Protect cost-bearing administrative endpoints."""
+    if not ADMIN_API_KEY:
+        raise HTTPException(status_code=503, detail="Administrative API is not configured")
+    if x_api_key != ADMIN_API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid or missing API key")
 
 
 class BlogArticle(BaseModel):
@@ -110,7 +127,7 @@ async def submit_investor_inquiry(inquiry: InvestorInquiry):
             "message": "Investor inquiry submitted successfully",
             "id": str(result.inserted_id),
             "status": "success",
-            "note": "Our team will contact you shortly at luca@ott4fututre.com"
+            "note": "Our team will contact you shortly at luca@ott4future.com"
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error submitting inquiry: {str(e)}")
@@ -206,7 +223,7 @@ async def generate_article_via_llm(topic: str, category: str, tone: str, index: 
         raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY is not configured")
 
     system_prompt = (
-        "You are the senior technology editor for ON TIME TECHNOLOGY LTD, a UK-based IT company specialising "
+        "You are the senior technology editor for ON TIME TECHNOLOGY LTD, an Irish-registered IT company based in Dublin, specialising "
         "in Software Design, Software Development, R&D, and innovative special projects (NoMoreFakeNews, "
         "Custodiy, Freety). You write authoritative, forward-looking corporate blog articles for an executive "
         "and investor audience. Tone: futuristic, sharp, professional, slightly visionary. Avoid fluff and "
@@ -307,7 +324,11 @@ def write_articles_to_disk(articles: List[dict]) -> None:
 
 
 @app.post("/api/blog/generate")
-async def generate_blog_article(req: BlogGenerateRequest):
+async def generate_blog_article(
+    req: BlogGenerateRequest,
+    x_api_key: Optional[str] = Header(default=None, alias="X-API-Key"),
+):
+    require_admin_api_key(x_api_key)
     try:
         article = await generate_article_via_llm(req.topic, req.category, req.tone)
         await db.blog_articles.update_one(
