@@ -351,6 +351,7 @@ export default function HomeScreen() {
                 category="AI · TRUST"
                 tagline="An AI-powered platform engineered to identify, flag and dismantle disinformation in real time."
                 gradient={['#3B82F6', '#A855F7']}
+                image="https://www.ott4future.com/nomorefakenews-hero.jpg"
                 status="Open for investors"
                 onPress={() => router.push('/nomorefakenews')}
                 isDesktop={isDesktop}
@@ -590,6 +591,7 @@ function ProjectCard({
   category,
   tagline,
   gradient,
+  image,
   status,
   onPress,
   isDesktop,
@@ -599,6 +601,7 @@ function ProjectCard({
   category: string;
   tagline: string;
   gradient: string[];
+  image?: string;
   status: string;
   onPress: () => void;
   isDesktop: boolean;
@@ -606,7 +609,11 @@ function ProjectCard({
 }) {
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={[styles.projectCard, !isDesktop && styles.projectCardMobile]}>
-      <LinearGradient colors={gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.projectGradient} />
+      {image ? (
+        <Image source={{ uri: image }} style={styles.projectImage} resizeMode="cover" />
+      ) : (
+        <LinearGradient colors={gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.projectGradient} />
+      )}
       <View style={styles.projectOverlay} />
       <View style={styles.projectInner}>
         <View style={styles.projectTop}>
@@ -757,6 +764,7 @@ const styles = StyleSheet.create({
   projectCard: { flex: 1, minWidth: 280, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border, ...(Platform.OS === 'web' ? { transition: 'transform 0.3s ease, box-shadow 0.3s ease' } as any : {}) },
   projectCardMobile: { minHeight: 240 },
   projectGradient: { ...StyleSheet.absoluteFillObject, opacity: 0.85 },
+  projectImage: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   projectOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5, 6, 15, 0.55)' },
   projectInner: { padding: 24, flex: 1, justifyContent: 'space-between' },
   projectTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
