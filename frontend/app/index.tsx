@@ -623,13 +623,15 @@ function ProjectCard({
             <Text style={styles.projectStatusText}>{status}</Text>
           </View>
         </View>
-        <Text style={styles.projectTitle}>{title}</Text>
-        <Text style={styles.projectTagline}>{tagline}</Text>
-        <View style={styles.projectFooter}>
+        <View style={[styles.projectContent, image && styles.projectContentBottom]}>
+          {!image ? <Text style={styles.projectTitle}>{title}</Text> : null}
+          <Text style={styles.projectTagline}>{tagline}</Text>
+          <View style={styles.projectFooter}>
           <Text style={styles.projectLink}>
             {external ? 'Visit site' : 'Discover'}
           </Text>
-          <Ionicons name={external ? 'open-outline' : 'arrow-forward'} size={16} color={colors.text} />
+            <Ionicons name={external ? 'open-outline' : 'arrow-forward'} size={16} color={colors.text} />
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -772,6 +774,8 @@ const styles = StyleSheet.create({
   projectStatus: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.4)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
   projectStatusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
   projectStatusText: { color: '#fff', fontSize: 11, fontWeight: '600' },
+  projectContent: { gap: 8 },
+  projectContentBottom: { marginTop: 'auto', paddingTop: 48 },
   projectTitle: { color: '#fff', fontSize: 28, fontWeight: '900', marginVertical: 8, letterSpacing: -0.5 },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
   projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },
