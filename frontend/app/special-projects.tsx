@@ -142,7 +142,7 @@ export default function SpecialProjectsScreen() {
               </View>
               <View style={[styles.cardContent, p.title === 'NoMoreFakeNews' && styles.cardContentBottom]}>
                 {p.title !== 'NoMoreFakeNews' ? <Text style={styles.cardTitle}>{p.title}</Text> : null}
-                <Text style={styles.cardTagline}>{p.tagline}</Text>
+                {p.title !== 'NoMoreFakeNews' ? <Text style={styles.cardTagline}>{p.tagline}</Text> : null}
                 <View style={styles.cardFooter}>
                 <Text style={styles.cardLink}>{p.external ? 'Visit site' : 'Discover'}</Text>
                   <Ionicons name={p.external ? 'open-outline' : 'arrow-forward'} size={16} color="#fff" />
