@@ -23,7 +23,7 @@ type Props = {
 };
 
 const DEFAULT_OG_IMAGE = 'https://www.ott4future.com/og-image.jpg';
-const DEFAULT_SITE_NAME = 'On Time Technology';
+const DEFAULT_SITE_NAME = 'On Time Technology Ltd';
 
 /**
  * Centralised SEO component. Emits:
@@ -112,7 +112,7 @@ export const ORG_SCHEMA = {
   name: 'On Time Technology Ltd',
   alternateName: ['On Time Technology', 'OTT'],
   url: 'https://www.ott4future.com',
-  logo: 'https://www.ott4future.com/favicon-512x512.png',
+  logo: 'https://www.ott4future.com/icon-512.png',
   description:
     'Irish-registered IT company based in Dublin, specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety).',
   email: 'Info@ott4future.com',
@@ -145,8 +145,8 @@ export const ORG_SCHEMA = {
 export const WEBSITE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'On Time Technology',
-  alternateName: 'OTT',
+  name: 'On Time Technology Ltd',
+  alternateName: ['On Time Technology', 'OTT'],
   url: 'https://www.ott4future.com',
   inLanguage: 'en-GB',
   publisher: { '@type': 'Organization', name: 'On Time Technology Ltd', url: 'https://www.ott4future.com' },
@@ -228,7 +228,7 @@ export function articleSchema(opts: {
       name: 'On Time Technology Ltd',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.ott4future.com/favicon-512x512.png',
+        url: 'https://www.ott4future.com/icon-512.png',
       },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': opts.url },
