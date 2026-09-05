@@ -625,7 +625,7 @@ function ProjectCard({
         </View>
         <View style={[styles.projectContent, image && styles.projectContentBottom]}>
           {!image ? <Text style={styles.projectTitle}>{title}</Text> : null}
-          <Text style={styles.projectTagline}>{tagline}</Text>
+          {!image ? <Text style={styles.projectTagline}>{tagline}</Text> : null}
           <View style={styles.projectFooter}>
           <Text style={styles.projectLink}>
             {external ? 'Visit site' : 'Discover'}
