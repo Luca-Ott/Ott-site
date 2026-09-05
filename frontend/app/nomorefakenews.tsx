@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   titleMobile: { fontSize: 36, lineHeight: 42, letterSpacing: -0.8 },
   titleGrad: { fontSize: 60, lineHeight: 68, fontWeight: '900', letterSpacing: -2 } as any,
   subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, marginTop: 18, maxWidth: 820 },
-  heroVisual: { width: '100%', aspectRatio: 1712 / 1152, marginTop: 30, borderRadius: radii.lg, overflow: 'hidden', borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: colors.bgCard },
+  heroVisual: { width: '100%', maxWidth: 720, alignSelf: 'center', aspectRatio: 1712 / 1152, marginTop: 30, borderRadius: radii.lg, overflow: 'hidden', borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: colors.bgCard },
   heroImage: { width: '100%', height: '100%' },
 
   objectivesGrid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 18 },
