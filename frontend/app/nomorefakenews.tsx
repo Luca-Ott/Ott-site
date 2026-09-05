@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -23,6 +23,7 @@ export default function NoMoreFakeNewsScreen() {
         title="NoMoreFakeNews — AI Fake News & Deepfake Detector"
         description="NoMoreFakeNews is an AI-powered platform engineered to detect fake news and deepfakes in real time, with provenance signals and a human-in-the-loop verification network."
         canonical="https://www.ott4future.com/nomorefakenews"
+        ogImage="https://www.ott4future.com/nomorefakenews-hero.jpg"
         keywords="AI fake news detector, deepfake detection AI 2026, NoMoreFakeNews, strumento AI per combattere fake news, disinformation detection, AI trust infrastructure"
         ogType="product"
         schema={[
@@ -63,6 +64,14 @@ export default function NoMoreFakeNewsScreen() {
           real time. We combine advanced machine learning, provenance signals and a collaborative fact-checking
           network to protect the integrity of digital information.
         </Text>
+        <View style={styles.heroVisual}>
+          <Image
+            source={{ uri: 'https://www.ott4future.com/nomorefakenews-hero.jpg' }}
+            style={styles.heroImage}
+            resizeMode="cover"
+            accessibilityLabel="NoMoreFakeNews — AI detects. Blockchain proves."
+          />
+        </View>
       </View>
 
       <View style={[styles.objectivesGrid, !isDesktop && styles.objectivesGridMobile]}>
@@ -133,6 +142,8 @@ const styles = StyleSheet.create({
   titleMobile: { fontSize: 36, lineHeight: 42, letterSpacing: -0.8 },
   titleGrad: { fontSize: 60, lineHeight: 68, fontWeight: '900', letterSpacing: -2 } as any,
   subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, marginTop: 18, maxWidth: 820 },
+  heroVisual: { width: '100%', aspectRatio: 1712 / 1152, marginTop: 30, borderRadius: radii.lg, overflow: 'hidden', borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: colors.bgCard },
+  heroImage: { width: '100%', height: '100%' },
 
   objectivesGrid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 18 },
   objectivesGridMobile: { flexDirection: 'column' },

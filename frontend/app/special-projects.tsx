@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -17,6 +17,7 @@ const PROJECTS = [
     tagline: 'AI-powered platform to detect, flag and dismantle disinformation in real time — protecting the integrity of public discourse.',
     status: 'Open for investors',
     gradient: ['#3B82F6', '#A855F7', '#22D3EE'],
+    image: 'https://www.ott4future.com/nomorefakenews-hero.jpg',
     route: '/nomorefakenews' as const,
     external: false,
   },
@@ -125,7 +126,11 @@ export default function SpecialProjectsScreen() {
             onPress={() => open(p)}
             style={[styles.card, !isDesktop && styles.cardMobile]}
           >
-            <LinearGradient colors={p.gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+            {'image' in p && p.image ? (
+              <Image source={{ uri: p.image }} style={styles.cardImage} resizeMode="cover" />
+            ) : (
+              <LinearGradient colors={p.gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
+            )}
             <View style={styles.overlay} />
             <View style={styles.cardInner}>
               <View style={styles.cardTop}>
@@ -180,6 +185,7 @@ const styles = StyleSheet.create({
   gridMobile: { flexDirection: 'column' },
   card: { flexBasis: '48%' as any, flexGrow: 1, minWidth: 320, maxWidth: 560, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border },
   cardMobile: { minHeight: 260 },
+  cardImage: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5,6,15,0.5)' },
   cardInner: { padding: 26, gap: 8, flex: 1, justifyContent: 'space-between' },
   cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
