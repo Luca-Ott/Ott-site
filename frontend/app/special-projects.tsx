@@ -126,7 +126,7 @@ export default function SpecialProjectsScreen() {
             onPress={() => open(p)}
             style={[styles.card, !isDesktop && styles.cardMobile]}
           >
-            {p.image ? (
+            {'image' in p && p.image ? (
               <Image source={{ uri: p.image }} style={styles.cardImage} resizeMode="cover" />
             ) : (
               <LinearGradient colors={p.gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill as any} />
