@@ -140,11 +140,13 @@ export default function SpecialProjectsScreen() {
                   <Text style={styles.statusText}>{p.status}</Text>
                 </View>
               </View>
-              <Text style={styles.cardTitle}>{p.title}</Text>
-              <Text style={styles.cardTagline}>{p.tagline}</Text>
-              <View style={styles.cardFooter}>
+              <View style={[styles.cardContent, p.title === 'NoMoreFakeNews' && styles.cardContentBottom]}>
+                {p.title !== 'NoMoreFakeNews' ? <Text style={styles.cardTitle}>{p.title}</Text> : null}
+                <Text style={styles.cardTagline}>{p.tagline}</Text>
+                <View style={styles.cardFooter}>
                 <Text style={styles.cardLink}>{p.external ? 'Visit site' : 'Discover'}</Text>
-                <Ionicons name={p.external ? 'open-outline' : 'arrow-forward'} size={16} color="#fff" />
+                  <Ionicons name={p.external ? 'open-outline' : 'arrow-forward'} size={16} color="#fff" />
+                </View>
               </View>
             </View>
           </TouchableOpacity>
@@ -193,6 +195,8 @@ const styles = StyleSheet.create({
   statusPill: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.45)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
   statusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
   statusText: { color: '#fff', fontSize: 11, fontWeight: '700' },
+  cardContent: { gap: 8 },
+  cardContentBottom: { marginTop: 'auto', paddingTop: 54 },
   cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
   cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },
   cardFooter: { flexDirection: 'row', alignItems: 'center', gap: 8 },
