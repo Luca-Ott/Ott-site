@@ -41,10 +41,12 @@ const PROJECTS = [
   },
   {
     title: 'SmartTrust',
-    category: 'SMART CONTRACT · TRUST',
-    tagline: 'Programmable trust infrastructure for smart-contract escrow, conditional digital-asset distribution, transparent milestones and beneficiary control.',
+    category: 'DIGITAL TRUST · GOVERNANCE',
+    tagline: 'An institutional operating layer for trusts, unifying governance, compliance evidence, beneficiary access and programmable digital-asset distributions.',
     status: 'In development',
-    gradient: ['#6366F1', '#8B5CF6', '#22D3EE'],
+    investorStatus: 'Open for investors',
+    gradient: ['#061D4F', '#0B3B82', '#0969FF'],
+    logo: '/smarttrust-logo-reversed.png',
     route: '/smarttrust' as const,
     external: false,
   },
@@ -88,7 +90,7 @@ export default function SpecialProjectsScreen() {
           ]),
           softwareAppSchema({ name: 'NoMoreFakeNews', url: 'https://www.ott4future.com/nomorefakenews', description: 'AI-powered platform to detect and dismantle disinformation in real time.', applicationSubCategory: 'AI Trust Infrastructure' }),
           softwareAppSchema({ name: 'Custodiy', url: 'https://custodiy.com', description: 'Modular Web3 OTC trading, escrow and document custody platform.', applicationSubCategory: 'Web3 Commerce Platform' }),
-          softwareAppSchema({ name: 'SmartTrust', url: 'https://www.ott4future.com/smarttrust', description: 'Programmable smart-contract escrow and conditional digital-asset distribution platform.', applicationSubCategory: 'Smart Contract Escrow Platform' }),
+          softwareAppSchema({ name: 'SmartTrust', url: 'https://www.ott4future.com/smarttrust', description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.', applicationSubCategory: 'Institutional Trust Management Platform' }),
           softwareAppSchema({ name: 'Freety', url: 'https://www.ott4future.com/freety', description: 'Digital infrastructure for global commodity & energy trading with AI tooling.', applicationSubCategory: 'Commodities Trading Platform' }),
         ]}
       />
@@ -135,13 +137,25 @@ export default function SpecialProjectsScreen() {
             <View style={styles.cardInner}>
               <View style={styles.cardTop}>
                 <Text style={styles.cardCategory}>{p.category}</Text>
-                <View style={styles.statusPill}>
-                  <View style={styles.statusDot} />
-                  <Text style={styles.statusText}>{p.status}</Text>
+                <View style={styles.statusGroup}>
+                  <View style={styles.statusPill}>
+                    <View style={styles.statusDot} />
+                    <Text style={styles.statusText}>{p.status}</Text>
+                  </View>
+                  {'investorStatus' in p && p.investorStatus ? (
+                    <View style={[styles.statusPill, styles.investorPill]}>
+                      <View style={styles.investorDot} />
+                      <Text style={styles.statusText}>{p.investorStatus}</Text>
+                    </View>
+                  ) : null}
                 </View>
               </View>
               <View style={[styles.cardContent, p.title === 'NoMoreFakeNews' && styles.cardContentBottom]}>
-                {p.title !== 'NoMoreFakeNews' ? <Text style={styles.cardTitle}>{p.title}</Text> : null}
+                {'logo' in p && p.logo ? (
+                  <Image source={{ uri: p.logo }} style={styles.cardLogo} resizeMode="contain" />
+                ) : p.title !== 'NoMoreFakeNews' ? (
+                  <Text style={styles.cardTitle}>{p.title}</Text>
+                ) : null}
                 {p.title !== 'NoMoreFakeNews' ? <Text style={styles.cardTagline}>{p.tagline}</Text> : null}
                 <View style={styles.cardFooter}>
                 <Text style={styles.cardLink}>{p.external ? 'Visit site' : 'Discover'}</Text>
@@ -190,13 +204,17 @@ const styles = StyleSheet.create({
   cardImage: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5,6,15,0.5)' },
   cardInner: { padding: 26, gap: 8, flex: 1, justifyContent: 'space-between' },
-  cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
+  cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10, marginBottom: 8 },
   cardCategory: { color: 'rgba(255,255,255,0.95)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
+  statusGroup: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap', gap: 6 },
   statusPill: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.45)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
+  investorPill: { borderColor: 'rgba(21,184,106,0.72)', backgroundColor: 'rgba(6,45,35,0.72)' },
   statusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
+  investorDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#15B86A' },
   statusText: { color: '#fff', fontSize: 11, fontWeight: '700' },
   cardContent: { gap: 8 },
   cardContentBottom: { marginTop: 'auto', paddingTop: 54 },
+  cardLogo: { width: 245, height: 68, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start' },
   cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
   cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },
   cardFooter: { flexDirection: 'row', alignItems: 'center', gap: 8 },
