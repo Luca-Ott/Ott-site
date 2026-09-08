@@ -10,6 +10,8 @@ import GradientText from '../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
+const SMARTTRUST_PLATFORM_URL = 'https://smarttrustprotocol.vercel.app';
+
 const PROJECTS = [
   {
     title: 'NoMoreFakeNews',
@@ -47,6 +49,7 @@ const PROJECTS = [
     investorStatus: 'Open for investors',
     gradient: ['#061D4F', '#0B3B82', '#0969FF'],
     logo: '/smarttrust-logo-reversed.png',
+    platformHref: SMARTTRUST_PLATFORM_URL,
     route: '/smarttrust' as const,
     external: false,
   },
@@ -67,10 +70,14 @@ export default function SpecialProjectsScreen() {
   const width = dims.width || 1200;
   const isDesktop = width >= 900;
 
+  const openExternal = (href: string) => {
+    if (typeof window !== 'undefined') window.open(href, '_blank', 'noopener,noreferrer');
+    else Linking.openURL(href);
+  };
+
   const open = (p: typeof PROJECTS[number]) => {
     if (p.external && p.href) {
-      if (typeof window !== 'undefined') window.open(p.href, '_blank');
-      else Linking.openURL(p.href);
+      openExternal(p.href);
     } else if (p.route) {
       router.push(p.route);
     }
@@ -152,7 +159,17 @@ export default function SpecialProjectsScreen() {
               </View>
               <View style={[styles.cardContent, p.title === 'NoMoreFakeNews' && styles.cardContentBottom]}>
                 {'logo' in p && p.logo ? (
-                  <Image source={{ uri: p.logo }} style={styles.cardLogo} resizeMode="contain" />
+                  <TouchableOpacity
+                    accessibilityRole="link"
+                    accessibilityLabel="Open the SmartTrust platform"
+                    onPress={(event) => {
+                      event.stopPropagation();
+                      if ('platformHref' in p && p.platformHref) openExternal(p.platformHref);
+                    }}
+                    style={styles.cardLogoLink}
+                  >
+                    <Image source={{ uri: p.logo }} style={styles.cardLogo} resizeMode="contain" />
+                  </TouchableOpacity>
                 ) : p.title !== 'NoMoreFakeNews' ? (
                   <Text style={styles.cardTitle}>{p.title}</Text>
                 ) : null}
@@ -214,7 +231,8 @@ const styles = StyleSheet.create({
   statusText: { color: '#fff', fontSize: 11, fontWeight: '700' },
   cardContent: { gap: 8 },
   cardContentBottom: { marginTop: 'auto', paddingTop: 54 },
-  cardLogo: { width: 245, height: 68, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start' },
+  cardLogoLink: { width: 245, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start' },
+  cardLogo: { width: '100%', height: 68 },
   cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
   cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },
   cardFooter: { flexDirection: 'row', alignItems: 'center', gap: 8 },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,6 +9,8 @@ import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
+
+const SMARTTRUST_PLATFORM_URL = 'https://smarttrustprotocol.vercel.app';
 
 const FEATURES = [
   {
@@ -37,6 +39,11 @@ export default function SmartTrustScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const isDesktop = (width || 1200) >= 900;
+
+  const openPlatform = () => {
+    if (typeof window !== 'undefined') window.open(SMARTTRUST_PLATFORM_URL, '_blank', 'noopener,noreferrer');
+    else Linking.openURL(SMARTTRUST_PLATFORM_URL);
+  };
 
   return (
     <PageShell>
@@ -91,12 +98,12 @@ export default function SmartTrustScreen() {
             distributions into one auditable workflow.
           </Text>
           <View style={styles.actions}>
-            <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/investor-inquiry')}>
-              <Text style={styles.primaryBtnText}>Investor inquiry</Text>
-              <Ionicons name="arrow-forward" size={16} color="#fff" />
+            <TouchableOpacity style={styles.primaryBtn} onPress={openPlatform} accessibilityRole="link">
+              <Text style={styles.primaryBtnText}>Explore the Platform</Text>
+              <Ionicons name="open-outline" size={16} color="#fff" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.push('/contact')}>
-              <Text style={styles.secondaryBtnText}>Discuss SmartTrust</Text>
+            <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.push('/investor-inquiry')}>
+              <Text style={styles.secondaryBtnText}>Investor inquiry</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.statusRow}>
@@ -117,7 +124,14 @@ export default function SmartTrustScreen() {
               colors={['rgba(4,24,66,0.96)', 'rgba(7,55,122,0.94)', 'rgba(9,105,255,0.82)']}
               style={styles.visualCore}
             >
-              <Image source={{ uri: '/smarttrust-logo-reversed.png' }} style={styles.heroLogo} resizeMode="contain" />
+              <TouchableOpacity
+                onPress={openPlatform}
+                accessibilityRole="link"
+                accessibilityLabel="Open the SmartTrust platform"
+                style={styles.heroLogoLink}
+              >
+                <Image source={{ uri: '/smarttrust-logo-reversed.png' }} style={styles.heroLogo} resizeMode="contain" />
+              </TouchableOpacity>
             </LinearGradient>
             <View style={[styles.orbit, styles.orbitOne]} />
             <View style={[styles.orbit, styles.orbitTwo]} />
@@ -212,7 +226,8 @@ const styles = StyleSheet.create({
   statusText: { color: colors.text, fontSize: 13, fontWeight: '700' },
   visual: { width: 310, height: 310, alignItems: 'center', justifyContent: 'center', position: 'relative' },
   visualCore: { width: 292, height: 142, borderRadius: 28, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18, borderWidth: 1, borderColor: 'rgba(43,123,255,0.5)' },
-  heroLogo: { width: 260, height: 92 },
+  heroLogoLink: { width: 260, height: 92, alignItems: 'center', justifyContent: 'center' },
+  heroLogo: { width: '100%', height: '100%' },
   orbit: { position: 'absolute', borderWidth: 1, borderColor: 'rgba(129,140,248,0.45)', borderRadius: 999 },
   orbitOne: { width: 240, height: 240 },
   orbitTwo: { width: 300, height: 190, transform: [{ rotate: '35deg' }] },
