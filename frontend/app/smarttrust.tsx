@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,26 +10,28 @@ import GradientText from '../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 
+const SMARTTRUST_PLATFORM_URL = 'https://smarttrustprotocol.vercel.app';
+
 const FEATURES = [
   {
     icon: 'shield-checkmark' as const,
-    title: 'Programmable escrow',
-    body: 'Digital assets are held and released through transparent, predefined smart-contract conditions.',
-  },
-  {
-    icon: 'git-branch' as const,
-    title: 'Milestone-based release',
-    body: 'Funds can be distributed progressively when contractual milestones and approvals are completed.',
-  },
-  {
-    icon: 'people' as const,
-    title: 'Beneficiary control',
-    body: 'Authorised beneficiaries can manage their destination wallet before an eligible release is executed.',
+    title: 'Institutional governance',
+    body: 'Role-based workflows connect trustees, protectors, beneficiaries, legal teams and compliance officers in one controlled environment.',
   },
   {
     icon: 'document-text' as const,
-    title: 'Verifiable audit trail',
-    body: 'Every relevant action is recorded to provide traceability, accountability and operational clarity.',
+    title: 'Compliance and document control',
+    body: 'KYC/AML evidence, legal documents and approvals follow clear review states before a trust or distribution can proceed.',
+  },
+  {
+    icon: 'calendar' as const,
+    title: 'Programmable distributions',
+    body: 'One-time or recurring payments can be scheduled to approved beneficiary wallets, including month-end plans that run until the allocation is completed.',
+  },
+  {
+    icon: 'analytics' as const,
+    title: 'Auditable operations',
+    body: 'Material actions, approvals and policy decisions are recorded for traceability, reporting and institutional oversight.',
   },
 ];
 
@@ -38,13 +40,18 @@ export default function SmartTrustScreen() {
   const { width } = useWindowDimensions();
   const isDesktop = (width || 1200) >= 900;
 
+  const openPlatform = () => {
+    if (typeof window !== 'undefined') window.open(SMARTTRUST_PLATFORM_URL, '_blank', 'noopener,noreferrer');
+    else Linking.openURL(SMARTTRUST_PLATFORM_URL);
+  };
+
   return (
     <PageShell>
       <PageSEO
-        title="SmartTrust — Programmable Smart-Contract Escrow"
-        description="SmartTrust is programmable trust infrastructure for conditional digital-asset distribution, transparent milestones and beneficiary control."
+        title="SmartTrust — Digital Trust Infrastructure for Institutional Asset Management"
+        description="SmartTrust unifies trust governance, compliance workflows, document controls and programmable beneficiary distributions in one auditable platform."
         canonical="https://www.ott4future.com/smarttrust"
-        keywords="SmartTrust, smart contract escrow, conditional asset distribution, programmable trust, digital asset beneficiaries, blockchain milestones"
+        keywords="SmartTrust, digital trust infrastructure, institutional asset management, trust administration platform, beneficiary distributions, trust governance, KYC AML workflows"
         schema={[
           breadcrumbsSchema([
             { name: 'Home', url: 'https://www.ott4future.com/' },
@@ -54,8 +61,8 @@ export default function SmartTrustScreen() {
           softwareAppSchema({
             name: 'SmartTrust',
             url: 'https://www.ott4future.com/smarttrust',
-            description: 'Programmable smart-contract escrow and conditional digital-asset distribution platform.',
-            applicationSubCategory: 'Smart Contract Escrow Platform',
+            description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.',
+            applicationSubCategory: 'Institutional Trust Management Platform',
           }),
         ]}
       />
@@ -74,29 +81,39 @@ export default function SmartTrustScreen() {
         <View style={styles.heroContent}>
           <View style={styles.eyebrow}>
             <View style={styles.liveDot} />
-            <Text style={styles.eyebrowText}>SMART CONTRACT · TRUST INFRASTRUCTURE</Text>
+            <Text style={styles.eyebrowText}>DIGITAL TRUST · INSTITUTIONAL ASSET GOVERNANCE</Text>
           </View>
           <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
-            Trust, converted into{' '}
+            The operating system for{' '}
             <GradientText
               style={[styles.titleGradient, !isDesktop && styles.titleGradientMobile]}
-              colors={['#818CF8', '#A855F7', '#22D3EE']}
+              colors={['#2B7BFF', '#22D3EE', '#15B86A']}
             >
-              executable logic
+              modern trusts
             </GradientText>
           </Text>
           <Text style={styles.subtitle}>
-            SmartTrust is a programmable escrow platform designed to coordinate conditional digital-asset
-            distribution with transparent rules, milestone approvals and beneficiary control.
+            SmartTrust is a compliance-first platform for trustees, fiduciary firms, family offices and financial
+            institutions. It brings governance, documents, beneficiary access and programmable digital-asset
+            distributions into one auditable workflow.
           </Text>
           <View style={styles.actions}>
-            <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/contact')}>
-              <Text style={styles.primaryBtnText}>Discuss SmartTrust</Text>
-              <Ionicons name="arrow-forward" size={16} color="#fff" />
+            <TouchableOpacity style={styles.primaryBtn} onPress={openPlatform} accessibilityRole="link">
+              <Text style={styles.primaryBtnText}>Explore the Platform</Text>
+              <Ionicons name="open-outline" size={16} color="#fff" />
             </TouchableOpacity>
+            <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.push('/investor-inquiry')}>
+              <Text style={styles.secondaryBtnText}>Investor inquiry</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.statusRow}>
             <View style={styles.statusPill}>
               <View style={styles.statusDot} />
               <Text style={styles.statusText}>In development</Text>
+            </View>
+            <View style={[styles.statusPill, styles.investorPill]}>
+              <View style={styles.investorDot} />
+              <Text style={styles.statusText}>Open for investors</Text>
             </View>
           </View>
         </View>
@@ -104,10 +121,17 @@ export default function SmartTrustScreen() {
         {isDesktop && (
           <View style={styles.visual}>
             <LinearGradient
-              colors={['rgba(99,102,241,0.9)', 'rgba(168,85,247,0.75)', 'rgba(34,211,238,0.75)']}
+              colors={['rgba(4,24,66,0.96)', 'rgba(7,55,122,0.94)', 'rgba(9,105,255,0.82)']}
               style={styles.visualCore}
             >
-              <Ionicons name="shield-checkmark" size={72} color="#fff" />
+              <TouchableOpacity
+                onPress={openPlatform}
+                accessibilityRole="link"
+                accessibilityLabel="Open the SmartTrust platform"
+                style={styles.heroLogoLink}
+              >
+                <Image source={{ uri: '/smarttrust-logo-reversed.png' }} style={styles.heroLogo} resizeMode="contain" />
+              </TouchableOpacity>
             </LinearGradient>
             <View style={[styles.orbit, styles.orbitOne]} />
             <View style={[styles.orbit, styles.orbitTwo]} />
@@ -118,12 +142,12 @@ export default function SmartTrustScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>THE PLATFORM</Text>
         <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
-          Infrastructure for conditional value transfer
+          One operating layer for the full trust lifecycle
         </Text>
         <Text style={styles.sectionIntro}>
-          SmartTrust translates contractual conditions into an operational workflow connecting asset owners,
-          administrators and beneficiaries. It is designed for use cases where release conditions must be
-          clear, auditable and resistant to unilateral alteration.
+          SmartTrust is designed to reduce operational fragmentation across trust formation, governance,
+          compliance, document review and beneficiary payments. Permissions and approval gates keep each actor
+          within the correct organisation and trust, while preserving a clear record of every material decision.
         </Text>
 
         <View style={[styles.grid, !isDesktop && styles.gridMobile]}>
@@ -143,10 +167,10 @@ export default function SmartTrustScreen() {
         <Text style={styles.sectionLabel}>HOW IT WORKS</Text>
         <View style={[styles.steps, !isDesktop && styles.stepsMobile]}>
           {[
-            ['01', 'Define', 'Set beneficiaries, assets, conditions and approval milestones.'],
-            ['02', 'Secure', 'Assets are placed under the agreed programmable escrow logic.'],
-            ['03', 'Verify', 'Authorised parties validate completion of the required conditions.'],
-            ['04', 'Release', 'Eligible assets are distributed to the confirmed beneficiary wallets.'],
+            ['01', 'Establish', 'Configure the organisation, trust, parties, governing rules and asset framework.'],
+            ['02', 'Verify', 'Complete identity, KYC/AML, legal-document and role-acceptance reviews.'],
+            ['03', 'Approve', 'Apply trustee, protector, legal and compliance approval gates as required.'],
+            ['04', 'Distribute', 'Execute approved one-time or recurring distributions to confirmed beneficiary wallets.'],
           ].map(([number, title, body]) => (
             <View key={number} style={styles.step}>
               <Text style={styles.stepNumber}>{number}</Text>
@@ -159,13 +183,14 @@ export default function SmartTrustScreen() {
 
       <View style={styles.cta}>
         <Text style={[styles.ctaTitle, !isDesktop && styles.ctaTitleMobile]}>
-          Build the next layer of programmable trust
+          Help shape the infrastructure for digital trust
         </Text>
         <Text style={styles.ctaBody}>
-          Contact On Time Technology to discuss institutional, commercial or bespoke SmartTrust applications.
+          SmartTrust is open to strategic investors and institutional pilot partners. Developed by On Time
+          Technology Ltd for a more controlled, transparent and programmable trust ecosystem.
         </Text>
-        <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/contact')}>
-          <Text style={styles.primaryBtnText}>Contact our team</Text>
+        <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/investor-inquiry')}>
+          <Text style={styles.primaryBtnText}>Explore the investment opportunity</Text>
           <Ionicons name="arrow-forward" size={16} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -189,13 +214,20 @@ const styles = StyleSheet.create({
   titleGradientMobile: { fontSize: 38, lineHeight: 46, letterSpacing: -0.8 } as any,
   subtitle: { color: colors.textMuted, fontSize: 17, lineHeight: 28, maxWidth: 720, marginTop: 22 },
   actions: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 14, marginTop: 30 },
-  primaryBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#6366F1', paddingHorizontal: 22, paddingVertical: 13, borderRadius: radii.pill },
+  primaryBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#0969FF', paddingHorizontal: 22, paddingVertical: 13, borderRadius: radii.pill },
   primaryBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  secondaryBtn: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 12, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: 'rgba(255,255,255,0.025)' },
+  secondaryBtnText: { color: colors.text, fontSize: 14, fontWeight: '700' },
+  statusRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 9, marginTop: 18 },
   statusPill: { flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 13, paddingVertical: 10, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.border },
-  statusDot: { width: 7, height: 7, borderRadius: 7, backgroundColor: colors.cyan },
+  investorPill: { borderColor: 'rgba(21,184,106,0.55)', backgroundColor: 'rgba(21,184,106,0.08)' },
+  statusDot: { width: 7, height: 7, borderRadius: 7, backgroundColor: '#2B7BFF' },
+  investorDot: { width: 7, height: 7, borderRadius: 7, backgroundColor: '#15B86A' },
   statusText: { color: colors.text, fontSize: 13, fontWeight: '700' },
   visual: { width: 310, height: 310, alignItems: 'center', justifyContent: 'center', position: 'relative' },
-  visualCore: { width: 160, height: 160, borderRadius: 80, alignItems: 'center', justifyContent: 'center' },
+  visualCore: { width: 292, height: 142, borderRadius: 28, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18, borderWidth: 1, borderColor: 'rgba(43,123,255,0.5)' },
+  heroLogoLink: { width: 260, height: 92, alignItems: 'center', justifyContent: 'center' },
+  heroLogo: { width: '100%', height: '100%' },
   orbit: { position: 'absolute', borderWidth: 1, borderColor: 'rgba(129,140,248,0.45)', borderRadius: 999 },
   orbitOne: { width: 240, height: 240 },
   orbitTwo: { width: 300, height: 190, transform: [{ rotate: '35deg' }] },

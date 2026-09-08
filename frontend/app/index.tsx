@@ -34,7 +34,7 @@ import { colors, radii, space } from '../src/theme/tokens';
 const newsItems = [
   'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
   'Custodiy v2.0 of the web app is now live',
-  'NEW PROJECT — SMARTTRUST: programmable escrow and conditional digital-asset distribution',
+  'SMARTTRUST — Institutional digital trust infrastructure for governance, compliance and programmable beneficiary distributions',
   'Freety — Digital infrastructure for global commodity & energy trading',
   'Cyber Security Projects — Advanced protection for enterprise',
   'R&D division expanding with cutting-edge AI innovation',
@@ -114,8 +114,8 @@ export default function HomeScreen() {
           softwareAppSchema({
             name: 'SmartTrust',
             url: 'https://www.ott4future.com/smarttrust',
-            description: 'Programmable trust infrastructure for smart-contract escrow and conditional digital-asset distribution.',
-            applicationSubCategory: 'Smart Contract Escrow Platform',
+            description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.',
+            applicationSubCategory: 'Institutional Trust Management Platform',
           }),
           softwareAppSchema({
             name: 'Freety',
@@ -368,8 +368,8 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
-                category="SMART CONTRACT · TRUST"
-                tagline="Programmable escrow infrastructure for conditional digital-asset distribution, transparent milestones and beneficiary control."
+                category="DIGITAL TRUST · GOVERNANCE"
+                tagline="An institutional operating layer for trusts, unifying governance, compliance evidence, beneficiary access and programmable digital-asset distributions."
                 gradient={['#6366F1', '#8B5CF6']}
                 status="In development"
                 onPress={() => router.push('/smarttrust')}
