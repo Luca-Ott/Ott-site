@@ -114,8 +114,8 @@ export default function HomeScreen() {
           softwareAppSchema({
             name: 'SmartTrust',
             url: 'https://www.ott4future.com/smarttrust',
-      description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.',
-      applicationSubCategory: 'Institutional Trust Management Platform',
+            description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.',
+            applicationSubCategory: 'Institutional Trust Management Platform',
           }),
           softwareAppSchema({
             name: 'Freety',
@@ -368,8 +368,8 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
-              category="DIGITAL TRUST · GOVERNANCE"
-              tagline="An institutional operating layer for trusts, unifying governance, compliance evidence, beneficiary access and programmable digital-asset distributions."
+                category="DIGITAL TRUST · GOVERNANCE"
+                tagline="An institutional operating layer for trusts, unifying governance, compliance evidence, beneficiary access and programmable digital-asset distributions."
                 gradient={['#6366F1', '#8B5CF6']}
                 status="In development"
                 onPress={() => router.push('/smarttrust')}
