@@ -34,7 +34,7 @@ import { colors, radii, space } from '../src/theme/tokens';
 const newsItems = [
   'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
   'Custodiy v2.0 of the web app is now live',
-  'SMARTTRUST — Institutional digital trust infrastructure for governance, compliance and programmable beneficiary distributions',
+  'SMARTTRUST — Multi-asset trust governance, custody technology and controlled beneficiary distributions — open for investors',
   'Freety — Digital infrastructure for global commodity & energy trading',
   'Cyber Security Projects — Advanced protection for enterprise',
   'R&D division expanding with cutting-edge AI innovation',
@@ -114,7 +114,7 @@ export default function HomeScreen() {
           softwareAppSchema({
             name: 'SmartTrust',
             url: 'https://www.ott4future.com/smarttrust',
-            description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.',
+            description: 'Multi-asset trust management and custody technology for governance, legal and compliance reviews, beneficiary access and controlled distributions.',
             applicationSubCategory: 'Institutional Trust Management Platform',
           }),
           softwareAppSchema({
@@ -368,10 +368,10 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
-                category="DIGITAL TRUST · GOVERNANCE"
-                tagline="An institutional operating layer for trusts, unifying governance, compliance evidence, beneficiary access and programmable digital-asset distributions."
+                category="MULTI-ASSET TRUST · GOVERNANCE"
+                tagline="Trust governance and custody technology for physical assets, bank accounts and stablecoin wallets, with legal reviews, compliance evidence and controlled beneficiary distributions."
                 gradient={['#6366F1', '#8B5CF6']}
-                status="In development"
+                status="Multi-asset platform"
                 onPress={() => router.push('/smarttrust')}
                 isDesktop={isDesktop}
               />
