@@ -15,23 +15,33 @@ const SMARTTRUST_PLATFORM_URL = 'https://smarttrustprotocol.vercel.app';
 const FEATURES = [
   {
     icon: 'shield-checkmark' as const,
-    title: 'Institutional governance',
-    body: 'Role-based workflows connect trustees, protectors, beneficiaries, legal teams and compliance officers in one controlled environment.',
+    title: 'Organisation onboarding and KYB',
+    body: 'Organisations submit corporate records, beneficial ownership, AML policies and licensing evidence for platform review. Compliance officers can be assigned across organisations while access stays scoped to each appointment.',
   },
   {
     icon: 'document-text' as const,
-    title: 'Compliance and document control',
-    body: 'KYC/AML evidence, legal documents and approvals follow clear review states before a trust or distribution can proceed.',
+    title: 'Trust formation and legal review',
+    body: 'Record jurisdiction, governing law, purpose, administration, asset situs and CRS/FATCA classifications. Independent legal approval, acceptance by every trustee and compliance review guide the trust towards activation.',
+  },
+  {
+    icon: 'briefcase' as const,
+    title: 'Multi-asset trust portfolio',
+    body: 'Bring real estate, gold, artwork, vehicles, securities, bank accounts and stablecoin wallets into one trust portfolio. Keep valuations, ownership and custody evidence, supporting documents and review status together for each asset.',
+  },
+  {
+    icon: 'people' as const,
+    title: 'Defined roles and beneficiary access',
+    body: 'Connect settlors, trustees, protectors, beneficiaries, legal counsel and compliance officers. Beneficiaries can view their own allocations and distributions; payout-wallet changes require trustee and compliance approval.',
   },
   {
     icon: 'calendar' as const,
-    title: 'Programmable distributions',
-    body: 'One-time or recurring payments can be scheduled to approved beneficiary wallets, including month-end plans that run until the allocation is completed.',
+    title: 'Controlled beneficiary distributions',
+    body: 'Prepare one-time or recurring plans, including monthly schedules within an agreed allocation. Each request records its deed clause, fiduciary rationale and tax treatment, with trustee, compliance and any required protector approvals.',
   },
   {
     icon: 'analytics' as const,
-    title: 'Auditable operations',
-    body: 'Material actions, approvals and policy decisions are recorded for traceability, reporting and institutional oversight.',
+    title: 'Evidence, tasks and audit history',
+    body: 'Track outstanding actions, documents, review decisions and compliance expiry dates from role-specific dashboards. Reports and audit records give authorised teams a traceable view of trust administration.',
   },
 ];
 
@@ -48,10 +58,10 @@ export default function SmartTrustScreen() {
   return (
     <PageShell>
       <PageSEO
-        title="SmartTrust — Digital Trust Infrastructure for Institutional Asset Management"
-        description="SmartTrust unifies trust governance, compliance workflows, document controls and programmable beneficiary distributions in one auditable platform."
+        title="SmartTrust — Multi-Asset Trust Governance & Custody Technology"
+        description="SmartTrust brings multi-asset portfolios, legal and compliance reviews, beneficiary access and controlled distributions into one trust management platform."
         canonical="https://www.ott4future.com/smarttrust"
-        keywords="SmartTrust, digital trust infrastructure, institutional asset management, trust administration platform, beneficiary distributions, trust governance, KYC AML workflows"
+        keywords="SmartTrust, multi-asset trust management, custody technology, trust governance, real estate, stablecoin wallets, beneficiary distributions, KYB, compliance workflows"
         schema={[
           breadcrumbsSchema([
             { name: 'Home', url: 'https://www.ott4future.com/' },
@@ -61,7 +71,7 @@ export default function SmartTrustScreen() {
           softwareAppSchema({
             name: 'SmartTrust',
             url: 'https://www.ott4future.com/smarttrust',
-            description: 'Digital trust infrastructure for institutional governance, compliance and programmable beneficiary distributions.',
+            description: 'Multi-asset trust management and custody technology for governance, legal and compliance reviews, beneficiary access and controlled distributions.',
             applicationSubCategory: 'Institutional Trust Management Platform',
           }),
         ]}
@@ -81,7 +91,7 @@ export default function SmartTrustScreen() {
         <View style={styles.heroContent}>
           <View style={styles.eyebrow}>
             <View style={styles.liveDot} />
-            <Text style={styles.eyebrowText}>DIGITAL TRUST · INSTITUTIONAL ASSET GOVERNANCE</Text>
+            <Text style={styles.eyebrowText}>TRUST GOVERNANCE · CUSTODY TECHNOLOGY</Text>
           </View>
           <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
             The operating system for{' '}
@@ -93,9 +103,10 @@ export default function SmartTrustScreen() {
             </GradientText>
           </Text>
           <Text style={styles.subtitle}>
-            SmartTrust is a compliance-first platform for trustees, fiduciary firms, family offices and financial
-            institutions. It brings governance, documents, beneficiary access and programmable digital-asset
-            distributions into one auditable workflow.
+            SmartTrust brings trust governance, multi-asset portfolios, compliance evidence and beneficiary
+            distributions into one platform. Built for trustees, fiduciary firms, family offices and financial
+            institutions, it connects physical assets, bank accounts and stablecoin wallets with clear
+            responsibilities and documented approvals.
           </Text>
           <View style={styles.actions}>
             <TouchableOpacity style={styles.primaryBtn} onPress={openPlatform} accessibilityRole="link">
@@ -109,7 +120,7 @@ export default function SmartTrustScreen() {
           <View style={styles.statusRow}>
             <View style={styles.statusPill}>
               <View style={styles.statusDot} />
-              <Text style={styles.statusText}>In development</Text>
+              <Text style={styles.statusText}>Multi-asset platform</Text>
             </View>
             <View style={[styles.statusPill, styles.investorPill]}>
               <View style={styles.investorDot} />
@@ -145,9 +156,9 @@ export default function SmartTrustScreen() {
           One operating layer for the full trust lifecycle
         </Text>
         <Text style={styles.sectionIntro}>
-          SmartTrust is designed to reduce operational fragmentation across trust formation, governance,
-          compliance, document review and beneficiary payments. Permissions and approval gates keep each actor
-          within the correct organisation and trust, while preserving a clear record of every material decision.
+          From organisation onboarding to an active trust, each stage has its own documents, responsible
+          parties and approval checks. Legal review, trustee acceptance, compliance and evidence of asset
+          settlement are tracked separately, with access tied to each organisation, trust and assigned role.
         </Text>
 
         <View style={[styles.grid, !isDesktop && styles.gridMobile]}>
@@ -163,14 +174,61 @@ export default function SmartTrustScreen() {
         </View>
       </View>
 
+      <View style={styles.section}>
+        <Text style={styles.sectionLabel}>ASSETS AND CUSTODY TECHNOLOGY</Text>
+        <Text style={[styles.sectionTitle, !isDesktop && styles.sectionTitleMobile]}>
+          A broader view of trust property
+        </Text>
+        <Text style={styles.sectionIntro}>
+          One portfolio connects physical assets, bank accounts and stablecoin wallets. Asset valuations,
+          bank balances and on-chain funds are tracked according to their source, giving trustees a
+          consolidated view with distinct controls for each type of asset.
+        </Text>
+        <View style={[styles.grid, !isDesktop && styles.gridMobile]}>
+          <GlassCard glow="purple" style={styles.card}>
+            <Text style={styles.cardTitle}>Physical and financial assets</Text>
+            <Text style={styles.cardBody}>
+              Property, precious metals, art and collectibles, vehicles, securities and company interests
+              have dedicated records, valuation details and evidence requirements. Ownership, custody and
+              asset acceptance stay subject to documented review.
+            </Text>
+          </GlassCard>
+          <GlassCard glow="purple" style={styles.card}>
+            <Text style={styles.cardTitle}>Bank accounts and treasury</Text>
+            <Text style={styles.cardBody}>
+              Manage trust bank-account records, currencies, signatories, statements and supporting
+              evidence. Reconcile balances and movements, prepare payment instructions and record
+              approvals and settlement evidence within the trust workflow.
+            </Text>
+          </GlassCard>
+          <GlassCard glow="purple" style={styles.card}>
+            <Text style={styles.cardTitle}>Stablecoin treasury workflows</Text>
+            <Text style={styles.cardBody}>
+              EVM wallet connection, payment preparation and on-chain confirmation are implemented.
+              Where settlement is enabled, an authorised signer uses an external wallet and the platform
+              verifies the transaction. Network and token availability depend on the configured environment;
+              test-network activity does not represent a transfer of real funds.
+            </Text>
+          </GlassCard>
+          <GlassCard glow="purple" style={styles.card}>
+            <Text style={styles.cardTitle}>Governance across the portfolio</Text>
+            <Text style={styles.cardBody}>
+              Link asset operations and treasury movements to the trust, its responsible parties and
+              required approvals. Track receipts, supporting evidence and distributions while preserving
+              the distinction between estimated asset value and funds available for payment.
+            </Text>
+          </GlassCard>
+        </View>
+      </View>
+
       <View style={styles.workflowSection}>
         <Text style={styles.sectionLabel}>HOW IT WORKS</Text>
         <View style={[styles.steps, !isDesktop && styles.stepsMobile]}>
           {[
-            ['01', 'Establish', 'Configure the organisation, trust, parties, governing rules and asset framework.'],
-            ['02', 'Verify', 'Complete identity, KYC/AML, legal-document and role-acceptance reviews.'],
-            ['03', 'Approve', 'Apply trustee, protector, legal and compliance approval gates as required.'],
-            ['04', 'Distribute', 'Execute approved one-time or recurring distributions to confirmed beneficiary wallets.'],
+            ['01', 'Onboard', 'Complete organisation details, upload corporate evidence and obtain the required platform reviews.'],
+            ['02', 'Establish', 'Define the trust, its governing law, parties and deed; complete independent legal review and trustee acceptance.'],
+            ['03', 'Activate', 'Complete compliance checks and record evidence of legal asset settlement and segregation before activation.'],
+            ['04', 'Administer', 'Maintain the portfolio, resolve pending actions and process approved distributions through configured payment workflows.'],
           ].map(([number, title, body]) => (
             <View key={number} style={styles.step}>
               <Text style={styles.stepNumber}>{number}</Text>
@@ -186,8 +244,9 @@ export default function SmartTrustScreen() {
           Help shape the infrastructure for digital trust
         </Text>
         <Text style={styles.ctaBody}>
-          SmartTrust is open to strategic investors and institutional pilot partners. Developed by On Time
-          Technology Ltd for a more controlled, transparent and programmable trust ecosystem.
+          Developed by On Time Technology Ltd, SmartTrust combines trust administration and custody
+          technology in one evolving platform. We welcome strategic investors and institutional partners
+          interested in piloting multi-asset governance and controlled beneficiary distributions.
         </Text>
         <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/investor-inquiry')}>
           <Text style={styles.primaryBtnText}>Explore the investment opportunity</Text>
@@ -207,7 +266,7 @@ const styles = StyleSheet.create({
   heroContent: { flex: 1 },
   eyebrow: { flexDirection: 'row', alignItems: 'center', gap: 9, marginBottom: 20 },
   liveDot: { width: 7, height: 7, borderRadius: 7, backgroundColor: colors.cyan },
-  eyebrowText: { color: colors.cyan, fontSize: 11, fontWeight: '800', letterSpacing: 1.7 },
+  eyebrowText: { color: colors.cyan, fontSize: 11, fontWeight: '800', letterSpacing: 1.7, flexShrink: 1 },
   title: { color: colors.text, fontSize: 60, lineHeight: 68, fontWeight: '900', letterSpacing: -1.6 },
   titleMobile: { fontSize: 38, lineHeight: 46, letterSpacing: -0.8 },
   titleGradient: { fontSize: 60, lineHeight: 68, fontWeight: '900', letterSpacing: -1.6 } as any,
