@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   Platform,
   Image,
+  type ImageSourcePropType,
   Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -358,6 +359,8 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="Custodiy"
+                logo={require('../assets/custodiy-logo.png')}
+                logoVariant="icon"
                 category="WEB3 · COMMERCE"
                 tagline="A modular platform for OTC trading, escrow, marketplaces and secure document custody."
                 gradient={['#06B6D4', '#3B82F6']}
@@ -368,7 +371,7 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
-                logo="/smarttrust-logo-reversed.png"
+                logo={{ uri: '/smarttrust-logo-reversed.png' }}
                 category="MULTI-ASSET TRUST · GOVERNANCE"
                 tagline="Trust governance and custody technology for physical assets, bank accounts and stablecoin wallets, with legal reviews, compliance evidence and controlled beneficiary distributions."
                 gradient={['#6366F1', '#8B5CF6']}
@@ -378,6 +381,8 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="Freety"
+                logo={require('../assets/freety-logo.jpg')}
+                logoVariant="plate"
                 category="COMMODITIES · AI"
                 tagline="Digital infrastructure for global commodity & energy trading, with cargo tokenisation and AI tooling."
                 gradient={['#10B981', '#22D3EE']}
@@ -594,6 +599,7 @@ function ProjectCard({
   gradient,
   image,
   logo,
+  logoVariant,
   status,
   onPress,
   isDesktop,
@@ -604,7 +610,8 @@ function ProjectCard({
   tagline: string;
   gradient: string[];
   image?: string;
-  logo?: string;
+  logo?: ImageSourcePropType;
+  logoVariant?: 'icon' | 'plate';
   status: string;
   onPress: () => void;
   isDesktop: boolean;
@@ -628,7 +635,18 @@ function ProjectCard({
         </View>
         <View style={[styles.projectContent, image && styles.projectContentBottom]}>
           {logo ? (
-            <Image source={{ uri: logo }} style={styles.projectLogo} resizeMode="contain" accessibilityLabel={title} />
+            logoVariant === 'icon' ? (
+              <View style={styles.projectBrand}>
+                <Image source={logo} style={styles.projectLogoIcon} resizeMode="contain" accessibilityLabel={title} />
+                <Text style={styles.projectTitle}>{title}</Text>
+              </View>
+            ) : logoVariant === 'plate' ? (
+              <View style={styles.projectLogoPlate}>
+                <Image source={logo} style={styles.projectLogoPlateImage} resizeMode="contain" accessibilityLabel={title} />
+              </View>
+            ) : (
+              <Image source={logo} style={styles.projectLogo} resizeMode="contain" accessibilityLabel={title} />
+            )
           ) : !image ? <Text style={styles.projectTitle}>{title}</Text> : null}
           {!image ? <Text style={styles.projectTagline}>{tagline}</Text> : null}
           <View style={styles.projectFooter}>
@@ -783,6 +801,10 @@ const styles = StyleSheet.create({
   projectContentBottom: { marginTop: 'auto', paddingTop: 48 },
   projectTitle: { color: '#fff', fontSize: 28, fontWeight: '900', marginVertical: 8, letterSpacing: -0.5 },
   projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
+  projectBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
+  projectLogoIcon: { width: 56, height: 56 },
+  projectLogoPlate: { width: '100%', maxWidth: 244, height: 76, padding: 10, backgroundColor: '#fff', borderRadius: 12, alignSelf: 'flex-start', marginVertical: 4 },
+  projectLogoPlateImage: { width: '100%', height: '100%' },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
   projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },
   projectLink: { color: '#fff', fontSize: 14, fontWeight: '700' },
