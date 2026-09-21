@@ -381,8 +381,7 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="Freety"
-                logo={require('../assets/freety-logo.jpg')}
-                logoVariant="plate"
+                logo={require('../assets/freety-logo-transparent.png')}
                 category="COMMODITIES · AI"
                 tagline="Digital infrastructure for global commodity & energy trading, with cargo tokenisation and AI tooling."
                 gradient={['#10B981', '#22D3EE']}
@@ -611,7 +610,7 @@ function ProjectCard({
   gradient: string[];
   image?: string;
   logo?: ImageSourcePropType;
-  logoVariant?: 'icon' | 'plate';
+  logoVariant?: 'icon';
   status: string;
   onPress: () => void;
   isDesktop: boolean;
@@ -639,10 +638,6 @@ function ProjectCard({
               <View style={styles.projectBrand}>
                 <Image source={logo} style={styles.projectLogoIcon} resizeMode="contain" accessibilityLabel={title} />
                 <Text style={styles.projectTitle}>{title}</Text>
-              </View>
-            ) : logoVariant === 'plate' ? (
-              <View style={styles.projectLogoPlate}>
-                <Image source={logo} style={styles.projectLogoPlateImage} resizeMode="contain" accessibilityLabel={title} />
               </View>
             ) : (
               <Image source={logo} style={styles.projectLogo} resizeMode="contain" accessibilityLabel={title} />
@@ -803,8 +798,6 @@ const styles = StyleSheet.create({
   projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
   projectLogoIcon: { width: 56, height: 56 },
-  projectLogoPlate: { width: '100%', maxWidth: 244, height: 76, padding: 10, backgroundColor: '#fff', borderRadius: 12, alignSelf: 'flex-start', marginVertical: 4 },
-  projectLogoPlateImage: { width: '100%', height: '100%' },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
   projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },
   projectLink: { color: '#fff', fontSize: 14, fontWeight: '700' },
