@@ -368,6 +368,7 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
+                logo="/smarttrust-logo-reversed.png"
                 category="MULTI-ASSET TRUST · GOVERNANCE"
                 tagline="Trust governance and custody technology for physical assets, bank accounts and stablecoin wallets, with legal reviews, compliance evidence and controlled beneficiary distributions."
                 gradient={['#6366F1', '#8B5CF6']}
@@ -592,6 +593,7 @@ function ProjectCard({
   tagline,
   gradient,
   image,
+  logo,
   status,
   onPress,
   isDesktop,
@@ -602,6 +604,7 @@ function ProjectCard({
   tagline: string;
   gradient: string[];
   image?: string;
+  logo?: string;
   status: string;
   onPress: () => void;
   isDesktop: boolean;
@@ -624,7 +627,9 @@ function ProjectCard({
           </View>
         </View>
         <View style={[styles.projectContent, image && styles.projectContentBottom]}>
-          {!image ? <Text style={styles.projectTitle}>{title}</Text> : null}
+          {logo ? (
+            <Image source={{ uri: logo }} style={styles.projectLogo} resizeMode="contain" accessibilityLabel={title} />
+          ) : !image ? <Text style={styles.projectTitle}>{title}</Text> : null}
           {!image ? <Text style={styles.projectTagline}>{tagline}</Text> : null}
           <View style={styles.projectFooter}>
           <Text style={styles.projectLink}>
@@ -777,6 +782,7 @@ const styles = StyleSheet.create({
   projectContent: { gap: 8 },
   projectContentBottom: { marginTop: 'auto', paddingTop: 48 },
   projectTitle: { color: '#fff', fontSize: 28, fontWeight: '900', marginVertical: 8, letterSpacing: -0.5 },
+  projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
   projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },
   projectLink: { color: '#fff', fontSize: 14, fontWeight: '700' },
