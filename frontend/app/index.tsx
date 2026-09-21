@@ -617,13 +617,13 @@ function ProjectCard({
   external?: boolean;
 }) {
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={[styles.projectCard, !isDesktop && styles.projectCardMobile]}>
+    <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={[styles.projectCard, image && styles.projectImageCard, !isDesktop && styles.projectCardMobile]}>
       {image ? (
-        <Image source={{ uri: image }} style={styles.projectImage} resizeMode="cover" />
+        <Image source={{ uri: image }} style={styles.projectImage} resizeMode="contain" accessibilityLabel={title} />
       ) : (
         <LinearGradient colors={gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.projectGradient} />
       )}
-      <View style={styles.projectOverlay} />
+      <View style={[styles.projectOverlay, image && styles.projectImageOverlay]} />
       <View style={styles.projectInner}>
         <View style={styles.projectTop}>
           <Text style={styles.projectCategory}>{category}</Text>
@@ -784,8 +784,11 @@ const styles = StyleSheet.create({
   projectCard: { flex: 1, minWidth: 280, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border, ...(Platform.OS === 'web' ? { transition: 'transform 0.3s ease, box-shadow 0.3s ease' } as any : {}) },
   projectCardMobile: { minHeight: 240 },
   projectGradient: { ...StyleSheet.absoluteFillObject, opacity: 0.85 },
-  projectImage: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
+  projectImageCard: { backgroundColor: '#02040A' },
+  // The wordmark sits at 40% of the artwork width; 125% centers it without cropping the text.
+  projectImage: { position: 'absolute', left: 0, top: '50%', width: '125%', aspectRatio: 1600 / 1077, transform: [{ translateY: '-50%' }] },
   projectOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5, 6, 15, 0.55)' },
+  projectImageOverlay: { backgroundColor: 'rgba(5, 6, 15, 0.2)' },
   projectInner: { padding: 24, flex: 1, justifyContent: 'space-between' },
   projectTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
   projectCategory: { color: 'rgba(255,255,255,0.85)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
