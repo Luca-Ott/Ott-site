@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, useWindowDimensions } from 'react-native';
-import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
+import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -9,8 +9,7 @@ import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
-
-const SMARTTRUST_PLATFORM_URL = 'https://smarttrustprotocol.vercel.app';
+import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smarttrust';
 
 const FEATURES = [
   {
@@ -50,11 +49,6 @@ export default function SmartTrustScreen() {
   const { width } = useWindowDimensions();
   const isDesktop = (width || 1200) >= 900;
 
-  const openPlatform = () => {
-    if (typeof window !== 'undefined') window.open(SMARTTRUST_PLATFORM_URL, '_blank', 'noopener,noreferrer');
-    else Linking.openURL(SMARTTRUST_PLATFORM_URL);
-  };
-
   return (
     <PageShell>
       <PageSEO
@@ -89,6 +83,13 @@ export default function SmartTrustScreen() {
 
       <View style={[styles.hero, !isDesktop && styles.heroMobile]}>
         <View style={styles.heroContent}>
+          {!isDesktop && (
+            <Link href={SMARTTRUST_PLATFORM_URL} target="_blank" rel="noopener noreferrer" asChild>
+              <TouchableOpacity style={styles.mobileLogoLink} accessibilityLabel="Open the SmartTrust platform">
+                <Image source={{ uri: SMARTTRUST_LOGO_URL }} style={styles.heroLogo} resizeMode="contain" accessibilityLabel="SmartTrust" />
+              </TouchableOpacity>
+            </Link>
+          )}
           <View style={styles.eyebrow}>
             <View style={styles.liveDot} />
             <Text style={styles.eyebrowText}>TRUST GOVERNANCE · CUSTODY TECHNOLOGY</Text>
@@ -109,10 +110,12 @@ export default function SmartTrustScreen() {
             responsibilities and documented approvals.
           </Text>
           <View style={styles.actions}>
-            <TouchableOpacity style={styles.primaryBtn} onPress={openPlatform} accessibilityRole="link">
-              <Text style={styles.primaryBtnText}>Explore the Platform</Text>
-              <Ionicons name="open-outline" size={16} color="#fff" />
-            </TouchableOpacity>
+            <Link href={SMARTTRUST_PLATFORM_URL} target="_blank" rel="noopener noreferrer" asChild>
+              <TouchableOpacity style={styles.primaryBtn}>
+                <Text style={styles.primaryBtnText}>Explore the Platform</Text>
+                <Ionicons name="open-outline" size={16} color="#fff" />
+              </TouchableOpacity>
+            </Link>
             <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.push('/investor-inquiry')}>
               <Text style={styles.secondaryBtnText}>Investor inquiry</Text>
             </TouchableOpacity>
@@ -120,7 +123,7 @@ export default function SmartTrustScreen() {
           <View style={styles.statusRow}>
             <View style={styles.statusPill}>
               <View style={styles.statusDot} />
-              <Text style={styles.statusText}>Multi-asset platform</Text>
+              <Text style={styles.statusText}>Live at smarttrustprotocol.com</Text>
             </View>
             <View style={[styles.statusPill, styles.investorPill]}>
               <View style={styles.investorDot} />
@@ -132,17 +135,17 @@ export default function SmartTrustScreen() {
         {isDesktop && (
           <View style={styles.visual}>
             <LinearGradient
-              colors={['rgba(4,24,66,0.96)', 'rgba(7,55,122,0.94)', 'rgba(9,105,255,0.82)']}
+              colors={['#FFFFFF', '#F1F5FF', '#DBEAFE']}
               style={styles.visualCore}
             >
-              <TouchableOpacity
-                onPress={openPlatform}
-                accessibilityRole="link"
-                accessibilityLabel="Open the SmartTrust platform"
-                style={styles.heroLogoLink}
-              >
-                <Image source={{ uri: '/smarttrust-logo-reversed.png' }} style={styles.heroLogo} resizeMode="contain" />
-              </TouchableOpacity>
+              <Link href={SMARTTRUST_PLATFORM_URL} target="_blank" rel="noopener noreferrer" asChild>
+                <TouchableOpacity
+                  accessibilityLabel="Open the SmartTrust platform"
+                  style={styles.heroLogoLink}
+                >
+                  <Image source={{ uri: SMARTTRUST_LOGO_URL }} style={styles.heroLogo} resizeMode="contain" accessibilityLabel="SmartTrust" />
+                </TouchableOpacity>
+              </Link>
             </LinearGradient>
             <View style={[styles.orbit, styles.orbitOne]} />
             <View style={[styles.orbit, styles.orbitTwo]} />
@@ -286,6 +289,7 @@ const styles = StyleSheet.create({
   visual: { width: 310, height: 310, alignItems: 'center', justifyContent: 'center', position: 'relative' },
   visualCore: { width: 292, height: 142, borderRadius: 28, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18, borderWidth: 1, borderColor: 'rgba(43,123,255,0.5)' },
   heroLogoLink: { width: 260, height: 92, alignItems: 'center', justifyContent: 'center' },
+  mobileLogoLink: { width: 280, maxWidth: '100%', height: 96, padding: 10, borderRadius: 16, backgroundColor: '#F8FAFC', marginBottom: 24 },
   heroLogo: { width: '100%', height: '100%' },
   orbit: { position: 'absolute', borderWidth: 1, borderColor: 'rgba(129,140,248,0.45)', borderRadius: 999 },
   orbitOne: { width: 240, height: 240 },

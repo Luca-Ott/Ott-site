@@ -13,7 +13,7 @@ import {
   Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Head from 'expo-router/head';
@@ -30,12 +30,13 @@ import SiteFooter from '../src/components/SiteFooter';
 import OrbitVisual from '../src/components/OrbitVisual';
 import PageSEO, { softwareAppSchema } from '../src/components/PageSEO';
 import { getAllArticles, formatDate } from '../src/data/blog';
+import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smarttrust';
 import { colors, radii, space } from '../src/theme/tokens';
 
 const newsItems = [
+  'SmartTrust Protocol is now LIVE — https://smarttrustprotocol.com',
   'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
   'Custodiy v2.0 of the web app is now live',
-  'SMARTTRUST — Multi-asset trust governance, custody technology and controlled beneficiary distributions — open for investors',
   'Freety — Digital infrastructure for global commodity & energy trading',
   'Cyber Security Projects — Advanced protection for enterprise',
   'R&D division expanding with cutting-edge AI innovation',
@@ -225,18 +226,22 @@ export default function HomeScreen() {
               <Text style={styles.tickerLabelText}>LIVE</Text>
             </View>
             <View style={styles.tickerTrack}>
-              <Animated.Text
-                numberOfLines={2}
+              <Animated.View
                 style={[
-                  styles.tickerText,
                   {
                     opacity: tickerFade,
                     transform: [{ translateY: tickerSlide }],
                   },
                 ]}
               >
-                ◆  {newsItems[tickerIndex]}
-              </Animated.Text>
+                {tickerIndex === 0 ? (
+                  <Link href={SMARTTRUST_PLATFORM_URL} target="_blank" rel="noopener noreferrer" style={styles.tickerText} numberOfLines={2}>
+                    ◆  {newsItems[tickerIndex]}
+                  </Link>
+                ) : (
+                  <Text style={styles.tickerText} numberOfLines={2}>◆  {newsItems[tickerIndex]}</Text>
+                )}
+              </Animated.View>
             </View>
             <View style={styles.tickerDots}>
               {newsItems.map((_, i) => (
@@ -371,11 +376,12 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
-                logo={{ uri: '/smarttrust-logo-reversed.png' }}
+                logo={{ uri: SMARTTRUST_LOGO_URL }}
+                platformHref={SMARTTRUST_PLATFORM_URL}
                 category="MULTI-ASSET TRUST · GOVERNANCE"
                 tagline="Trust governance and custody technology for physical assets, bank accounts and stablecoin wallets, with legal reviews, compliance evidence and controlled beneficiary distributions."
                 gradient={['#6366F1', '#8B5CF6']}
-                status="Multi-asset platform"
+                status="Live"
                 onPress={() => router.push('/smarttrust')}
                 isDesktop={isDesktop}
               />
@@ -599,6 +605,7 @@ function ProjectCard({
   image,
   logo,
   logoVariant,
+  platformHref,
   status,
   onPress,
   isDesktop,
@@ -611,6 +618,7 @@ function ProjectCard({
   image?: string;
   logo?: ImageSourcePropType;
   logoVariant?: 'icon';
+  platformHref?: string;
   status: string;
   onPress: () => void;
   isDesktop: boolean;
@@ -634,7 +642,17 @@ function ProjectCard({
         </View>
         <View style={[styles.projectContent, image && styles.projectContentBottom]}>
           {logo ? (
-            logoVariant === 'icon' ? (
+            platformHref ? (
+              <Link href={platformHref} target="_blank" rel="noopener noreferrer" asChild>
+                <TouchableOpacity
+                  style={styles.projectLogoPanel}
+                  accessibilityLabel={`Open the ${title} platform`}
+                  onPress={(event) => event.stopPropagation()}
+                >
+                  <Image source={logo} style={styles.projectLogoPanelImage} resizeMode="contain" accessibilityLabel={title} />
+                </TouchableOpacity>
+              </Link>
+            ) : logoVariant === 'icon' ? (
               <View style={styles.projectBrand}>
                 <Image source={logo} style={styles.projectLogoIcon} resizeMode="contain" accessibilityLabel={title} />
                 <Text style={styles.projectTitle}>{title}</Text>
@@ -799,6 +817,8 @@ const styles = StyleSheet.create({
   projectContentBottom: { marginTop: 'auto', paddingTop: 48 },
   projectTitle: { color: '#fff', fontSize: 28, fontWeight: '900', marginVertical: 8, letterSpacing: -0.5 },
   projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
+  projectLogoPanel: { width: '100%', maxWidth: 244, height: 76, padding: 8, borderRadius: 12, backgroundColor: '#F8FAFC', alignSelf: 'flex-start', marginVertical: 4 },
+  projectLogoPanelImage: { width: '100%', height: '100%' },
   projectBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
   projectLogoIcon: { width: 56, height: 56 },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
