@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   statusText: { color: '#fff', fontSize: 11, fontWeight: '700' },
   cardContent: { gap: 8 },
   cardContentBottom: { marginTop: 'auto', paddingTop: 54 },
-  cardLogoLink: { width: 245, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start', padding: 8, borderRadius: 12, backgroundColor: '#F8FAFC' },
+  cardLogoLink: { width: 245, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start' },
   cardLogo: { width: '100%', height: 68 },
   cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
   cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },

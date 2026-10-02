@@ -34,7 +34,7 @@ import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smartt
 import { colors, radii, space } from '../src/theme/tokens';
 
 const newsItems = [
-  'SmartTrust Protocol is now LIVE — https://smarttrustprotocol.com',
+  `SmartTrust Protocol is now LIVE — ${SMARTTRUST_PLATFORM_URL}`,
   'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
   'Custodiy v2.0 of the web app is now live',
   'Freety — Digital infrastructure for global commodity & energy trading',
@@ -817,7 +817,7 @@ const styles = StyleSheet.create({
   projectContentBottom: { marginTop: 'auto', paddingTop: 48 },
   projectTitle: { color: '#fff', fontSize: 28, fontWeight: '900', marginVertical: 8, letterSpacing: -0.5 },
   projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
-  projectLogoPanel: { width: '100%', maxWidth: 244, height: 76, padding: 8, borderRadius: 12, backgroundColor: '#F8FAFC', alignSelf: 'flex-start', marginVertical: 4 },
+  projectLogoPanel: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectLogoPanelImage: { width: '100%', height: '100%' },
   projectBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
   projectLogoIcon: { width: 56, height: 56 },
