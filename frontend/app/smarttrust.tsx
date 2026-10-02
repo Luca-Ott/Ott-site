@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import PageShell from '../src/components/PageShell';
 import GlassCard from '../src/components/GlassCard';
@@ -123,7 +122,7 @@ export default function SmartTrustScreen() {
           <View style={styles.statusRow}>
             <View style={styles.statusPill}>
               <View style={styles.statusDot} />
-              <Text style={styles.statusText}>Live at smarttrustprotocol.com</Text>
+              <Text style={styles.statusText}>Live at www.smarttrustprotocol.com</Text>
             </View>
             <View style={[styles.statusPill, styles.investorPill]}>
               <View style={styles.investorDot} />
@@ -134,10 +133,7 @@ export default function SmartTrustScreen() {
 
         {isDesktop && (
           <View style={styles.visual}>
-            <LinearGradient
-              colors={['#FFFFFF', '#F1F5FF', '#DBEAFE']}
-              style={styles.visualCore}
-            >
+            <View style={styles.visualCore}>
               <Link href={SMARTTRUST_PLATFORM_URL} target="_blank" rel="noopener noreferrer" asChild>
                 <TouchableOpacity
                   accessibilityLabel="Open the SmartTrust platform"
@@ -146,9 +142,9 @@ export default function SmartTrustScreen() {
                   <Image source={{ uri: SMARTTRUST_LOGO_URL }} style={styles.heroLogo} resizeMode="contain" accessibilityLabel="SmartTrust" />
                 </TouchableOpacity>
               </Link>
-            </LinearGradient>
-            <View style={[styles.orbit, styles.orbitOne]} />
-            <View style={[styles.orbit, styles.orbitTwo]} />
+            </View>
+            <View pointerEvents="none" style={[styles.orbit, styles.orbitOne]} />
+            <View pointerEvents="none" style={[styles.orbit, styles.orbitTwo]} />
           </View>
         )}
       </View>
@@ -287,9 +283,9 @@ const styles = StyleSheet.create({
   investorDot: { width: 7, height: 7, borderRadius: 7, backgroundColor: '#15B86A' },
   statusText: { color: colors.text, fontSize: 13, fontWeight: '700' },
   visual: { width: 310, height: 310, alignItems: 'center', justifyContent: 'center', position: 'relative' },
-  visualCore: { width: 292, height: 142, borderRadius: 28, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 18, borderWidth: 1, borderColor: 'rgba(43,123,255,0.5)' },
+  visualCore: { width: 292, height: 142, alignItems: 'center', justifyContent: 'center' },
   heroLogoLink: { width: 260, height: 92, alignItems: 'center', justifyContent: 'center' },
-  mobileLogoLink: { width: 280, maxWidth: '100%', height: 96, padding: 10, borderRadius: 16, backgroundColor: '#F8FAFC', marginBottom: 24 },
+  mobileLogoLink: { width: 280, maxWidth: '100%', height: 96, marginBottom: 24 },
   heroLogo: { width: '100%', height: '100%' },
   orbit: { position: 'absolute', borderWidth: 1, borderColor: 'rgba(129,140,248,0.45)', borderRadius: 999 },
   orbitOne: { width: 240, height: 240 },
