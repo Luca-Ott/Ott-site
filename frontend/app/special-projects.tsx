@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, useWindowDimensions } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Head from 'expo-router/head';
@@ -9,8 +9,7 @@ import PageShell from '../src/components/PageShell';
 import GradientText from '../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
-
-const SMARTTRUST_PLATFORM_URL = 'https://smarttrustprotocol.vercel.app';
+import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smarttrust';
 
 const PROJECTS = [
   {
@@ -45,10 +44,10 @@ const PROJECTS = [
     title: 'SmartTrust',
     category: 'MULTI-ASSET TRUST · GOVERNANCE',
     tagline: 'Trust governance and custody technology for physical assets, bank accounts and stablecoin wallets, with legal reviews, compliance evidence and controlled beneficiary distributions.',
-    status: 'Multi-asset platform',
+    status: 'Live',
     investorStatus: 'Open for investors',
     gradient: ['#061D4F', '#0B3B82', '#0969FF'],
-    logo: '/smarttrust-logo-reversed.png',
+    logo: SMARTTRUST_LOGO_URL,
     platformHref: SMARTTRUST_PLATFORM_URL,
     route: '/smarttrust' as const,
     external: false,
@@ -159,17 +158,15 @@ export default function SpecialProjectsScreen() {
               </View>
               <View style={[styles.cardContent, p.title === 'NoMoreFakeNews' && styles.cardContentBottom]}>
                 {'logo' in p && p.logo ? (
-                  <TouchableOpacity
-                    accessibilityRole="link"
-                    accessibilityLabel="Open the SmartTrust platform"
-                    onPress={(event) => {
-                      event.stopPropagation();
-                      if ('platformHref' in p && p.platformHref) openExternal(p.platformHref);
-                    }}
-                    style={styles.cardLogoLink}
-                  >
-                    <Image source={{ uri: p.logo }} style={styles.cardLogo} resizeMode="contain" />
-                  </TouchableOpacity>
+                  <Link href={p.platformHref} target="_blank" rel="noopener noreferrer" asChild>
+                    <TouchableOpacity
+                      accessibilityLabel="Open the SmartTrust platform"
+                      onPress={(event) => event.stopPropagation()}
+                      style={styles.cardLogoLink}
+                    >
+                      <Image source={{ uri: p.logo }} style={styles.cardLogo} resizeMode="contain" accessibilityLabel="SmartTrust" />
+                    </TouchableOpacity>
+                  </Link>
                 ) : p.title !== 'NoMoreFakeNews' ? (
                   <Text style={styles.cardTitle}>{p.title}</Text>
                 ) : null}
@@ -231,7 +228,7 @@ const styles = StyleSheet.create({
   statusText: { color: '#fff', fontSize: 11, fontWeight: '700' },
   cardContent: { gap: 8 },
   cardContentBottom: { marginTop: 'auto', paddingTop: 54 },
-  cardLogoLink: { width: 245, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start' },
+  cardLogoLink: { width: 245, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start', padding: 8, borderRadius: 12, backgroundColor: '#F8FAFC' },
   cardLogo: { width: '100%', height: 68 },
   cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
   cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },
