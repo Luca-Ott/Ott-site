@@ -64,7 +64,7 @@ export default function ServicePageShell({
 
       <View style={styles.hero}>
         <Text style={styles.eyebrow}>{eyebrow}</Text>
-        <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
+        <Text accessibilityRole="header" style={[styles.title, !isDesktop && styles.titleMobile]}>
           {titleStart}{' '}
           <GradientText style={styles.titleGrad} colors={titleColors}>{titleEnd}</GradientText>
         </Text>

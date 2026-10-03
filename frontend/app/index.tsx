@@ -26,6 +26,7 @@ import GlassCard from '../src/components/GlassCard';
 import GradientText from '../src/components/GradientText';
 import SiteHeader from '../src/components/SiteHeader';
 import SiteFooter from '../src/components/SiteFooter';
+import NavigationLink from '../src/components/NavigationLink';
 import OrbitVisual from '../src/components/OrbitVisual';
 import PageSEO, { softwareAppSchema } from '../src/components/PageSEO';
 import { getAllArticles, formatDate } from '../src/data/blog';
@@ -450,9 +451,9 @@ export default function HomeScreen() {
             <View style={[styles.blogGrid, !isDesktop && styles.blogGridMobile]}>
               {articles.map((a, idx) => (
                 <ScrollReveal key={a.slug} delay={idx * 100} style={{ flex: 1, minWidth: 260 }}>
-                  <TouchableOpacity
+                  <NavigationLink
                     activeOpacity={0.85}
-                    onPress={() => router.push(`/blog/${a.slug}` as any)}
+                    href={`/blog/${a.slug}`}
                     style={styles.blogCard}
                   >
                     <LinearGradient
@@ -475,7 +476,7 @@ export default function HomeScreen() {
                         <Text style={styles.blogMetaText}>{a.read_time} min read</Text>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </NavigationLink>
                 </ScrollReveal>
               ))}
             </View>

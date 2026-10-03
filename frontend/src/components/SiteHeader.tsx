@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Animated, Platform, Dimensions, ScrollView } from 'react-native';
-import { Link, useRouter, usePathname } from 'expo-router';
+import { Link, usePathname, type Href } from 'expo-router';
+import NavigationLink from './NavigationLink';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radii, space, fontSizes } from '../theme/tokens';
 import { SITE_NAME } from '../data/siteIdentity';
@@ -18,7 +19,6 @@ const NAV_ITEMS: { label: string; route: string }[] = [
 ];
 
 export default function SiteHeader() {
-  const router = useRouter();
   const pathname = usePathname();
   const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const [scrolled, setScrolled] = useState(false);
@@ -48,11 +48,6 @@ export default function SiteHeader() {
 
   const isDesktop = width >= 900;
 
-  const onNav = (route: string) => {
-    setMenuOpen(false);
-    router.push(route as any);
-  };
-
   return (
     <View style={[styles.wrap, scrolled && styles.wrapScrolled]} pointerEvents="box-none">
       <View style={styles.inner}>
@@ -71,16 +66,16 @@ export default function SiteHeader() {
             {NAV_ITEMS.map((item) => {
               const active = pathname === item.route || (item.route !== '/' && pathname.startsWith(item.route));
               return (
-                <TouchableOpacity key={item.route} onPress={() => onNav(item.route)} style={styles.navItem}>
+                <NavigationLink key={item.route} href={item.route as Href} style={styles.navItem}>
                   <Text style={[styles.navText, active && styles.navTextActive]}>{item.label}</Text>
                   {active && <View style={styles.navDot} />}
-                </TouchableOpacity>
+                </NavigationLink>
               );
             })}
-            <TouchableOpacity style={styles.ctaBtn} onPress={() => router.push('/investor-inquiry')}>
+            <NavigationLink style={styles.ctaBtn} href="/investor-inquiry">
               <Text style={styles.ctaBtnText}>Investor Inquiry</Text>
               <Ionicons name="arrow-forward" size={14} color="#fff" />
-            </TouchableOpacity>
+            </NavigationLink>
           </View>
         ) : (
           <TouchableOpacity style={styles.menuBtn} onPress={() => setMenuOpen(!menuOpen)}>
@@ -101,15 +96,15 @@ export default function SiteHeader() {
         >
           <ScrollView>
             {NAV_ITEMS.map((item) => (
-              <TouchableOpacity key={item.route} style={styles.mobileItem} onPress={() => onNav(item.route)}>
+              <NavigationLink key={item.route} href={item.route as Href} style={styles.mobileItem} onPress={() => setMenuOpen(false)}>
                 <Text style={styles.mobileItemText}>{item.label}</Text>
                 <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
-              </TouchableOpacity>
+              </NavigationLink>
             ))}
-            <TouchableOpacity style={[styles.ctaBtn, { alignSelf: 'flex-start', marginTop: 8 }]} onPress={() => onNav('/investor-inquiry')}>
+            <NavigationLink href="/investor-inquiry" style={[styles.ctaBtn, { alignSelf: 'flex-start', marginTop: 8 }]} onPress={() => setMenuOpen(false)}>
               <Text style={styles.ctaBtnText}>Investor Inquiry</Text>
               <Ionicons name="arrow-forward" size={14} color="#fff" />
-            </TouchableOpacity>
+            </NavigationLink>
           </ScrollView>
         </Animated.View>
       )}

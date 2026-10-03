@@ -97,8 +97,9 @@ export default function PageSEO({
         <script
           key={`jsonld-${idx}`}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }}
-        />
+        >
+          {JSON.stringify(s).replace(/</g, '\\u003c')}
+        </script>
       ))}
     </Head>
   );
