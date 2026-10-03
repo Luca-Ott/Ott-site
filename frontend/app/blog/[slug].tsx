@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Platform, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Head from 'expo-router/head';
 
 import MeshBackground from '../../src/components/MeshBackground';
 import ParticleField from '../../src/components/ParticleField';
@@ -14,16 +13,26 @@ import SiteFooter from '../../src/components/SiteFooter';
 import MarkdownView from '../../src/components/MarkdownView';
 import ScrollReveal from '../../src/components/ScrollReveal';
 import PageSEO, { breadcrumbsSchema, articleSchema } from '../../src/components/PageSEO';
-import Breadcrumbs from '../../src/components/Breadcrumbs';
-import { getAllArticles, getArticleBySlug, formatDate, type FullArticle, type ArticleSummary } from '../../src/data/blog';
+import NavigationLink from '../../src/components/NavigationLink';
+import { getAllArticles, formatDate } from '../../src/data/blog';
+import { getArticleBySlug } from '../../src/data/blogContent';
+import { SITE_NAME, SITE_URL } from '../../src/data/siteIdentity';
 import { colors, radii, space } from '../../src/theme/tokens';
+
+export async function generateStaticParams() {
+  return getAllArticles().map(({ slug }) => {
+    if (!getArticleBySlug(slug)) throw new Error(`Missing published article content: ${slug}`);
+    return { slug };
+  });
+}
 
 export default function ArticleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
-  const router = useRouter();
-  const [article, setArticle] = useState<FullArticle | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [related, setRelated] = useState<ArticleSummary[]>([]);
+  const slugStr = (Array.isArray(slug) ? slug[0] : slug) || '';
+  const article = getArticleBySlug(slugStr);
+  const related = article
+    ? getAllArticles().filter((x) => x.slug !== article.slug && x.category === article.category).slice(0, 3)
+    : [];
   const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
 
   useEffect(() => {
@@ -33,34 +42,16 @@ export default function ArticleScreen() {
   const isDesktop = width >= 900;
 
   useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      setLoading(true);
-      const slugStr = Array.isArray(slug) ? slug[0] : slug;
-      if (!slugStr) {
-        setLoading(false);
-        return;
-      }
-      const a = await getArticleBySlug(slugStr);
-      if (cancelled) return;
-      setArticle(a);
-      if (a) {
-        const all = getAllArticles();
-        setRelated(all.filter((x) => x.slug !== a.slug && x.category === a.category).slice(0, 3));
-      }
-      setLoading(false);
-      if (Platform.OS === 'web' && typeof window !== 'undefined') window.scrollTo(0, 0);
-    };
-    load();
-    return () => { cancelled = true; };
-  }, [slug]);
+    if (Platform.OS === 'web' && typeof window !== 'undefined') window.scrollTo(0, 0);
+  }, [slugStr]);
 
   return (
     <View style={styles.root}>
       <PageSEO
-        title={article ? `${article.title} — On Time Technology` : 'Article — On Time Technology'}
+        title={article ? `${article.title} — ${SITE_NAME}` : `Article not found — ${SITE_NAME}`}
         description={article?.excerpt || 'On Time Technology insights & analysis on AI, EU AI Act, Web3 and frontier software.'}
-        canonical={`https://www.ott4future.com/blog/${article?.slug || ''}`}
+        canonical={`${SITE_URL}blog/${slugStr}`}
+        noindex={!article}
         ogType="article"
         publishedTime={article?.published_at}
         modifiedTime={article?.published_at}
@@ -100,29 +91,19 @@ export default function ArticleScreen() {
 
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
           <View style={styles.backWrap}>
-            <TouchableOpacity
-              style={styles.backBtn}
-              onPress={() => (router.canGoBack() ? router.back() : router.replace('/blog'))}
-            >
+            <NavigationLink href="/blog" style={styles.backBtn}>
               <Ionicons name="arrow-back" size={16} color={colors.text} />
               <Text style={styles.backText}>All articles</Text>
-            </TouchableOpacity>
+            </NavigationLink>
           </View>
 
-          {loading && (
-            <View style={styles.loading}>
-              <ActivityIndicator color={colors.accent} size="large" />
-              <Text style={styles.loadingText}>Loading article…</Text>
-            </View>
-          )}
-
-          {!loading && !article && (
+          {!article && (
             <View style={styles.loading}>
               <Ionicons name="alert-circle-outline" size={48} color={colors.textDim} />
               <Text style={styles.loadingText}>Article not found.</Text>
-              <TouchableOpacity style={styles.backBtn} onPress={() => router.replace('/blog')}>
+              <NavigationLink href="/blog" replace style={styles.backBtn}>
                 <Text style={styles.backText}>Back to blog</Text>
-              </TouchableOpacity>
+              </NavigationLink>
             </View>
           )}
 
@@ -140,7 +121,7 @@ export default function ArticleScreen() {
               <ScrollReveal delay={120}>
                 <View style={[styles.header, !isDesktop && styles.headerMobile]}>
                   <Text style={styles.category}>{article.category.toUpperCase()}</Text>
-                  <Text style={[styles.title, !isDesktop && { fontSize: 32, lineHeight: 38 }]}>{article.title}</Text>
+                  <Text accessibilityRole="header" style={[styles.title, !isDesktop && { fontSize: 32, lineHeight: 38 }]}>{article.title}</Text>
                   <Text style={[styles.excerpt, !isDesktop && { fontSize: 16, lineHeight: 26 }]}>{article.excerpt}</Text>
                   <View style={styles.metaRow}>
                     <View style={styles.metaItem}>
@@ -180,11 +161,12 @@ export default function ArticleScreen() {
                   <Text style={styles.relatedLabel}>RELATED READING</Text>
                   <View style={styles.relatedGrid}>
                     {related.map((r) => (
-                      <TouchableOpacity
+                      <NavigationLink
                         key={r.slug}
                         style={styles.relatedCard}
                         activeOpacity={0.9}
-                        onPress={() => router.replace(`/blog/${r.slug}` as any)}
+                        href={`/blog/${r.slug}`}
+                        replace
                       >
                         <LinearGradient colors={r.cover_gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.relatedCover} />
                         <View style={styles.relatedBody}>
@@ -192,7 +174,7 @@ export default function ArticleScreen() {
                           <Text style={styles.relatedTitle} numberOfLines={2}>{r.title}</Text>
                           <Text style={styles.relatedMeta}>{formatDate(r.published_at)} · {r.read_time} min</Text>
                         </View>
-                      </TouchableOpacity>
+                      </NavigationLink>
                     ))}
                   </View>
                 </View>

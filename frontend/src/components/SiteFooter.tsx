@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Platform, Image } from 'react-native';
-import { useRouter } from 'expo-router';
+import type { Href } from 'expo-router';
+import NavigationLink from './NavigationLink';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radii, space } from '../theme/tokens';
 import { SITE_NAME } from '../data/siteIdentity';
@@ -8,7 +9,6 @@ import { SITE_NAME } from '../data/siteIdentity';
 const LOGO_URL = 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68';
 
 export default function SiteFooter() {
-  const router = useRouter();
 
   return (
     <View style={styles.wrap}>
@@ -35,28 +35,29 @@ export default function SiteFooter() {
 
           <View style={styles.col}>
             <Text style={styles.colTitle}>Company</Text>
-            <FooterLink label="About" onPress={() => router.push('/about')} />
-            <FooterLink label="Contact" onPress={() => router.push('/contact')} />
-            <FooterLink label="Investor Inquiry" onPress={() => router.push('/investor-inquiry')} />
-            <FooterLink label="Blog" onPress={() => router.push('/blog')} />
-            <FooterLink label="Careers" onPress={() => router.push('/careers')} />
-            <FooterLink label="Resources" onPress={() => router.push('/resources')} />
+            <FooterLink label="About" href="/about" />
+            <FooterLink label="Contact" href="/contact" />
+            <FooterLink label="Investor Inquiry" href="/investor-inquiry" />
+            <FooterLink label="Blog" href="/blog" />
+            <FooterLink label="Careers" href="/careers" />
+            <FooterLink label="Resources" href="/resources" />
           </View>
 
           <View style={styles.col}>
             <Text style={styles.colTitle}>Services</Text>
-            <FooterLink label="Software Design" onPress={() => router.push('/software-design')} />
-            <FooterLink label="Software Development" onPress={() => router.push('/software-development')} />
-            <FooterLink label="R&D" onPress={() => router.push('/research-development')} />
-            <FooterLink label="AI Act Compliance" onPress={() => router.push('/ai-act-compliance')} />
-            <FooterLink label="Special Projects" onPress={() => router.push('/special-projects')} />
+            <FooterLink label="Software Design" href="/software-design" />
+            <FooterLink label="Software Development" href="/software-development" />
+            <FooterLink label="R&D" href="/research-development" />
+            <FooterLink label="AI Act Compliance" href="/ai-act-compliance" />
+            <FooterLink label="Special Projects" href="/special-projects" />
           </View>
 
           <View style={styles.col}>
             <Text style={styles.colTitle}>Special Projects</Text>
-            <FooterLink label="NoMoreFakeNews" onPress={() => router.push('/nomorefakenews')} />
-            <FooterLink label="Custodiy" onPress={() => Linking.openURL('https://custodiy.com')} />
-            <FooterLink label="Freety" onPress={() => router.push('/freety')} />
+            <FooterLink label="NoMoreFakeNews" href="/nomorefakenews" />
+            <FooterLink label="Custodiy" href="https://custodiy.com" />
+            <FooterLink label="SmartTrust" href="/smarttrust" />
+            <FooterLink label="Freety" href="/freety" />
           </View>
         </View>
 
@@ -71,11 +72,11 @@ export default function SiteFooter() {
   );
 }
 
-function FooterLink({ label, onPress }: { label: string; onPress: () => void }) {
+function FooterLink({ label, href }: { label: string; href: Href }) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.linkRow}>
+    <NavigationLink href={href} style={styles.linkRow}>
       <Text style={styles.linkText}>{label}</Text>
-    </TouchableOpacity>
+    </NavigationLink>
   );
 }
 

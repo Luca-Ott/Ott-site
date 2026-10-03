@@ -314,8 +314,8 @@ export default function CareersScreen() {
         <View style={styles.breadcrumbsWrap}>
           <Breadcrumbs
             items={[
-              { name: 'Home', url: '/' },
-              { name: 'Careers', url: '/careers' },
+              { label: 'Home', href: '/' },
+              { label: 'Careers' },
             ]}
           />
         </View>
@@ -327,6 +327,7 @@ export default function CareersScreen() {
             <Text style={styles.eyebrowText}>FREELANCE · REMOTE · AI-FIRST</Text>
           </View>
           <Text
+            accessibilityRole="header"
             style={[
               styles.heroTitle,
               { fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs },

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import type { Href } from 'expo-router';
+import NavigationLink from './NavigationLink';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radii, space } from '../theme/tokens';
 
@@ -13,26 +14,21 @@ type Props = { items: BreadcrumbItem[] };
  * for full SEO benefit.
  */
 export default function Breadcrumbs({ items }: Props) {
-  const router = useRouter();
   if (!items || items.length === 0) return null;
 
   return (
-    <View style={styles.wrap} accessibilityRole="navigation" accessibilityLabel="Breadcrumb">
+    <View style={styles.wrap} role="navigation" accessibilityLabel="Breadcrumb">
       {items.map((it, idx) => {
         const isLast = idx === items.length - 1;
         const isLink = !isLast && it.href;
-        const TextWrap: any = isLink ? TouchableOpacity : View;
+        const label = <Text style={[styles.label, isLast && styles.labelCurrent]} numberOfLines={1}>{it.label}</Text>;
         return (
           <React.Fragment key={`${it.label}-${idx}`}>
-            <TextWrap
-              onPress={isLink ? () => router.push(it.href as any) : undefined}
-              accessibilityRole={isLink ? 'link' : undefined}
-              style={styles.item}
-            >
-              <Text style={[styles.label, isLast && styles.labelCurrent]} numberOfLines={1}>
-                {it.label}
-              </Text>
-            </TextWrap>
+            {isLink ? (
+              <NavigationLink href={it.href as Href} style={styles.item}>{label}</NavigationLink>
+            ) : (
+              <View style={styles.item}>{label}</View>
+            )}
             {!isLast && (
               <Ionicons name="chevron-forward" size={12} color={colors.textDim} style={{ marginHorizontal: 6 }} />
             )}

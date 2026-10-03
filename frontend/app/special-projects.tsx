@@ -113,7 +113,7 @@ export default function SpecialProjectsScreen() {
 
       <View style={styles.hero}>
         <Text style={styles.eyebrow}>SPECIAL PROJECTS</Text>
-        <Text style={[styles.title, !isDesktop && styles.titleMobile]}>
+        <Text accessibilityRole="header" style={[styles.title, !isDesktop && styles.titleMobile]}>
           Visionary bets on{' '}
           <GradientText style={styles.titleGrad} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
             the next decade

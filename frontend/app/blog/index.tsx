@@ -1,10 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform, Dimensions, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Head from 'expo-router/head';
 
 import MeshBackground from '../../src/components/MeshBackground';
 import ParticleField from '../../src/components/ParticleField';
@@ -14,12 +12,11 @@ import SiteHeader from '../../src/components/SiteHeader';
 import SiteFooter from '../../src/components/SiteFooter';
 import GradientText from '../../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema } from '../../src/components/PageSEO';
-import Breadcrumbs from '../../src/components/Breadcrumbs';
+import NavigationLink from '../../src/components/NavigationLink';
 import { getAllArticles, formatDate } from '../../src/data/blog';
 import { colors, radii, space } from '../../src/theme/tokens';
 
 export default function BlogIndex() {
-  const router = useRouter();
   const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const [query, setQuery] = useState('');
   const [activeCat, setActiveCat] = useState<string>('All');
@@ -85,7 +82,7 @@ export default function BlogIndex() {
           <View style={styles.heroWrap}>
             <ScrollReveal>
               <Text style={styles.eyebrow}>INSIGHTS · BLOG</Text>
-              <Text style={[styles.heroTitle, !isDesktop && styles.heroTitleMobile]}>
+              <Text accessibilityRole="header" style={[styles.heroTitle, !isDesktop && styles.heroTitleMobile]}>
                 Ideas from the{' '}
                 <GradientText style={styles.heroTitleGrad} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
                   frontier of technology
@@ -126,9 +123,9 @@ export default function BlogIndex() {
           {/* Featured Article */}
           {featured && (
             <ScrollReveal style={styles.featuredWrap}>
-              <TouchableOpacity
+              <NavigationLink
                 activeOpacity={0.92}
-                onPress={() => router.push(`/blog/${featured.slug}` as any)}
+                href={`/blog/${featured.slug}`}
                 style={[styles.featuredCard, !isDesktop && styles.featuredCardMobile]}
               >
                 <LinearGradient
@@ -156,7 +153,7 @@ export default function BlogIndex() {
                     <Ionicons name="arrow-forward" size={16} color={colors.text} />
                   </View>
                 </View>
-              </TouchableOpacity>
+              </NavigationLink>
             </ScrollReveal>
           )}
 
@@ -164,9 +161,9 @@ export default function BlogIndex() {
           <View style={styles.grid}>
             {rest.map((a, idx) => (
               <ScrollReveal key={a.slug} delay={idx * 60} style={{ flex: 1, minWidth: 280 }}>
-                <TouchableOpacity
+                <NavigationLink
                   activeOpacity={0.9}
-                  onPress={() => router.push(`/blog/${a.slug}` as any)}
+                  href={`/blog/${a.slug}`}
                   style={styles.card}
                 >
                   <LinearGradient colors={a.cover_gradient as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cardCover}>
@@ -181,7 +178,7 @@ export default function BlogIndex() {
                       <Text style={styles.metaText}>{a.read_time} min</Text>
                     </View>
                   </View>
-                </TouchableOpacity>
+                </NavigationLink>
               </ScrollReveal>
             ))}
           </View>
