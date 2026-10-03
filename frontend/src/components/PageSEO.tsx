@@ -1,5 +1,7 @@
 import React from 'react';
 import Head from 'expo-router/head';
+import { SITE_NAME } from '../data/siteIdentity';
+export { ORG_SCHEMA, WEBSITE_SCHEMA } from '../data/siteIdentity';
 
 type JsonLd = Record<string, any> | Record<string, any>[];
 
@@ -23,7 +25,7 @@ type Props = {
 };
 
 const DEFAULT_OG_IMAGE = 'https://www.ott4future.com/og-image.jpg';
-const DEFAULT_SITE_NAME = 'On Time Technology Ltd';
+const DEFAULT_SITE_NAME = SITE_NAME;
 
 /**
  * Centralised SEO component. Emits:
@@ -44,7 +46,7 @@ export default function PageSEO({
   noindex,
   publishedTime,
   modifiedTime,
-  author = 'On Time Technology Ltd',
+  author = SITE_NAME,
   articleSection,
   articleTags,
   schema,
@@ -106,57 +108,6 @@ export default function PageSEO({
 // Reusable JSON-LD builders
 // ---------------------------------------------------------------------------
 
-export const ORG_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'On Time Technology Ltd',
-  alternateName: ['On Time Technology', 'OTT'],
-  url: 'https://www.ott4future.com',
-  logo: 'https://www.ott4future.com/icon-512.png',
-  description:
-    'Irish-registered IT company based in Dublin, specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety).',
-  email: 'Info@ott4future.com',
-  telephone: '+44-7775-682831',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'The Black Church, St Mary\u2019s Place',
-    addressLocality: 'Dublin',
-    postalCode: 'D07 P4AX',
-    addressCountry: 'IE',
-  },
-  sameAs: [
-    'https://x.com/OnTechnolo1200',
-    'https://custodiy.com',
-  ],
-  foundingDate: '2010',
-  founders: [{ '@type': 'Person', name: 'On Time Technology Founding Team' }],
-  knowsAbout: [
-    'Artificial Intelligence',
-    'EU AI Act compliance',
-    'Software Engineering',
-    'Blockchain & Web3',
-    'Custodial wallet infrastructure',
-    'Tokenised commodities trading',
-    'Cyber security',
-    'Anti-disinformation technology',
-  ],
-};
-
-export const WEBSITE_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'On Time Technology Ltd',
-  alternateName: ['On Time Technology', 'OTT'],
-  url: 'https://www.ott4future.com',
-  inLanguage: 'en-GB',
-  publisher: { '@type': 'Organization', name: 'On Time Technology Ltd', url: 'https://www.ott4future.com' },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: 'https://www.ott4future.com/blog?q={search_term_string}',
-    'query-input': 'required name=search_term_string',
-  },
-};
-
 export function softwareAppSchema(opts: {
   name: string;
   url: string;
@@ -178,7 +129,7 @@ export function softwareAppSchema(opts: {
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
     provider: {
       '@type': 'Organization',
-      name: 'On Time Technology Ltd',
+      name: SITE_NAME,
       address: { '@type': 'PostalAddress', addressCountry: 'IE' },
     },
   };
@@ -225,7 +176,7 @@ export function articleSchema(opts: {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'On Time Technology Ltd',
+      name: SITE_NAME,
       logo: {
         '@type': 'ImageObject',
         url: 'https://www.ott4future.com/icon-512.png',

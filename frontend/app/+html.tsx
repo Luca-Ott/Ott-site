@@ -1,60 +1,7 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import type { PropsWithChildren } from 'react';
 
-const SITE_URL = 'https://www.ott4future.com';
-const LOGO = SITE_URL + '/icon-512.png';
-const OG_IMAGE = SITE_URL + '/og-image.jpg';
-
-const ORG_LD = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  '@id': SITE_URL + '/#organization',
-  name: 'On Time Technology Ltd',
-  legalName: 'On Time Technology Ltd',
-  alternateName: ['On Time Technology', 'OTT', 'ott4future'],
-  url: SITE_URL,
-  logo: { '@type': 'ImageObject', url: LOGO, width: 512, height: 512 },
-  description:
-    'Irish-registered IT company based in Dublin, specialising in software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety) — building the digital infrastructure of tomorrow.',
-  email: 'Info@ott4future.com',
-  telephone: '+44-7775-682831',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'The Black Church, St Mary\u2019s Place',
-    addressLocality: 'Dublin',
-    postalCode: 'D07 P4AX',
-    addressCountry: 'IE',
-  },
-  sameAs: ['https://x.com/OnTechnolo1200', 'https://custodiy.com'],
-  areaServed: ['IE', 'GB', 'EU', 'Worldwide'],
-  foundingDate: '2010',
-  knowsAbout: [
-    'EU AI Act compliance',
-    'AI fake news detection',
-    'Deepfake detection',
-    'Software design and development',
-    'Custodial wallet infrastructure',
-    'Tokenised commodities trading',
-    'Cyber security',
-    'Research and Development',
-  ],
-};
-
-const WEBSITE_LD = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  '@id': SITE_URL + '/#website',
-  name: 'On Time Technology Ltd',
-  alternateName: ['On Time Technology', 'OTT', 'ott4future'],
-  url: SITE_URL,
-  inLanguage: 'en-GB',
-  publisher: { '@id': SITE_URL + '/#organization' },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: SITE_URL + '/blog?q={search_term_string}',
-    'query-input': 'required name=search_term_string',
-  },
-};
+import { ORG_SCHEMA, WEBSITE_SCHEMA, SITE_NAME } from '../src/data/siteIdentity';
 
 export default function Root({ children }: PropsWithChildren) {
   return (
@@ -64,34 +11,10 @@ export default function Root({ children }: PropsWithChildren) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        {/* Default Primary Meta — overridden by per-page PageSEO */}
-        <title>On Time Technology — Future-Ready Software & R&D</title>
-        <meta name="application-name" content="On Time Technology Ltd" />
-        <meta name="description" content="On Time Technology Ltd is an Irish IT company based in Dublin building the digital infrastructure of tomorrow — software design, development, R&D and visionary special projects (NoMoreFakeNews, Custodiy, Freety)." />
-        <meta name="keywords" content="On Time Technology, ott4future, EU AI Act compliance, AI fake news detector, deepfake detection 2026, NoMoreFakeNews, Custodiy, Freety, custodial wallet Ireland, tokenized commodities trading, Irish AI software company, Dublin IT company, software design, software development, R&D" />
-        <meta name="author" content="On Time Technology Ltd" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        {/* PageSEO owns title, description, canonical, robots and social metadata.
+            Keeping defaults here would duplicate tags in exported HTML. */}
+        <meta name="application-name" content={SITE_NAME} />
         <meta name="language" content="English" />
-
-        {/* Open Graph defaults */}
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="On Time Technology Ltd" />
-        <meta property="og:locale" content="en_GB" />
-        <meta property="og:title" content="On Time Technology — Future-Ready Software & R&D" />
-        <meta property="og:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI, software, R&D and special projects." />
-        <meta property="og:image" content={OG_IMAGE} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="On Time Technology — Building the digital infrastructure of tomorrow" />
-
-        {/* Twitter Card defaults */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@OnTechnolo1200" />
-        <meta name="twitter:creator" content="@OnTechnolo1200" />
-        <meta name="twitter:title" content="On Time Technology — Future-Ready Software & R&D" />
-        <meta name="twitter:description" content="Irish IT company based in Dublin building the digital infrastructure of tomorrow." />
-        <meta name="twitter:image" content={OG_IMAGE} />
-        <meta name="twitter:image:alt" content="On Time Technology — Building the digital infrastructure of tomorrow" />
 
         {/* Theme + Geo */}
         <meta name="theme-color" content="#05060F" />
@@ -158,8 +81,8 @@ export default function Root({ children }: PropsWithChildren) {
         <script defer src="/_vercel/insights/script.js"></script>
 
         {/* Global JSON-LD Schema (Organization + WebSite) */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_LD) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_LD) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_SCHEMA) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }} />
 
         <ScrollViewStyleReset />
       </head>

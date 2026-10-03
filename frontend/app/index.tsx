@@ -16,7 +16,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Head from 'expo-router/head';
 
 import MeshBackground from '../src/components/MeshBackground';
 import ParticleField from '../src/components/ParticleField';
@@ -32,6 +31,7 @@ import PageSEO, { softwareAppSchema } from '../src/components/PageSEO';
 import { getAllArticles, formatDate } from '../src/data/blog';
 import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smarttrust';
 import { colors, radii, space } from '../src/theme/tokens';
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL } from '../src/data/siteIdentity';
 
 const newsItems = [
   `SmartTrust Protocol is now LIVE — ${SMARTTRUST_PLATFORM_URL}`,
@@ -102,9 +102,10 @@ export default function HomeScreen() {
   return (
     <View style={styles.root}>
       <PageSEO
-        title="On Time Technology — AI-Native Software, R&D & Special Projects"
-        description="Irish IT company based in Dublin building the digital infrastructure of tomorrow — AI fake-news detection, EU AI Act compliance, custodial wallet, tokenised commodities and visionary special projects."
-        canonical="https://www.ott4future.com/"
+        title={HOME_TITLE}
+        description={HOME_DESCRIPTION}
+        canonical={SITE_URL}
+        siteName={SITE_NAME}
         keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, SmartTrust, Freety, custodial wallet Ireland, tokenized commodities trading"
         schema={[
           softwareAppSchema({

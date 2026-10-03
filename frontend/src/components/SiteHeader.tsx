@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Animated, Platform, Dimensions, ScrollView } from 'react-native';
-import { useRouter, usePathname } from 'expo-router';
+import { Link, useRouter, usePathname } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radii, space, fontSizes } from '../theme/tokens';
+import { SITE_NAME } from '../data/siteIdentity';
 
 const LOGO_URL = 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68';
 
@@ -55,13 +56,15 @@ export default function SiteHeader() {
   return (
     <View style={[styles.wrap, scrolled && styles.wrapScrolled]} pointerEvents="box-none">
       <View style={styles.inner}>
-        <TouchableOpacity style={styles.brand} onPress={() => router.push('/')} activeOpacity={0.8}>
-          <Image source={{ uri: LOGO_URL }} style={styles.logo} resizeMode="contain" />
-          <View>
-            <Text style={styles.brandName}>ON TIME TECHNOLOGY</Text>
-            <Text style={styles.brandTagline}>Innovating Tomorrow’s Solutions</Text>
-          </View>
-        </TouchableOpacity>
+        <Link href="/" asChild>
+          <TouchableOpacity style={styles.brand} activeOpacity={0.8} accessibilityLabel={`${SITE_NAME} — Home`}>
+            <Image source={{ uri: LOGO_URL }} style={styles.logo} resizeMode="contain" accessibilityLabel={SITE_NAME} />
+            <View style={styles.brandText}>
+              <Text style={styles.brandName}>{SITE_NAME}</Text>
+              <Text style={styles.brandTagline}>Innovating Tomorrow’s Solutions</Text>
+            </View>
+          </TouchableOpacity>
+        </Link>
 
         {isDesktop ? (
           <View style={styles.navRow}>
@@ -144,9 +147,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     width: '100%',
   },
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  brand: { flexDirection: 'row', alignItems: 'center', gap: 12, flexShrink: 1 },
+  brandText: { flexShrink: 1 },
   logo: { width: 40, height: 40, borderRadius: 8 },
-  brandName: { color: colors.text, fontSize: 14, fontWeight: '800', letterSpacing: 0.5 },
+  brandName: { color: colors.text, fontSize: 14, fontWeight: '800', letterSpacing: 0.5, textTransform: 'uppercase' },
   brandTagline: { color: colors.textMuted, fontSize: 11, marginTop: 2 },
   navRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   navItem: { paddingHorizontal: 12, paddingVertical: 6, alignItems: 'center' },
