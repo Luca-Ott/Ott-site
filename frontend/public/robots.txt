@@ -7,7 +7,8 @@ Allow: /
 # Disallow common low-value paths
 Disallow: /api/
 Disallow: /_vercel/
-Disallow: /_expo/
+# Allow the public JavaScript and CSS needed to render the site.
+Allow: /_expo/
 
 # Specific bot policies
 User-agent: GPTBot

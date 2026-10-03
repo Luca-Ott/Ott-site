@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Linking, Platform, Image } fr
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radii, space } from '../theme/tokens';
+import { SITE_NAME } from '../data/siteIdentity';
 
 const LOGO_URL = 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68';
 
@@ -15,8 +16,8 @@ export default function SiteFooter() {
         <View style={styles.grid}>
           <View style={styles.col}>
             <View style={styles.brandRow}>
-              <Image source={{ uri: LOGO_URL }} style={styles.logo} resizeMode="contain" />
-              <Text style={styles.brandName}>ON TIME TECHNOLOGY LTD</Text>
+              <Image source={{ uri: LOGO_URL }} style={styles.logo} resizeMode="contain" accessibilityLabel={SITE_NAME} />
+              <Text style={styles.brandName}>{SITE_NAME}</Text>
             </View>
             <Text style={styles.brandCopy}>Irish IT company based in Dublin, specialising in Software Design, Development and R&D. Building the digital infrastructure of tomorrow.</Text>
             <View style={styles.socials}>
@@ -62,7 +63,7 @@ export default function SiteFooter() {
         <View style={styles.divider} />
 
         <View style={styles.bottomRow}>
-          <Text style={styles.copy}>© {new Date().getFullYear()} On Time Technology Ltd. All rights reserved.</Text>
+          <Text style={styles.copy}>© {new Date().getFullYear()} {SITE_NAME}. All rights reserved.</Text>
           <Text style={styles.copyDim}>The Black Church, St Mary’s Place, Dublin D07 P4AX — Ireland</Text>
         </View>
       </View>
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   col: { minWidth: 200, flex: 1, maxWidth: 320, gap: 8 },
   brandRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   logo: { width: 36, height: 36, borderRadius: 6 },
-  brandName: { color: colors.text, fontSize: 14, fontWeight: '800', letterSpacing: 0.4 },
+  brandName: { color: colors.text, fontSize: 14, fontWeight: '800', letterSpacing: 0.4, textTransform: 'uppercase' },
   brandCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 20, marginTop: 8, maxWidth: 320 },
   socials: { flexDirection: 'row', gap: 8, marginTop: 12 },
   socialBtn: { width: 36, height: 36, borderRadius: 8, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border },
