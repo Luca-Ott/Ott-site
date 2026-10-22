@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,8 @@ import {
   Alert,
   Linking,
   useWindowDimensions,
-  ScrollView,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, type Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -23,86 +22,11 @@ import GradientText from '../src/components/GradientText';
 import ScrollReveal from '../src/components/ScrollReveal';
 import PageSEO, { breadcrumbsSchema, faqSchema } from '../src/components/PageSEO';
 import Breadcrumbs from '../src/components/Breadcrumbs';
+import NavigationLink from '../src/components/NavigationLink';
+import { CAREERS_EMAIL, POSITIONS, getPosition } from '../src/data/careers';
 import { colors, radii, space } from '../src/theme/tokens';
 
-const CAREERS_EMAIL = 'info@ott4future.com';
 const FORMSPREE_URL = 'https://formspree.io/f/mvzgazqk';
-
-type Position = {
-  id: string;
-  title: string;
-  location: string;
-  type: string;
-  stack: string[];
-  summary: string;
-  description: string;
-  requirements: string[];
-  glow: 'blue' | 'purple' | 'cyan';
-  icon: any;
-};
-
-const POSITIONS: Position[] = [
-  {
-    id: 'senior-ai-engineer',
-    title: 'Senior AI Engineer',
-    location: 'Remote · Dublin friendly',
-    type: 'Freelance · Long-term contract',
-    stack: ['Python', 'PyTorch', 'LLMs', 'RAG', 'LangChain', 'Vector DBs'],
-    summary:
-      'Lead the development of our AI-native platforms — from NoMoreFakeNews misinformation detectors to EU AI Act compliance tooling.',
-    description:
-      'You will architect, train and deploy production-grade AI systems for our flagship products. Expect to work on multimodal misinformation detection, retrieval-augmented generation pipelines, model governance and AI-safety frameworks aligned with the EU AI Act.',
-    requirements: [
-      '5+ years building production ML/AI systems (NLP, multimodal or LLM-based).',
-      'Strong Python; fluency with PyTorch / Hugging Face / OpenAI / vector databases.',
-      'Experience deploying models at scale (FastAPI, Docker, K8s, GPU inference).',
-      'Comfort with model evaluation, red-teaming and AI governance (EU AI Act a plus).',
-      'Excellent written English and ability to operate as a senior independent contributor.',
-    ],
-    glow: 'blue',
-    icon: 'sparkles',
-  },
-  {
-    id: 'react-developer',
-    title: 'React Developer',
-    location: 'Remote · Europe time-zone',
-    type: 'Freelance · Project-based or retainer',
-    stack: ['React', 'React Native', 'Expo', 'TypeScript', 'Next.js', 'Tailwind'],
-    summary:
-      'Build the user-facing surfaces of our products — from the Custodiy custodial wallet to the Freety commodities-trading interface and our public sites.',
-    description:
-      'You will craft fast, accessible and beautiful UIs across web and mobile using React, React Native (Expo) and TypeScript. Expect to ship features end-to-end, collaborate with designers and integrate with our FastAPI/Node back-ends.',
-    requirements: [
-      '4+ years of professional React (and ideally React Native / Expo) experience.',
-      'Strong TypeScript fundamentals and modern state-management patterns.',
-      'Eye for design, animations, accessibility and Core Web Vitals performance.',
-      'Comfort with REST/GraphQL APIs and CI/CD pipelines (Vercel, EAS, GitHub Actions).',
-      'Self-driven, async-first communication and EU time-zone overlap.',
-    ],
-    glow: 'cyan',
-    icon: 'logo-react',
-  },
-  {
-    id: 'blockchain-engineer',
-    title: 'Blockchain Engineer',
-    location: 'Remote · Worldwide',
-    type: 'Freelance · Long-term contract',
-    stack: ['Solidity', 'EVM', 'Hardhat', 'Foundry', 'Web3.js', 'Smart Contracts', 'L2s'],
-    summary:
-      'Engineer the smart-contract and on-chain infrastructure powering Custodiy and the tokenised commodity rails behind Freety.',
-    description:
-      'You will design, implement and audit smart contracts for custodial wallets, tokenised commodities and trust-minimised settlement flows. Expect to work across EVM L1/L2 networks, cryptographic primitives and high-assurance Solidity patterns.',
-    requirements: [
-      '4+ years of Solidity / EVM smart-contract engineering.',
-      'Proven security mindset (Foundry / Slither / formal verification a plus).',
-      'Experience with custodial wallet architectures, ERC-20/721/1155 and tokenisation.',
-      'Understanding of MEV, gas-optimisation and L2 ecosystems (Arbitrum, Base, etc.).',
-      'Strong written English and ability to ship production-grade audited code.',
-    ],
-    glow: 'purple',
-    icon: 'cube',
-  },
-];
 
 const PERKS = [
   {
@@ -156,6 +80,8 @@ const FAQ_ITEMS = [
 
 export default function CareersScreen() {
   const router = useRouter();
+  const { role } = useLocalSearchParams<{ role?: string | string[] }>();
+  const requestedRole = getPosition((Array.isArray(role) ? role[0] : role) || '');
   const dims = useWindowDimensions();
   const width = dims.width || 1200;
   const isDesktop = width >= 900;
@@ -168,10 +94,10 @@ export default function CareersScreen() {
   const sectionLh = Math.round(sectionFs * 1.18);
 
   const formRef = useRef<View>(null);
-  const scrollRef = useRef<ScrollView>(null);
 
   // Form state
   const [selectedRole, setSelectedRole] = useState<string>(POSITIONS[0].title);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [linkedin, setLinkedin] = useState('');
@@ -179,17 +105,29 @@ export default function CareersScreen() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (!requestedRole) return;
+    setSelectedRole(requestedRole.title);
+    if (Platform.OS === 'web') {
+      document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [requestedRole]);
+
+
   const showAlert = (title: string, msg: string) => {
     if (typeof window !== 'undefined') window.alert(`${title}: ${msg}`);
     else Alert.alert(title, msg);
   };
 
+  const scrollToSection = (id: string) => {
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const scrollToForm = (roleTitle?: string) => {
     if (roleTitle) setSelectedRole(roleTitle);
-    if (Platform.OS === 'web' && typeof document !== 'undefined') {
-      const el = document.getElementById('apply');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    scrollToSection('apply');
   };
 
   const openMailto = (roleTitle: string) => {
@@ -240,44 +178,6 @@ export default function CareersScreen() {
     }
   };
 
-  // JSON-LD JobPosting schema (one per position) — boosts Google Jobs eligibility
-  const today = new Date();
-  const validThrough = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000)
-    .toISOString()
-    .split('T')[0];
-  const datePosted = today.toISOString().split('T')[0];
-
-  const jobPostings = POSITIONS.map((p) => ({
-    '@context': 'https://schema.org',
-    '@type': 'JobPosting',
-    title: p.title,
-    description: `${p.summary} ${p.description} Required: ${p.requirements.join(' ')}`,
-    datePosted,
-    validThrough,
-    employmentType: 'CONTRACTOR',
-    hiringOrganization: {
-      '@type': 'Organization',
-      name: 'On Time Technology Ltd',
-      sameAs: 'https://www.ott4future.com',
-      logo: 'https://www.ott4future.com/favicon-512x512.png',
-    },
-    jobLocation: {
-      '@type': 'Place',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Dublin',
-        addressCountry: 'IE',
-      },
-    },
-    jobLocationType: 'TELECOMMUTE',
-    applicantLocationRequirements: [
-      { '@type': 'Country', name: 'Worldwide' },
-    ],
-    directApply: false,
-    skills: p.stack.join(', '),
-    url: `https://www.ott4future.com/careers#${p.id}`,
-  }));
-
   return (
     <PageShell>
       <PageSEO
@@ -290,7 +190,6 @@ export default function CareersScreen() {
             { name: 'Home', url: 'https://www.ott4future.com/' },
             { name: 'Careers', url: 'https://www.ott4future.com/careers' },
           ]),
-          ...jobPostings,
           faqSchema(FAQ_ITEMS),
         ]}
       />
@@ -353,7 +252,7 @@ export default function CareersScreen() {
             not push pixels in committees.
           </Text>
           <View style={styles.heroCtas}>
-            <TouchableOpacity style={styles.primaryBtn} onPress={() => scrollToForm()}>
+            <TouchableOpacity style={styles.primaryBtn} onPress={() => scrollToSection('open-positions')}>
               <Text style={styles.primaryBtnText}>See open positions</Text>
               <Ionicons name="arrow-forward" size={16} color="#fff" />
             </TouchableOpacity>
@@ -411,7 +310,7 @@ export default function CareersScreen() {
         </View>
 
         {/* ============================ OPEN POSITIONS ============================ */}
-        <View style={styles.section}>
+        <View style={styles.section} nativeID="open-positions">
           <ScrollReveal>
             <Text style={styles.sectionLabel}>OPEN POSITIONS · FREELANCE</Text>
             <Text
@@ -494,6 +393,14 @@ export default function CareersScreen() {
                     </View>
 
                     <View style={styles.positionActions}>
+                      <NavigationLink
+                        href={`/careers/${p.id}` as Href}
+                        style={styles.ghostBtnSmall}
+                        accessibilityLabel={`View ${p.title} details`}
+                      >
+                        <Text style={styles.ghostBtnTextSmall}>View details</Text>
+                        <Ionicons name="arrow-forward" size={13} color={colors.text} />
+                      </NavigationLink>
                       <TouchableOpacity
                         style={styles.primaryBtnSmall}
                         onPress={() => scrollToForm(p.title)}
