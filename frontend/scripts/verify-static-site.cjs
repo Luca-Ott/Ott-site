@@ -93,14 +93,15 @@ for (const pathname of ['careers', 'special-projects', 'software-design', 'ai-ac
 // Google Jobs requires one posting on a dedicated, crawlable page. Check the
 // exported HTML so a valid-looking React component cannot ship an empty route.
 const jobPages = [
-  ['senior-ai-engineer', 'Senior AI Engineer'],
-  ['react-developer', 'React Developer'],
-  ['blockchain-engineer', 'Blockchain Engineer'],
+  ['senior-ai-engineer', 'Senior AI Engineer', '2026-05-18'],
+  ['react-developer', 'React Developer', '2026-05-18'],
+  ['blockchain-engineer', 'Blockchain Engineer', '2026-05-18'],
+  ['freelance-sales-manager-europe', 'Freelance Sales Manager', '2026-10-22'],
 ];
 const readSchemas = (html) => [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
 const careersUrl = `${origin}/careers`;
 assert.ok(!readSchemas(pages.get(careersUrl)).some((schema) => schema['@type'] === 'JobPosting'), 'The careers listing must not contain individual JobPosting markup');
-for (const [slug, title] of jobPages) {
+for (const [slug, title, datePosted] of jobPages) {
   const url = `${careersUrl}/${slug}`;
   const html = pages.get(url);
   assert.ok(html, `Job missing from sitemap/export: ${url}`);
@@ -113,7 +114,7 @@ for (const [slug, title] of jobPages) {
   assert.equal(job.title, title, `Incorrect job title: ${url}`);
   assert.equal(job.url, url, `Job URL must be its canonical page: ${url}`);
   assert.equal(job.hiringOrganization?.name, siteName, `Incorrect hiring organization: ${url}`);
-  assert.equal(job.datePosted, '2026-05-18', `Preserve the original publication date, not the build date: ${url}`);
+  assert.equal(job.datePosted, datePosted, `Preserve the original publication date, not the build date: ${url}`);
   assert.ok(!job.validThrough, `Do not invent an expiry date for an open-ended role: ${url}`);
   assert.equal(job.employmentType, 'CONTRACTOR', `Incorrect contract type: ${url}`);
   assert.equal(job.jobLocationType, 'TELECOMMUTE', `Missing remote-work metadata: ${url}`);
@@ -134,4 +135,10 @@ for (const [slug, title] of jobPages) {
   }), `Missing role-specific application link: ${url}`);
   assert.ok(links.get(url).some((href) => href.startsWith('mailto:info@ott4future.com?')), `Missing direct email application: ${url}`);
 }
+const salesUrl = `${careersUrl}/freelance-sales-manager-europe`;
+assert.ok(links.get(homeUrl).includes(salesUrl), 'Homepage must link directly to the featured sales role');
+assert.ok(home.includes('Freelance Sales Manager') && home.includes('European'), 'Homepage must promote the European sales opening');
+const salesSchema = readSchemas(pages.get(salesUrl)).find((schema) => schema['@type'] === 'JobPosting');
+assert.ok(salesSchema.description.includes('SmartTrust Protocol') && salesSchema.description.includes('Europe'), 'Sales posting must identify product and territory');
+assert.ok(!salesSchema.description.includes('Competitive day-rates'), 'Do not apply engineering compensation promises to the sales role');
 console.log(`Static site verified: ${urls.length} canonical pages, ${articles.length} complete articles, ${jobPages.length} dedicated job pages, all reachable through HTML links; site identity: ${siteName}.`);

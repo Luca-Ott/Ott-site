@@ -10,14 +10,14 @@ import GlassCard from '../../src/components/GlassCard';
 import NavigationLink from '../../src/components/NavigationLink';
 import {
   CAREERS_EMAIL,
-  CONTRACT_TERMS,
   POSITIONS,
-  REMOTE_POLICY,
   applicationEmailHref,
   applicationHref,
   getPosition,
   jobPostingSchema,
   positionUrl,
+  positionContractTerms,
+  positionRemotePolicy,
 } from '../../src/data/careers';
 import { SITE_NAME, SITE_URL } from '../../src/data/siteIdentity';
 import { colors, radii, space } from '../../src/theme/tokens';
@@ -60,7 +60,7 @@ export default function PositionScreen() {
   return (
     <PageShell>
       <PageSEO
-        title={`${position.title} — Remote Freelance Role — ${SITE_NAME}`}
+        title={`${position.title} — ${position.location} — ${SITE_NAME}`}
         description={position.summary}
         canonical={canonical}
         keywords={`${position.title}, remote freelance jobs, ${position.stack.join(', ')}, ${SITE_NAME}`}
@@ -125,7 +125,7 @@ export default function PositionScreen() {
             ))}
           </View>
 
-          <Text role="heading" aria-level={2} style={styles.sectionTitle}>Tech stack</Text>
+          <Text role="heading" aria-level={2} style={styles.sectionTitle}>{position.skillsLabel || 'Tech stack'}</Text>
           <View style={styles.chips}>
             {position.stack.map((skill) => (
               <View key={skill} style={styles.chip}><Text style={styles.chipText}>{skill}</Text></View>
@@ -133,8 +133,8 @@ export default function PositionScreen() {
           </View>
 
           <Text role="heading" aria-level={2} style={styles.sectionTitle}>Working arrangements</Text>
-          <Text style={styles.body}>{position.type}. {REMOTE_POLICY}</Text>
-          <Text style={styles.body}>{CONTRACT_TERMS}</Text>
+          <Text style={styles.body}>{position.type}. {positionRemotePolicy(position)}</Text>
+          <Text style={styles.body}>{positionContractTerms(position)}</Text>
 
           <Text role="heading" aria-level={2} style={styles.sectionTitle}>How to apply</Text>
           <Text style={styles.body}>

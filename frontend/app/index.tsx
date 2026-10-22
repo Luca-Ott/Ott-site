@@ -258,6 +258,38 @@ export default function HomeScreen() {
             </View>
           </View>
 
+          {/* ============================ FEATURED HIRING ============================ */}
+          <View style={styles.featuredHiringWrap}>
+            <GlassCard glow="cyan" style={styles.featuredHiringCard}>
+              <LinearGradient
+                colors={['rgba(34,211,238,0.14)', 'rgba(59,130,246,0.10)', 'rgba(168,85,247,0.14)']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={StyleSheet.absoluteFill}
+              />
+              <View style={[styles.featuredHiringContent, !isDesktop && styles.featuredHiringContentMobile]}>
+                <View style={styles.featuredHiringCopy}>
+                  <Text style={styles.featuredHiringEyebrow}>WE’RE HIRING · SMARTTRUST PROTOCOL</Text>
+                  <Text role="heading" aria-level={2} style={styles.featuredHiringTitle}>
+                    Freelance Sales Manager — Europe
+                  </Text>
+                  <Text style={styles.featuredHiringBody}>
+                    Introduce SmartTrust Protocol to banks, trust companies, fiduciaries and family offices across Europe.
+                  </Text>
+                  <Text style={styles.featuredHiringMeta}>Freelance · Remote · B2B software sales</Text>
+                </View>
+                <NavigationLink
+                  href="/careers/freelance-sales-manager-europe"
+                  accessibilityLabel="View Freelance Sales Manager Europe role and apply"
+                  style={styles.primaryBtn}
+                >
+                  <Text style={styles.primaryBtnText}>View role &amp; apply</Text>
+                  <Ionicons name="arrow-forward" size={16} color="#fff" />
+                </NavigationLink>
+              </View>
+            </GlassCard>
+          </View>
+
           {/* ============================ MISSION ============================ */}
           <View style={styles.section}>
             <ScrollReveal>
@@ -495,10 +527,10 @@ export default function HomeScreen() {
                     </GradientText>
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/careers')}>
+                <NavigationLink href="/careers" style={styles.ghostBtn}>
                   <Text style={styles.ghostBtnText}>All positions</Text>
                   <Ionicons name="arrow-forward" size={14} color={colors.text} />
-                </TouchableOpacity>
+                </NavigationLink>
               </View>
             </ScrollReveal>
 
@@ -511,19 +543,21 @@ export default function HomeScreen() {
                   style={StyleSheet.absoluteFill}
                 />
                 <Text style={styles.careersIntro}>
-                  We are hiring senior freelance specialists — 100% remote, EU-friendly, frontier R&D work.
+                  We are hiring freelance sales and engineering specialists — remote roles helping bring our technology to market.
                 </Text>
                 <View style={[styles.careersGrid, !isDesktop && styles.careersGridMobile]}>
                   {[
-                    { t: 'Senior AI Engineer', s: 'Python · PyTorch · LLMs · RAG', icon: 'sparkles' as const, c: '#60A5FA' },
-                    { t: 'React Developer', s: 'React · React Native · Expo · TS', icon: 'logo-react' as const, c: '#22D3EE' },
-                    { t: 'Blockchain Engineer', s: 'Solidity · EVM · Smart Contracts', icon: 'cube' as const, c: '#A855F7' },
+                    { id: 'freelance-sales-manager-europe', t: 'Freelance Sales Manager — Europe', s: 'SmartTrust Protocol · European markets', icon: 'briefcase' as const, c: '#22D3EE' },
+                    { id: 'senior-ai-engineer', t: 'Senior AI Engineer', s: 'Python · PyTorch · LLMs · RAG', icon: 'sparkles' as const, c: '#60A5FA' },
+                    { id: 'react-developer', t: 'React Developer', s: 'React · React Native · Expo · TS', icon: 'logo-react' as const, c: '#22D3EE' },
+                    { id: 'blockchain-engineer', t: 'Blockchain Engineer', s: 'Solidity · EVM · Smart Contracts', icon: 'cube' as const, c: '#A855F7' },
                   ].map((p) => (
-                    <TouchableOpacity
-                      key={p.t}
+                    <NavigationLink
+                      key={p.id}
                       activeOpacity={0.85}
-                      onPress={() => router.push('/careers')}
-                      style={[styles.careerChipCard, { flex: 1, minWidth: 240 }]}
+                      href={`/careers/${p.id}`}
+                      accessibilityLabel={`View ${p.t} details`}
+                      style={[styles.careerChipCard, p.id === 'freelance-sales-manager-europe' && styles.featuredCareerChip, { flex: 1, minWidth: isTablet ? 240 : 0 }]}
                     >
                       <View style={[styles.careerChipIcon, { backgroundColor: `${p.c}24` }]}>
                         <Ionicons name={p.icon} size={20} color={p.c} />
@@ -533,7 +567,7 @@ export default function HomeScreen() {
                         <Text style={styles.careerChipSub}>{p.s}</Text>
                       </View>
                       <Ionicons name="arrow-forward" size={16} color={colors.textMuted} />
-                    </TouchableOpacity>
+                    </NavigationLink>
                   ))}
                 </View>
                 <View style={styles.careersFooter}>
@@ -777,6 +811,17 @@ const styles = StyleSheet.create({
     ...(Platform.OS === 'web' ? ({ boxShadow: '0 0 6px #22D3EE' } as any) : {}),
   },
 
+  // Featured opening remains visible independently of the rotating news.
+  featuredHiringWrap: { maxWidth: 980, width: '92%', alignSelf: 'center', marginTop: 20, marginBottom: 8 },
+  featuredHiringCard: { padding: 24, overflow: 'hidden', borderColor: 'rgba(34,211,238,0.45)' },
+  featuredHiringContent: { flexDirection: 'row', alignItems: 'center', gap: 24 },
+  featuredHiringContentMobile: { flexDirection: 'column', alignItems: 'flex-start', gap: 20 },
+  featuredHiringCopy: { flexGrow: 1, flexShrink: 1, minWidth: 0, gap: 10 },
+  featuredHiringEyebrow: { color: colors.cyan, fontSize: 11, fontWeight: '800', letterSpacing: 1.2, lineHeight: 18 },
+  featuredHiringTitle: { color: colors.text, fontSize: 27, lineHeight: 34, fontWeight: '800', letterSpacing: -0.5 },
+  featuredHiringBody: { color: colors.textMuted, fontSize: 15, lineHeight: 24 },
+  featuredHiringMeta: { color: colors.cyan, fontSize: 12, lineHeight: 18, fontWeight: '600' },
+
   // SECTIONS
   section: { paddingHorizontal: space.lg, paddingVertical: space.xxxl, maxWidth: 1280, width: '100%', marginHorizontal: 'auto' as any },
   sectionLabel: { color: colors.cyan, fontSize: 12, fontWeight: '800', letterSpacing: 2, marginBottom: 12 },
@@ -871,6 +916,7 @@ const styles = StyleSheet.create({
     ...(Platform.OS === 'web' ? { transition: 'transform 0.2s ease, border-color 0.2s ease' } as any : {}),
   },
   careerChipIcon: { width: 40, height: 40, borderRadius: radii.sm, alignItems: 'center', justifyContent: 'center' },
+  featuredCareerChip: { borderColor: 'rgba(34,211,238,0.5)', backgroundColor: 'rgba(34,211,238,0.08)' },
   careerChipTitle: { color: colors.text, fontSize: 15, fontWeight: '800' },
   careerChipSub: { color: colors.textMuted, fontSize: 12.5, marginTop: 2 },
   careersFooter: { flexDirection: 'row', gap: 12, flexWrap: 'wrap', marginTop: 8 },
