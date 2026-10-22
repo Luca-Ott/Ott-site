@@ -130,7 +130,7 @@ for (const [slug, title] of jobPages) {
   for (const text of [...prose, ...requirements]) assert.ok(visible.includes(escape(text)), `Structured job content missing from visible page: ${url}: ${text}`);
   assert.ok(links.get(url).some((href) => {
     const apply = new URL(href);
-    return apply.origin === origin && apply.pathname === '/careers' && apply.searchParams.get('role') === slug && apply.hash === '#apply';
+    return apply.origin === origin && apply.pathname === '/careers' && apply.searchParams.get('role') === slug && !apply.hash;
   }), `Missing role-specific application link: ${url}`);
   assert.ok(links.get(url).some((href) => href.startsWith('mailto:info@ott4future.com?')), `Missing direct email application: ${url}`);
 }

@@ -99,7 +99,9 @@ export function positionUrl(position: Position) {
 }
 
 export function applicationHref(position: Position) {
-  return `/careers?role=${position.id}#apply`;
+  // Expo Router can move query parameters behind a hash on hydration. The
+  // focused careers form handles scrolling after layout, so no hash is needed.
+  return `/careers?role=${position.id}`;
 }
 
 export function applicationEmailHref(position: Position) {
