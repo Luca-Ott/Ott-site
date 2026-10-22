@@ -6,6 +6,7 @@ const path = require('node:path');
 // incorrect canonicals and navigation that Google cannot follow before deploying.
 const root = path.resolve(__dirname, '..');
 const origin = 'https://www.ott4future.com';
+const siteName = 'On Time Technology Ltd';
 const sitemap = fs.readFileSync(path.join(root, 'dist/sitemap.xml'), 'utf8');
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 assert.equal(new Set(urls).size, urls.length, 'Duplicate sitemap URLs');
@@ -26,12 +27,38 @@ for (const url of urls) {
   assert.equal([...html.matchAll(/<title\b[^>]*>/g)].length, 1, `Invalid title count: ${url}`);
   const meta = [...html.matchAll(/<meta\b[^>]*>/g)].map((m) => attrs(m[0]));
   assert.equal(meta.filter((a) => a.name === 'description' && a.content).length, 1, `Missing/duplicate description: ${url}`);
+  assert.deepEqual(meta.filter((a) => a.property === 'og:site_name').map((a) => a.content), [siteName], `Conflicting site name: ${url}`);
+  assert.deepEqual(meta.filter((a) => a.name === 'application-name').map((a) => a.content), [siteName], `Conflicting application name: ${url}`);
   const robots = meta.filter((a) => a.name === 'robots');
   assert.equal(robots.length, 1, `Invalid robots count: ${url}`);
   assert.ok(!robots[0].content.includes('noindex'), `Sitemap includes a noindex page: ${url}`);
   pages.set(url, html);
   links.set(url, [...html.matchAll(/<a\b[^>]*>/g)].map((m) => attrs(m[0]).href).filter(Boolean).map((href) => new URL(href, url).href));
 }
+
+// Check the HTML Google receives, including the site-name signal that is
+// separate from the blue title link. Valid markup expresses a preference;
+// Google's selected search-result label cannot be guaranteed by this check.
+const homeUrl = `${origin}/`;
+const home = pages.get(homeUrl);
+assert.ok(home, 'Canonical homepage missing from sitemap');
+const homeSchemas = [...home.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+const websites = homeSchemas.filter((schema) => schema['@type'] === 'WebSite');
+const organizations = homeSchemas.filter((schema) => schema['@type'] === 'Organization');
+assert.equal(websites.length, 1, 'Homepage must contain exactly one WebSite identity');
+assert.equal(organizations.length, 1, 'Homepage must contain exactly one Organization identity');
+assert.equal(websites[0].name, siteName, 'Incorrect preferred Google site name');
+assert.equal(websites[0].url, homeUrl, 'WebSite must identify the canonical homepage');
+assert.equal(websites[0]['@id'], `${homeUrl}#website`, 'Incorrect WebSite identity URL');
+assert.equal(organizations[0]['@id'], `${homeUrl}#organization`, 'Incorrect Organization identity URL');
+assert.equal(organizations[0].name, siteName, 'Organization and site names must agree');
+assert.equal(organizations[0].legalName, siteName, 'Incorrect organization legal name');
+assert.equal(websites[0].publisher?.['@id'], organizations[0]['@id'], 'WebSite must reference the publisher identity');
+assert.ok(home.match(/<title\b[^>]*>([^<]*)<\/title>/)?.[1].startsWith(siteName), 'Homepage title must identify the company');
+const bodyText = home.match(/<body\b[^>]*>([\s\S]*?)<\/body>/)?.[1].replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ');
+assert.ok(bodyText?.includes(siteName), 'Preferred site name missing from visible homepage text');
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'dist/manifest.json'), 'utf8'));
+assert.equal(manifest.name, siteName, 'Manifest and site names must agree');
 
 const visited = new Set();
 const queue = [`${origin}/`];
@@ -62,4 +89,4 @@ for (const summary of articles) {
 for (const pathname of ['careers', 'special-projects', 'software-design', 'ai-act-compliance', 'blog']) {
   assert.equal([...pages.get(`${origin}/${pathname}`).matchAll(/<h1\b/g)].length, 1, `Missing/duplicate page H1: ${pathname}`);
 }
-console.log(`Static site verified: ${urls.length} canonical pages, ${articles.length} complete articles, all reachable through HTML links.`);
+console.log(`Static site verified: ${urls.length} canonical pages, ${articles.length} complete articles, all reachable through HTML links; site identity: ${siteName}.`);
