@@ -89,4 +89,49 @@ for (const summary of articles) {
 for (const pathname of ['careers', 'special-projects', 'software-design', 'ai-act-compliance', 'blog']) {
   assert.equal([...pages.get(`${origin}/${pathname}`).matchAll(/<h1\b/g)].length, 1, `Missing/duplicate page H1: ${pathname}`);
 }
-console.log(`Static site verified: ${urls.length} canonical pages, ${articles.length} complete articles, all reachable through HTML links; site identity: ${siteName}.`);
+
+// Google Jobs requires one posting on a dedicated, crawlable page. Check the
+// exported HTML so a valid-looking React component cannot ship an empty route.
+const jobPages = [
+  ['senior-ai-engineer', 'Senior AI Engineer'],
+  ['react-developer', 'React Developer'],
+  ['blockchain-engineer', 'Blockchain Engineer'],
+];
+const readSchemas = (html) => [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+const careersUrl = `${origin}/careers`;
+assert.ok(!readSchemas(pages.get(careersUrl)).some((schema) => schema['@type'] === 'JobPosting'), 'The careers listing must not contain individual JobPosting markup');
+for (const [slug, title] of jobPages) {
+  const url = `${careersUrl}/${slug}`;
+  const html = pages.get(url);
+  assert.ok(html, `Job missing from sitemap/export: ${url}`);
+  assert.ok(links.get(careersUrl).includes(url), `Job must be linked from careers: ${url}`);
+  assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `Missing/duplicate job H1: ${url}`);
+  const schemas = readSchemas(html);
+  const postings = schemas.filter((schema) => schema['@type'] === 'JobPosting');
+  assert.equal(postings.length, 1, `Each job page needs exactly one JobPosting: ${url}`);
+  const job = postings[0];
+  assert.equal(job.title, title, `Incorrect job title: ${url}`);
+  assert.equal(job.url, url, `Job URL must be its canonical page: ${url}`);
+  assert.equal(job.hiringOrganization?.name, siteName, `Incorrect hiring organization: ${url}`);
+  assert.equal(job.datePosted, '2026-05-18', `Preserve the original publication date, not the build date: ${url}`);
+  assert.ok(!job.validThrough, `Do not invent an expiry date for an open-ended role: ${url}`);
+  assert.equal(job.employmentType, 'CONTRACTOR', `Incorrect contract type: ${url}`);
+  assert.equal(job.jobLocationType, 'TELECOMMUTE', `Missing remote-work metadata: ${url}`);
+  assert.equal(job.jobLocation?.address?.addressCountry, 'IE', `Missing optional Dublin work location: ${url}`);
+  assert.ok(!JSON.stringify(job.applicantLocationRequirements || []).includes('Worldwide'), `Worldwide is not a country: ${url}`);
+  assert.ok(schemas.some((schema) => schema['@type'] === 'BreadcrumbList' && schema.itemListElement?.at(-1)?.item === url), `Missing job breadcrumbs: ${url}`);
+  const visible = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/g, '');
+  assert.ok(visible.includes(title), `Missing visible role: ${url}`);
+  assert.ok(job.description.includes('<p>') && job.description.includes('<li>'), `Job description needs readable HTML paragraphs and requirements: ${url}`);
+  const decode = (text) => text.replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&#39;', "'");
+  const prose = [...job.description.matchAll(/<p>([\s\S]*?)<\/p>/g)].slice(0, 4).map((match) => decode(match[1]));
+  const requirements = [...job.description.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => decode(match[1]));
+  assert.ok(requirements.length > 0, `Missing job requirements: ${url}`);
+  for (const text of [...prose, ...requirements]) assert.ok(visible.includes(escape(text)), `Structured job content missing from visible page: ${url}: ${text}`);
+  assert.ok(links.get(url).some((href) => {
+    const apply = new URL(href);
+    return apply.origin === origin && apply.pathname === '/careers' && apply.searchParams.get('role') === slug && apply.hash === '#apply';
+  }), `Missing role-specific application link: ${url}`);
+  assert.ok(links.get(url).some((href) => href.startsWith('mailto:info@ott4future.com?')), `Missing direct email application: ${url}`);
+}
+console.log(`Static site verified: ${urls.length} canonical pages, ${articles.length} complete articles, ${jobPages.length} dedicated job pages, all reachable through HTML links; site identity: ${siteName}.`);
