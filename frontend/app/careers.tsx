@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   Linking,
   useWindowDimensions,
 } from 'react-native';
-import { useLocalSearchParams, useRouter, type Href } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter, type Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -94,6 +94,8 @@ export default function CareersScreen() {
   const sectionLh = Math.round(sectionFs * 1.18);
 
   const formRef = useRef<View>(null);
+  const positionsRef = useRef<View>(null);
+  const [formLaidOut, setFormLaidOut] = useState(false);
 
   // Form state
   const [selectedRole, setSelectedRole] = useState<string>(POSITIONS[0].title);
@@ -106,12 +108,20 @@ export default function CareersScreen() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!requestedRole) return;
-    setSelectedRole(requestedRole.title);
-    if (Platform.OS === 'web') {
-      document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (requestedRole) setSelectedRole(requestedRole.title);
   }, [requestedRole]);
+
+  // An incoming application link can mount before the stack screen and its
+  // ScrollView have measurable layout. Wait for both focus and form layout,
+  // then scroll on the next frame. Form edits do not rerun this entry action.
+  useFocusEffect(useCallback(() => {
+    if (!requestedRole || !formLaidOut || Platform.OS !== 'web') return;
+    const frame = requestAnimationFrame(() => {
+      const element = formRef.current as unknown as HTMLElement | null;
+      element?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [requestedRole, formLaidOut]));
 
 
   const showAlert = (title: string, msg: string) => {
@@ -119,15 +129,16 @@ export default function CareersScreen() {
     else Alert.alert(title, msg);
   };
 
-  const scrollToSection = (id: string) => {
-    if (Platform.OS === 'web' && typeof document !== 'undefined') {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const scrollToSection = (target: View | null) => {
+    if (Platform.OS === 'web') {
+      const element = target as unknown as HTMLElement | null;
+      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   const scrollToForm = (roleTitle?: string) => {
     if (roleTitle) setSelectedRole(roleTitle);
-    scrollToSection('apply');
+    scrollToSection(formRef.current);
   };
 
   const openMailto = (roleTitle: string) => {
@@ -252,7 +263,7 @@ export default function CareersScreen() {
             not push pixels in committees.
           </Text>
           <View style={styles.heroCtas}>
-            <TouchableOpacity style={styles.primaryBtn} onPress={() => scrollToSection('open-positions')}>
+            <TouchableOpacity style={styles.primaryBtn} onPress={() => scrollToSection(positionsRef.current)}>
               <Text style={styles.primaryBtnText}>See open positions</Text>
               <Ionicons name="arrow-forward" size={16} color="#fff" />
             </TouchableOpacity>
@@ -310,7 +321,7 @@ export default function CareersScreen() {
         </View>
 
         {/* ============================ OPEN POSITIONS ============================ */}
-        <View style={styles.section} nativeID="open-positions">
+        <View style={styles.section} nativeID="open-positions" ref={positionsRef}>
           <ScrollReveal>
             <Text style={styles.sectionLabel}>OPEN POSITIONS · FREELANCE</Text>
             <Text
@@ -495,6 +506,9 @@ export default function CareersScreen() {
         <View
           style={styles.section}
           ref={formRef}
+          onLayout={({ nativeEvent: { layout } }) => {
+            if (layout.width > 0 && layout.height > 0) setFormLaidOut(true);
+          }}
           // @ts-ignore - web-only DOM id for scrollIntoView
           nativeID="apply"
           {...(Platform.OS === 'web' ? ({ id: 'apply' } as any) : {})}
