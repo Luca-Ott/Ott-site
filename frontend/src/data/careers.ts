@@ -6,7 +6,7 @@ export const CAREERS_EMAIL = 'info@ott4future.com';
 export const CONTRACT_TERMS = 'These are independent-contractor engagements, billed monthly. Competitive day-rates, monthly invoicing and transparent contracts.';
 export const REMOTE_POLICY = 'All roles are 100% remote. We prefer an EU-friendly time-zone overlap of at least 4 hours per day, but exceptional senior candidates worldwide are welcome to apply. Dublin HQ is available for those who want it, with no office mandate.';
 
-// Original publication: the three positions were added on 18 May 2026
+// Original publication: the three engineering positions were added on 18 May 2026
 // (repository commit 58c267257634e29f5fc2f8b73aa4326a5c1816ca).
 // Keep dates editorial: rebuilding the site must not republish or extend a job.
 export type Position = {
@@ -21,9 +21,39 @@ export type Position = {
   glow: 'blue' | 'purple' | 'cyan';
   icon: ComponentProps<typeof Ionicons>['name'];
   datePosted: string;
+  skillsLabel?: string;
+  remotePolicy?: string;
+  contractTerms?: string;
 };
 
 export const POSITIONS: Position[] = [
+  {
+    datePosted: '2026-10-22',
+    id: 'freelance-sales-manager-europe',
+    title: 'Freelance Sales Manager',
+    location: 'Remote · European markets',
+    type: 'Freelance · Independent contractor',
+    stack: ['B2B SaaS', 'European markets', 'Trust management', 'Institutional sales', 'Partnerships', 'CRM'],
+    skillsLabel: 'Markets & sales skills',
+    summary:
+      'Grow SmartTrust Protocol across Europe by building relationships with banks, trust companies, fiduciary firms and family offices.',
+    description:
+      'Own the commercial development of SmartTrust Protocol in European markets. Identify and qualify prospective organisations, build a pipeline of decision-makers, arrange product demonstrations with our team and guide opportunities from discovery through proposal and commercial follow-up. Present how the platform brings trust administration, multi-asset portfolios, legal and compliance workflows, beneficiary access and controlled distributions into one software environment. Work with the product team to understand customer needs, support pilot discussions and hand over new relationships for onboarding.',
+    requirements: [
+      'Proven experience in B2B software, SaaS or fintech sales and business development in European markets.',
+      'Ability to engage senior stakeholders at banks, trust companies, fiduciary firms, family offices or professional-services organisations.',
+      'A structured approach to prospecting, qualification, product demonstrations, proposals and CRM pipeline management.',
+      'Confidence discussing trust administration and operational workflows, and the ability to learn SmartTrust Protocol in depth.',
+      'Fluent professional English; additional European languages and an established institutional network are an advantage.',
+      'Ability to work independently as a freelance professional and coordinate customer meetings across European time zones.',
+    ],
+    remotePolicy:
+      'This is a remote freelance role with a sales territory covering Europe. Coordinate prospect meetings and product demonstrations across European time zones. Work with On Time Technology Ltd, based in Dublin, with optional access to the Dublin HQ and no office mandate.',
+    contractTerms:
+      'Freelance independent-contractor engagement. Scope, commercial terms and working arrangements will be discussed and agreed directly before the engagement starts.',
+    glow: 'cyan',
+    icon: 'briefcase',
+  },
   {
     datePosted: '2026-05-18',
     id: 'senior-ai-engineer',
@@ -94,6 +124,14 @@ export function getPosition(id: string) {
   return POSITIONS.find((position) => position.id === id);
 }
 
+export function positionRemotePolicy(position: Position) {
+  return position.remotePolicy || REMOTE_POLICY;
+}
+
+export function positionContractTerms(position: Position) {
+  return position.contractTerms || CONTRACT_TERMS;
+}
+
 export function positionUrl(position: Position) {
   return `${SITE_URL}careers/${position.id}`;
 }
@@ -122,7 +160,7 @@ export function jobPostingSchema(position: Position) {
     '@id': `${positionUrl(position)}#job`,
     identifier: { '@type': 'PropertyValue', name: SITE_NAME, value: position.id },
     title: position.title,
-    description: `<p>${escapeHtml(position.summary)}</p><p>${escapeHtml(position.description)}</p><p>${escapeHtml(position.type)}</p><p>${escapeHtml(REMOTE_POLICY)}</p><p>${escapeHtml(CONTRACT_TERMS)}</p><p>What you bring:</p><ul>${position.requirements.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul><p>Tech stack: ${escapeHtml(position.stack.join(', '))}.</p><p>Apply using the application form or email ${CAREERS_EMAIL}.</p>`,
+    description: `<p>${escapeHtml(position.summary)}</p><p>${escapeHtml(position.description)}</p><p>${escapeHtml(position.type)}</p><p>${escapeHtml(positionRemotePolicy(position))}</p><p>${escapeHtml(positionContractTerms(position))}</p><p>What you bring:</p><ul>${position.requirements.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul><p>${escapeHtml(position.skillsLabel || 'Tech stack')}: ${escapeHtml(position.stack.join(', '))}.</p><p>Apply using the application form or email ${CAREERS_EMAIL}.</p>`,
     datePosted: position.datePosted,
     // No closing date has been supplied. Do not invent a rolling validThrough.
     employmentType: 'CONTRACTOR',

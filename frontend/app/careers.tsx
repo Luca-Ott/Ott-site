@@ -43,9 +43,9 @@ const PERKS = [
   },
   {
     icon: 'cash-outline' as const,
-    title: 'Senior freelance rates',
+    title: 'Clear freelance terms',
     desc:
-      'Competitive day-rates, monthly invoicing, transparent contracts — paid like the senior specialist you are.',
+      'Scope, commercial terms and expectations are agreed directly for each freelance engagement.',
   },
   {
     icon: 'flash-outline' as const,
@@ -59,7 +59,7 @@ const FAQ_ITEMS = [
   {
     question: 'Are these positions employee roles or freelance contracts?',
     answer:
-      'All currently open positions at On Time Technology are senior freelance / independent-contractor contracts, billed monthly. Long-term, retainer and project-based engagements are all available.',
+      'All currently open positions at On Time Technology are freelance / independent-contractor engagements. Scope, commercial terms and working arrangements are agreed directly for each role.',
   },
   {
     question: 'Do I need to be based in Ireland or the EU?',
@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
   {
     question: 'What does the selection process look like?',
     answer:
-      'Step 1: short intro call. Step 2: technical interview tailored to the role (live coding, system design or smart-contract review). Step 3: paid trial assignment. Step 4: contract & onboarding. Typical timeline: 2 to 3 weeks.',
+      'Start with a short introductory call and a discussion tailored to the role. For sales, we discuss your market experience and commercial approach. Engineering roles include a technical interview and may include a paid trial assignment. Engagement terms are agreed before onboarding.',
   },
   {
     question: 'Can I send my CV even if no position matches exactly?',
@@ -192,10 +192,10 @@ export default function CareersScreen() {
   return (
     <PageShell>
       <PageSEO
-        title="Careers at On Time Technology — Freelance AI, React & Blockchain Roles"
-        description="Join On Time Technology — Irish AI software company hiring senior freelance AI engineers, React developers and blockchain engineers. 100% remote, EU-friendly, frontier R&D work."
+        title="Careers at On Time Technology — Freelance Software & Sales Roles"
+        description="Join On Time Technology: freelance sales opportunities for SmartTrust Protocol across Europe, plus AI, React and blockchain engineering roles. Remote work."
         canonical="https://www.ott4future.com/careers"
-        keywords="careers On Time Technology, freelance AI engineer Ireland, freelance React developer remote, freelance blockchain engineer, ott4future jobs, remote AI jobs EU, Dublin tech jobs"
+        keywords="careers On Time Technology, freelance sales manager Europe, SmartTrust Protocol sales, B2B SaaS sales, freelance AI engineer Ireland, freelance React developer remote, freelance blockchain engineer, ott4future jobs"
         schema={[
           breadcrumbsSchema([
             { name: 'Home', url: 'https://www.ott4future.com/' },
@@ -259,8 +259,8 @@ export default function CareersScreen() {
           <Text style={styles.heroSub}>
             We are an Irish AI-native software house building anti-disinformation platforms,
             EU AI Act compliance tooling, custodial wallet infrastructure and tokenised commodity
-            rails. We are hiring senior freelance specialists who want to ship to real users —
-            not push pixels in committees.
+            rails. We are hiring freelance specialists to build our platforms and grow their
+            reach across European markets.
           </Text>
           <View style={styles.heroCtas}>
             <TouchableOpacity style={styles.primaryBtn} onPress={() => scrollToSection(positionsRef.current)}>
@@ -446,7 +446,7 @@ export default function CareersScreen() {
                     ))}
                   </View>
 
-                  <Text style={styles.positionH4}>Tech stack</Text>
+                  <Text style={styles.positionH4}>{p.skillsLabel || 'Tech stack'}</Text>
                   <View style={styles.stackChipsRow}>
                     {p.stack.map((s) => (
                       <View key={s} style={styles.stackChip}>
@@ -470,7 +470,7 @@ export default function CareersScreen() {
                 { fontSize: sectionFs, lineHeight: sectionLh },
               ]}
             >
-              From hello to{' '}
+              A conversation to{' '}
               <GradientText
                 style={{
                   fontSize: sectionFs,
@@ -479,7 +479,7 @@ export default function CareersScreen() {
                 }}
                 colors={['#60A5FA', '#22D3EE']}
               >
-                first invoice in 2–3 weeks
+                get started
               </GradientText>
             </Text>
           </ScrollReveal>
@@ -487,9 +487,9 @@ export default function CareersScreen() {
           <View style={[styles.stepsRow, !isDesktop && styles.stepsRowMobile]}>
             {[
               { n: '01', t: 'Intro call', d: '30 min, no whiteboards. We meet, you ask anything.' },
-              { n: '02', t: 'Technical interview', d: 'Tailored to the role: live problem, system design or contract review.' },
-              { n: '03', t: 'Paid trial', d: 'Short paid task on a real (non-critical) module of the platform.' },
-              { n: '04', t: 'Contract & ship', d: 'Freelance contract signed, onboarded, shipping in days.' },
+              { n: '02', t: 'Role discussion', d: 'Your market approach for sales, or a technical discussion for engineering.' },
+              { n: '03', t: 'Align on scope', d: 'Discuss responsibilities and terms. Engineering roles may include a paid trial.' },
+              { n: '04', t: 'Contract & onboard', d: 'Agree the freelance engagement and prepare to work with the team.' },
             ].map((s, idx) => (
               <ScrollReveal key={s.n} delay={idx * 90} style={{ flex: 1, minWidth: 220 }}>
                 <View style={styles.stepCard}>
