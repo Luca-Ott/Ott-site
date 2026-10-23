@@ -83,16 +83,10 @@ export default function PositionScreen() {
         { label: position.title },
       ]} />
       <View style={styles.content}>
-        <View style={styles.navigationLinks}>
-          <NavigationLink href="/" replace accessibilityLabel="Back to home" style={styles.backLink}>
-            <Ionicons name="arrow-back" size={16} color={colors.textMuted} />
-            <Text style={styles.backText}>Back to home</Text>
-          </NavigationLink>
-          <NavigationLink href="/careers" style={styles.backLink}>
-            <Ionicons name="arrow-back" size={16} color={colors.textMuted} />
-            <Text style={styles.backText}>All open positions</Text>
-          </NavigationLink>
-        </View>
+        <NavigationLink href="/" replace accessibilityLabel="Back to home" style={styles.backLink}>
+          <Ionicons name="arrow-back" size={16} color={colors.textMuted} />
+          <Text style={styles.backText}>Back to home</Text>
+        </NavigationLink>
 
         <View style={styles.hero}>
           <Text style={styles.eyebrow}>FREELANCE · REMOTE</Text>
@@ -168,7 +162,6 @@ export default function PositionScreen() {
 
 const styles = StyleSheet.create({
   content: { maxWidth: 1000, width: '100%', marginHorizontal: 'auto', paddingHorizontal: space.lg, paddingTop: space.lg, paddingBottom: space.xxxl },
-  navigationLinks: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 20 },
   backLink: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingVertical: 8 },
   backText: { color: colors.textMuted, fontSize: 14, fontWeight: '600' },
   hero: { paddingVertical: space.xl, gap: 18 },
