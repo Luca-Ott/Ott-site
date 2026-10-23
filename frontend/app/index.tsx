@@ -52,11 +52,12 @@ export default function HomeScreen() {
 
   const isDesktop = width >= 900;
   const isTablet = width >= 640;
+  const isWideHero = width >= 1100;
 
   // Responsive type scale to avoid overflow on small phones
-  const heroFs = isDesktop ? 76 : width < 400 ? 32 : width < 600 ? 40 : 52;
+  const heroFs = isWideHero ? Math.min(68, Math.round(52 + (width - 1100) * 0.06)) : isDesktop ? 76 : width < 400 ? 32 : width < 600 ? 40 : 52;
   const heroLh = Math.round(heroFs * 1.12);
-  const heroLs = isDesktop ? -2 : width < 400 ? -0.5 : -1;
+  const heroLs = isWideHero ? -1.5 : isDesktop ? -2 : width < 400 ? -0.5 : -1;
   const sectionFs = isDesktop ? 48 : width < 400 ? 26 : width < 600 ? 32 : 40;
   const sectionLh = Math.round(sectionFs * 1.18);
   const sectionLs = isDesktop ? -1.2 : width < 400 ? -0.4 : -0.8;
@@ -146,54 +147,87 @@ export default function HomeScreen() {
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
           {/* ============================ HERO ============================ */}
           <View style={[styles.hero, !isDesktop && styles.heroMobile]}>
-            <View style={{ maxWidth: 980, width: '100%', alignItems: 'center' }}>
-              <View style={styles.eyebrow}>
-                <Animated.View
-                  style={[
-                    styles.eyebrowDot,
-                    {
-                      opacity: pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }),
-                    },
-                  ]}
-                />
-                <Text style={styles.eyebrowText}>IRELAND · IT COMPANY · EST. 2010</Text>
+            <View style={[styles.heroLayout, isWideHero && styles.heroLayoutWide]}>
+              <View style={[styles.heroContent, isWideHero && styles.heroContentWide]}>
+                <View style={styles.eyebrow}>
+                  <Animated.View
+                    style={[
+                      styles.eyebrowDot,
+                      {
+                        opacity: pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }),
+                      },
+                    ]}
+                  />
+                  <Text style={styles.eyebrowText}>IRELAND · IT COMPANY · EST. 2010</Text>
+                </View>
+
+                <Text style={[styles.heroTitle, { fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs }]}>
+                  Building the digital{'\n'}
+                  <GradientText style={{ fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs, fontWeight: '900' }} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
+                    infrastructure of tomorrow
+                  </GradientText>
+                </Text>
+
+                <Text style={[styles.heroSub, !isDesktop && styles.heroSubMobile]}>
+                  We architect software, R&D programmes and visionary special projects for organisations that intend
+                  to lead the next decade — from AI-native platforms to programmable trust infrastructure.
+                </Text>
+
+                <View style={styles.heroCtas}>
+                  <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/special-projects')}>
+                    <Text style={styles.primaryBtnText}>Explore our projects</Text>
+                    <Ionicons name="arrow-forward" size={16} color="#fff" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/contact')}>
+                    <Text style={styles.ghostBtnText}>Get in touch</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.heroBadges}>
+                  <View style={styles.heroBadge}>
+                    <Ionicons name="shield-checkmark" size={14} color={colors.cyan} />
+                    <Text style={styles.heroBadgeText}>Irish Registered</Text>
+                  </View>
+                  <View style={styles.heroBadge}>
+                    <Ionicons name="rocket" size={14} color={colors.purple} />
+                    <Text style={styles.heroBadgeText}>R&D Driven</Text>
+                  </View>
+                  <View style={styles.heroBadge}>
+                    <Ionicons name="sparkles" size={14} color={colors.accent} />
+                    <Text style={styles.heroBadgeText}>AI Native</Text>
+                  </View>
+                </View>
               </View>
 
-              <Text style={[styles.heroTitle, { fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs }]}>
-                Building the digital{'\n'}
-                <GradientText style={{ fontSize: heroFs, lineHeight: heroLh, letterSpacing: heroLs, fontWeight: '900' }} colors={['#60A5FA', '#A855F7', '#22D3EE']}>
-                  infrastructure of tomorrow
-                </GradientText>
-              </Text>
-
-              <Text style={[styles.heroSub, !isDesktop && styles.heroSubMobile]}>
-                We architect software, R&D programmes and visionary special projects for organisations that intend
-                to lead the next decade — from AI-native platforms to programmable trust infrastructure.
-              </Text>
-
-              <View style={styles.heroCtas}>
-                <TouchableOpacity style={styles.primaryBtn} onPress={() => router.push('/special-projects')}>
-                  <Text style={styles.primaryBtnText}>Explore our projects</Text>
-                  <Ionicons name="arrow-forward" size={16} color="#fff" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.ghostBtn} onPress={() => router.push('/contact')}>
-                  <Text style={styles.ghostBtnText}>Get in touch</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.heroBadges}>
-                <View style={styles.heroBadge}>
-                  <Ionicons name="shield-checkmark" size={14} color={colors.cyan} />
-                  <Text style={styles.heroBadgeText}>Irish Registered</Text>
-                </View>
-                <View style={styles.heroBadge}>
-                  <Ionicons name="rocket" size={14} color={colors.purple} />
-                  <Text style={styles.heroBadgeText}>R&D Driven</Text>
-                </View>
-                <View style={styles.heroBadge}>
-                  <Ionicons name="sparkles" size={14} color={colors.accent} />
-                  <Text style={styles.heroBadgeText}>AI Native</Text>
-                </View>
+              <View style={[styles.featuredHiringWrap, isWideHero && styles.featuredHiringAside]}>
+                <GlassCard glow="cyan" style={styles.featuredHiringCard}>
+                  <LinearGradient
+                    colors={['rgba(34,211,238,0.14)', 'rgba(59,130,246,0.10)', 'rgba(168,85,247,0.14)']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={StyleSheet.absoluteFill}
+                  />
+                  <View style={styles.featuredHiringContent}>
+                    <View style={styles.featuredHiringCopy}>
+                      <Text style={styles.featuredHiringEyebrow}>WE’RE HIRING · SMARTTRUST PROTOCOL</Text>
+                      <Text role="heading" aria-level={2} style={styles.featuredHiringTitle}>
+                        Freelance Sales Manager — Europe
+                      </Text>
+                      <Text style={styles.featuredHiringBody}>
+                        Introduce SmartTrust Protocol to banks, trust companies, fiduciaries and family offices across Europe.
+                      </Text>
+                      <Text style={styles.featuredHiringMeta}>Freelance · Remote · B2B software sales</Text>
+                    </View>
+                    <NavigationLink
+                      href="/careers/freelance-sales-manager-europe"
+                      accessibilityLabel="View Freelance Sales Manager Europe role and apply"
+                      style={[styles.primaryBtn, styles.featuredHiringButton]}
+                    >
+                      <Text style={styles.primaryBtnText}>View role &amp; apply</Text>
+                      <Ionicons name="arrow-forward" size={16} color="#fff" />
+                    </NavigationLink>
+                  </View>
+                </GlassCard>
               </View>
             </View>
 
@@ -256,38 +290,6 @@ export default function HomeScreen() {
                 />
               ))}
             </View>
-          </View>
-
-          {/* ============================ FEATURED HIRING ============================ */}
-          <View style={styles.featuredHiringWrap}>
-            <GlassCard glow="cyan" style={styles.featuredHiringCard}>
-              <LinearGradient
-                colors={['rgba(34,211,238,0.14)', 'rgba(59,130,246,0.10)', 'rgba(168,85,247,0.14)']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={StyleSheet.absoluteFill}
-              />
-              <View style={[styles.featuredHiringContent, !isDesktop && styles.featuredHiringContentMobile]}>
-                <View style={styles.featuredHiringCopy}>
-                  <Text style={styles.featuredHiringEyebrow}>WE’RE HIRING · SMARTTRUST PROTOCOL</Text>
-                  <Text role="heading" aria-level={2} style={styles.featuredHiringTitle}>
-                    Freelance Sales Manager — Europe
-                  </Text>
-                  <Text style={styles.featuredHiringBody}>
-                    Introduce SmartTrust Protocol to banks, trust companies, fiduciaries and family offices across Europe.
-                  </Text>
-                  <Text style={styles.featuredHiringMeta}>Freelance · Remote · B2B software sales</Text>
-                </View>
-                <NavigationLink
-                  href="/careers/freelance-sales-manager-europe"
-                  accessibilityLabel="View Freelance Sales Manager Europe role and apply"
-                  style={styles.primaryBtn}
-                >
-                  <Text style={styles.primaryBtnText}>View role &amp; apply</Text>
-                  <Ionicons name="arrow-forward" size={16} color="#fff" />
-                </NavigationLink>
-              </View>
-            </GlassCard>
           </View>
 
           {/* ============================ MISSION ============================ */}
@@ -725,6 +727,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   heroMobile: { minHeight: 560, paddingTop: space.xl },
+  heroLayout: { width: '100%', maxWidth: 1280, alignItems: 'center', zIndex: 1 },
+  heroLayoutWide: { flexDirection: 'row-reverse', alignItems: 'center', gap: 36 },
+  heroContent: { maxWidth: 980, width: '100%', alignItems: 'center' },
+  heroContentWide: { flex: 1, minWidth: 0, width: 'auto' },
   eyebrow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 24, paddingHorizontal: 14, paddingVertical: 7, backgroundColor: colors.bgCard, borderRadius: radii.pill, borderWidth: 1, borderColor: colors.border },
   eyebrowDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: colors.cyan },
   eyebrowText: { color: colors.textMuted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5 },
@@ -811,16 +817,17 @@ const styles = StyleSheet.create({
     ...(Platform.OS === 'web' ? ({ boxShadow: '0 0 6px #22D3EE' } as any) : {}),
   },
 
-  // Featured opening remains visible independently of the rotating news.
-  featuredHiringWrap: { maxWidth: 980, width: '92%', alignSelf: 'center', marginTop: 20, marginBottom: 8 },
-  featuredHiringCard: { padding: 24, overflow: 'hidden', borderColor: 'rgba(34,211,238,0.45)' },
-  featuredHiringContent: { flexDirection: 'row', alignItems: 'center', gap: 24 },
-  featuredHiringContentMobile: { flexDirection: 'column', alignItems: 'flex-start', gap: 20 },
-  featuredHiringCopy: { flexGrow: 1, flexShrink: 1, minWidth: 0, gap: 10 },
-  featuredHiringEyebrow: { color: colors.cyan, fontSize: 11, fontWeight: '800', letterSpacing: 1.2, lineHeight: 18 },
-  featuredHiringTitle: { color: colors.text, fontSize: 27, lineHeight: 34, fontWeight: '800', letterSpacing: -0.5 },
-  featuredHiringBody: { color: colors.textMuted, fontSize: 15, lineHeight: 24 },
+  // Reserve a left column on wide screens; stack in normal flow on phones.
+  featuredHiringWrap: { width: 320, maxWidth: '100%', alignSelf: 'flex-start', marginTop: 36 },
+  featuredHiringAside: { width: 260, flexShrink: 0, alignSelf: 'center', marginTop: 0 },
+  featuredHiringCard: { padding: 20, overflow: 'hidden', backgroundColor: 'rgba(8,14,28,0.85)', borderColor: 'rgba(34,211,238,0.45)' },
+  featuredHiringContent: { alignItems: 'flex-start', gap: 20 },
+  featuredHiringCopy: { minWidth: 0, gap: 10 },
+  featuredHiringEyebrow: { color: colors.cyan, fontSize: 10.5, fontWeight: '800', letterSpacing: 1.1, lineHeight: 17 },
+  featuredHiringTitle: { color: colors.text, fontSize: 24, lineHeight: 30, fontWeight: '800', letterSpacing: -0.4 },
+  featuredHiringBody: { color: colors.textMuted, fontSize: 14, lineHeight: 22 },
   featuredHiringMeta: { color: colors.cyan, fontSize: 12, lineHeight: 18, fontWeight: '600' },
+  featuredHiringButton: { paddingHorizontal: 16 },
 
   // SECTIONS
   section: { paddingHorizontal: space.lg, paddingVertical: space.xxxl, maxWidth: 1280, width: '100%', marginHorizontal: 'auto' as any },
