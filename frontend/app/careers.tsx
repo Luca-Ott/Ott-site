@@ -211,13 +211,15 @@ export default function CareersScreen() {
       >
         {/* Back button */}
         <View style={styles.backWrap}>
-          <TouchableOpacity
+          <NavigationLink
+            href="/"
+            replace
+            accessibilityLabel="Back to home"
             style={styles.backBtn}
-            onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
           >
             <Ionicons name="arrow-back" size={16} color={colors.text} />
-            <Text style={styles.backText}>Back</Text>
-          </TouchableOpacity>
+            <Text style={styles.backText}>Back to home</Text>
+          </NavigationLink>
         </View>
 
         {/* Breadcrumbs */}
