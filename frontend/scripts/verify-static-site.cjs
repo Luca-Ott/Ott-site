@@ -119,9 +119,18 @@ for (const [slug, title, datePosted] of jobPages) {
   assert.equal(job.employmentType, 'CONTRACTOR', `Incorrect contract type: ${url}`);
   assert.equal(job.jobLocationType, 'TELECOMMUTE', `Missing remote-work metadata: ${url}`);
   assert.equal(job.jobLocation?.address?.addressCountry, 'IE', `Missing optional Dublin work location: ${url}`);
+  const applicantCountries = job.applicantLocationRequirements;
+  assert.ok(Array.isArray(applicantCountries) && applicantCountries.length > 0, `Remote job is missing eligible applicant countries: ${url}`);
+  assert.ok(applicantCountries.every((country) => country['@type'] === 'Country' && typeof country.name === 'string' && country.name.length > 0), `Applicant locations must be named countries: ${url}`);
+  const countryNames = applicantCountries.map((country) => country.name);
+  assert.equal(new Set(countryNames).size, countryNames.length, `Duplicate applicant countries: ${url}`);
+  for (const country of ['Ireland', 'United Kingdom', 'Italy', 'United States', 'India', 'Australia', 'Brazil', 'South Africa']) {
+    assert.ok(countryNames.includes(country), `Worldwide eligibility must include ${country}: ${url}`);
+  }
   assert.ok(!JSON.stringify(job.applicantLocationRequirements || []).includes('Worldwide'), `Worldwide is not a country: ${url}`);
   assert.ok(schemas.some((schema) => schema['@type'] === 'BreadcrumbList' && schema.itemListElement?.at(-1)?.item === url), `Missing job breadcrumbs: ${url}`);
   const visible = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/g, '');
+  assert.ok(visible.includes('worldwide'), `Worldwide applicant eligibility must also be visible: ${url}`);
   assert.ok(visible.includes(title), `Missing visible role: ${url}`);
   assert.ok(job.description.includes('<p>') && job.description.includes('<li>'), `Job description needs readable HTML paragraphs and requirements: ${url}`);
   const decode = (text) => text.replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&#39;', "'");
