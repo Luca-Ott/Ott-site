@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react';
 import type { Ionicons } from '@expo/vector-icons';
 import { SITE_NAME, SITE_URL } from './siteIdentity';
+import { WORLDWIDE_APPLICANT_COUNTRIES } from './jobApplicantCountries';
 
 export const CAREERS_EMAIL = 'info@ott4future.com';
 export const CONTRACT_TERMS = 'These are independent-contractor engagements, billed monthly. Competitive day-rates, monthly invoicing and transparent contracts.';
@@ -48,7 +49,7 @@ export const POSITIONS: Position[] = [
       'Ability to work independently as a freelance professional and coordinate customer meetings across European time zones.',
     ],
     remotePolicy:
-      'This is a remote freelance role with a sales territory covering Europe. Coordinate prospect meetings and product demonstrations across European time zones. Work with On Time Technology Ltd, based in Dublin, with optional access to the Dublin HQ and no office mandate.',
+      'This is a 100% remote freelance role open to applicants worldwide, with a sales territory covering Europe. Coordinate prospect meetings and product demonstrations across European time zones. Work with On Time Technology Ltd, based in Dublin, with optional access to the Dublin HQ and no office mandate.',
     contractTerms:
       'Freelance independent-contractor engagement. Scope, commercial terms and working arrangements will be discussed and agreed directly before the engagement starts.',
     glow: 'cyan',
@@ -172,8 +173,13 @@ export function jobPostingSchema(position: Position) {
       logo: `${SITE_URL}icon-512.png`,
     },
     jobLocationType: 'TELECOMMUTE',
+    // Preserve worldwide eligibility using real countries, rather than a
+    // fictional Country named Worldwide or limiting discovery to Dublin.
+    applicantLocationRequirements: WORLDWIDE_APPLICANT_COUNTRIES.map((name) => ({
+      '@type': 'Country',
+      name,
+    })),
     // The existing hiring policy also offers optional work at the Dublin HQ.
-    // Google may use Ireland as its default location for remote discovery.
     jobLocation: {
       '@type': 'Place',
       address: { '@type': 'PostalAddress', addressLocality: 'Dublin', addressCountry: 'IE' },
