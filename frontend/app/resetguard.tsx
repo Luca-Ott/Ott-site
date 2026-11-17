@@ -33,6 +33,10 @@ export default function ResetGuardScreen() {
         title={`ResetGuard — Android & iOS Security App | ${project.status}`}
         description={`${project.description} Reserve now to receive a personal code for 40% off the list price.`}
         canonical={project.url}
+        ogImage={project.socialImage.url}
+        ogImageWidth={project.socialImage.width}
+        ogImageHeight={project.socialImage.height}
+        ogImageAlt={project.socialImage.alt}
         keywords="ResetGuard, Android security app, iOS security app, mobile device protection, emergency device reset, On Time Technology"
         schema={[
           breadcrumbsSchema([

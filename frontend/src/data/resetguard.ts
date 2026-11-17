@@ -10,4 +10,10 @@ export const RESETGUARD_PROJECT = {
   liveAnnouncement: 'ResetGuard — Coming soon. Emergency reset for Android & iOS. Reserve now: 40% off.',
   logo: '/resetguard-logo.webp',
   screenshot: '/resetguard-app-screen.webp',
+  socialImage: {
+    url: 'https://www.ott4future.com/resetguard-social-yellow-20261117.png',
+    width: 1672,
+    height: 941,
+    alt: 'ResetGuard. Your emergency button. Coming soon for iOS and Android. Reserve the app and request your personal code for 40% off at ott4future.com.',
+  },
 };
