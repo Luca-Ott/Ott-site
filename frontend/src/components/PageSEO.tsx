@@ -11,6 +11,9 @@ type Props = {
   canonical: string;
   keywords?: string;
   ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogImageAlt?: string;
   ogType?: 'website' | 'article' | 'product' | 'profile';
   twitterCard?: 'summary' | 'summary_large_image';
   noindex?: boolean;
@@ -41,6 +44,9 @@ export default function PageSEO({
   canonical,
   keywords,
   ogImage = DEFAULT_OG_IMAGE,
+  ogImageWidth = 1200,
+  ogImageHeight = 630,
+  ogImageAlt = title,
   ogType = 'website',
   twitterCard = 'summary_large_image',
   noindex,
@@ -72,9 +78,9 @@ export default function PageSEO({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={title} />
+      <meta property="og:image:width" content={String(ogImageWidth)} />
+      <meta property="og:image:height" content={String(ogImageHeight)} />
+      <meta property="og:image:alt" content={ogImageAlt} />
 
       {/* Article-specific OG */}
       {ogType === 'article' && publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
@@ -88,7 +94,7 @@ export default function PageSEO({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
-      <meta name="twitter:image:alt" content={title} />
+      <meta name="twitter:image:alt" content={ogImageAlt} />
       <meta name="twitter:site" content="@OnTechnolo1200" />
       <meta name="twitter:creator" content="@OnTechnolo1200" />
 

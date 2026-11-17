@@ -1,7 +1,7 @@
 export const SITE_NAME = 'On Time Technology Ltd';
 export const SITE_URL = 'https://www.ott4future.com/';
 export const HOME_TITLE = `${SITE_NAME} — Software, AI & R&D`;
-export const HOME_DESCRIPTION = `${SITE_NAME} is an Irish IT company based in Dublin, specialising in software design, development, AI and R&D. Discover SmartTrust, NoMoreFakeNews, Custodiy and Freety.`;
+export const HOME_DESCRIPTION = `${SITE_NAME} is an Irish IT company based in Dublin, specialising in software design, development, AI and R&D. Discover SmartTrust, NoMoreFakeNews, Custodiy, Freety and the upcoming ResetGuard app for Android and iOS.`;
 
 export const ORG_SCHEMA = {
   '@context': 'https://schema.org',

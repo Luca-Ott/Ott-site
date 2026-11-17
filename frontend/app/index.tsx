@@ -6,14 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  useWindowDimensions,
   Platform,
   Image,
   type ImageSourcePropType,
   Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, useRouter } from 'expo-router';
+import { Link, useRouter, type Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -31,23 +30,25 @@ import OrbitVisual from '../src/components/OrbitVisual';
 import PageSEO, { softwareAppSchema } from '../src/components/PageSEO';
 import { getAllArticles, formatDate } from '../src/data/blog';
 import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smarttrust';
+import { RESETGUARD_PROJECT } from '../src/data/resetguard';
 import { colors, radii, space } from '../src/theme/tokens';
 import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL } from '../src/data/siteIdentity';
+import useViewportWidth from '../src/hooks/useViewportWidth';
 
 const newsItems = [
-  `SmartTrust Protocol is now LIVE — ${SMARTTRUST_PLATFORM_URL}`,
-  'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors',
-  'Custodiy v2.0 of the web app is now live',
-  'Freety — Digital infrastructure for global commodity & energy trading',
-  'Cyber Security Projects — Advanced protection for enterprise',
-  'R&D division expanding with cutting-edge AI innovation',
-  'New enterprise software design & development solutions available',
+  { text: RESETGUARD_PROJECT.liveAnnouncement, href: RESETGUARD_PROJECT.route },
+  { text: 'SmartTrust Protocol is now LIVE — Multi-asset trust governance and custody.', href: SMARTTRUST_PLATFORM_URL, external: true },
+  { text: 'NoMoreFakeNews — AI-powered platform to eliminate misinformation, open for investors', href: '/nomorefakenews' },
+  { text: 'Custodiy v2.0 — OTC trading, escrow and secure document custody. Now live.', href: 'https://custodiy.com', external: true },
+  { text: 'Freety — Digital infrastructure for global commodity & energy trading', href: '/freety' },
+  { text: 'Cyber Security Projects — Advanced protection for enterprise', href: '/research-development' },
+  { text: 'R&D division expanding with cutting-edge AI innovation', href: '/research-development' },
+  { text: 'New enterprise software design & development solutions available', href: '/software-development' },
 ];
 
 export default function HomeScreen() {
   const router = useRouter();
-  const dims = useWindowDimensions();
-  const width = dims.width || (typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const width = useViewportWidth();
   const articles = getAllArticles().slice(0, 3);
 
   const isDesktop = width >= 900;
@@ -108,7 +109,7 @@ export default function HomeScreen() {
         description={HOME_DESCRIPTION}
         canonical={SITE_URL}
         siteName={SITE_NAME}
-        keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, SmartTrust, Freety, custodial wallet Ireland, tokenized commodities trading"
+        keywords="On Time Technology, Irish AI software company, Dublin IT company, EU AI Act compliance, AI fake news detector, NoMoreFakeNews, Custodiy, SmartTrust, Freety, ResetGuard, Android security app, iOS security app, custodial wallet Ireland, tokenized commodities trading"
         schema={[
           softwareAppSchema({
             name: 'NoMoreFakeNews',
@@ -270,13 +271,15 @@ export default function HomeScreen() {
                   },
                 ]}
               >
-                {tickerIndex === 0 ? (
-                  <Link href={SMARTTRUST_PLATFORM_URL} target="_blank" rel="noopener noreferrer" style={styles.tickerText} numberOfLines={2}>
-                    ◆  {newsItems[tickerIndex]}
-                  </Link>
-                ) : (
-                  <Text style={styles.tickerText} numberOfLines={2}>◆  {newsItems[tickerIndex]}</Text>
-                )}
+                <Link
+                  href={newsItems[tickerIndex].href as Href}
+                  target={newsItems[tickerIndex].external ? '_blank' : undefined}
+                  rel={newsItems[tickerIndex].external ? 'noopener noreferrer' : undefined}
+                  style={styles.tickerText}
+                  numberOfLines={2}
+                >
+                  ◆  {newsItems[tickerIndex].text}
+                </Link>
               </Animated.View>
             </View>
             <View style={styles.tickerDots}>
@@ -390,6 +393,7 @@ export default function HomeScreen() {
             <View style={[styles.projectsGrid, !isDesktop && styles.projectsGridMobile]}>
               <ProjectCard
                 title="NoMoreFakeNews"
+                href="/nomorefakenews"
                 category="AI · TRUST"
                 tagline="An AI-powered platform engineered to identify, flag and dismantle disinformation in real time."
                 gradient={['#3B82F6', '#A855F7']}
@@ -400,6 +404,7 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="Custodiy"
+                href="https://custodiy.com"
                 logo={require('../assets/custodiy-logo.png')}
                 logoVariant="icon"
                 category="WEB3 · COMMERCE"
@@ -412,6 +417,7 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="SmartTrust"
+                href="/smarttrust"
                 logo={{ uri: SMARTTRUST_LOGO_URL }}
                 platformHref={SMARTTRUST_PLATFORM_URL}
                 category="MULTI-ASSET TRUST · GOVERNANCE"
@@ -423,6 +429,7 @@ export default function HomeScreen() {
               />
               <ProjectCard
                 title="Freety"
+                href="/freety"
                 logo={require('../assets/freety-logo-transparent.png')}
                 category="COMMODITIES · AI"
                 tagline="Digital infrastructure for global commodity & energy trading, with cargo tokenisation and AI tooling."
@@ -432,12 +439,25 @@ export default function HomeScreen() {
                 isDesktop={isDesktop}
               />
               <ProjectCard
+                title={RESETGUARD_PROJECT.name}
+                href={RESETGUARD_PROJECT.route}
+                logo={{ uri: RESETGUARD_PROJECT.logo }}
+                logoVariant="icon"
+                category={`${RESETGUARD_PROJECT.category} · ANDROID & IOS`}
+                tagline={RESETGUARD_PROJECT.tagline}
+                gradient={['#071B4D', '#15498D']}
+                status={RESETGUARD_PROJECT.status}
+                onPress={() => router.push(RESETGUARD_PROJECT.route)}
+                isDesktop={isDesktop}
+              />
+              <ProjectCard
                 title="Cyber Security"
+                href="/research-development"
                 category="ENTERPRISE · DEFENCE"
                 tagline="Advanced protection programmes for businesses and individuals exposed to next-gen threats."
                 gradient={['#F472B6', '#A855F7']}
                 status="In R&D"
-                onPress={() => router.push('/special-projects')}
+                onPress={() => router.push('/research-development')}
                 isDesktop={isDesktop}
               />
             </View>
@@ -457,7 +477,7 @@ export default function HomeScreen() {
                 <StatItem to={15} suffix="+" label="Years of Engineering" />
                 <StatItem to={50} suffix="+" label="Specialists Network" />
                 <StatItem to={20} suffix="+" label="Active Clients" />
-                <StatItem to={5} suffix="" label="Special Projects" />
+                <StatItem to={6} suffix="" label="Special Projects" />
               </View>
             </GlassCard>
           </View>
@@ -637,6 +657,7 @@ function StatItem({ to, suffix, label, delay = 400 }: { to: number; suffix?: str
 
 function ProjectCard({
   title,
+  href,
   category,
   tagline,
   gradient,
@@ -650,6 +671,7 @@ function ProjectCard({
   external,
 }: {
   title: string;
+  href: Href;
   category: string;
   tagline: string;
   gradient: string[];
@@ -700,12 +722,12 @@ function ProjectCard({
             )
           ) : !image ? <Text style={styles.projectTitle}>{title}</Text> : null}
           {!image ? <Text style={styles.projectTagline}>{tagline}</Text> : null}
-          <View style={styles.projectFooter}>
-          <Text style={styles.projectLink}>
-            {external ? 'Visit site' : 'Discover'}
-          </Text>
-            <Ionicons name={external ? 'open-outline' : 'arrow-forward'} size={16} color={colors.text} />
-          </View>
+          <Link href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} asChild>
+            <TouchableOpacity accessibilityLabel={`${external ? 'Visit' : 'Discover'} ${title}`} onPress={(event) => event.stopPropagation()} style={styles.projectFooter}>
+              <Text style={styles.projectLink}>{external ? 'Visit site' : 'Discover'}</Text>
+              <Ionicons name={external ? 'open-outline' : 'arrow-forward'} size={16} color={colors.text} />
+            </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </TouchableOpacity>
@@ -854,7 +876,7 @@ const styles = StyleSheet.create({
   projectsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20 },
   projectsGridMobile: { flexDirection: 'column' },
   projectCard: { flex: 1, minWidth: 280, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border, ...(Platform.OS === 'web' ? { transition: 'transform 0.3s ease, box-shadow 0.3s ease' } as any : {}) },
-  projectCardMobile: { minHeight: 240 },
+  projectCardMobile: { minHeight: 240, minWidth: 0, width: '100%' },
   projectGradient: { ...StyleSheet.absoluteFillObject, opacity: 0.85 },
   projectImageCard: { backgroundColor: '#02040A' },
   // The wordmark sits at 40% of the artwork width; 125% centers it without cropping the text.
@@ -862,7 +884,7 @@ const styles = StyleSheet.create({
   projectOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5, 6, 15, 0.55)' },
   projectImageOverlay: { backgroundColor: 'rgba(5, 6, 15, 0.2)' },
   projectInner: { padding: 24, flex: 1, justifyContent: 'space-between' },
-  projectTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
+  projectTop: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
   projectCategory: { color: 'rgba(255,255,255,0.85)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
   projectStatus: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.4)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
   projectStatusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
@@ -873,7 +895,7 @@ const styles = StyleSheet.create({
   projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectLogoPanel: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectLogoPanelImage: { width: '100%', height: '100%' },
-  projectBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
+  projectBrand: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
   projectLogoIcon: { width: 56, height: 56 },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
   projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },

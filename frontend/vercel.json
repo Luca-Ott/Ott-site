@@ -5,6 +5,15 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true }
-  ]
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "functions": {
+    "api/resetguard-reservations.mjs": {
+      "maxDuration": 45
+    }
+  }
 }
