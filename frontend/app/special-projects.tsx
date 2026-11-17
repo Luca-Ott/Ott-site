@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Image } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,6 +10,7 @@ import GradientText from '../src/components/GradientText';
 import PageSEO, { breadcrumbsSchema, softwareAppSchema } from '../src/components/PageSEO';
 import { colors, radii, space } from '../src/theme/tokens';
 import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smarttrust';
+import useViewportWidth from '../src/hooks/useViewportWidth';
 
 const PROJECTS = [
   {
@@ -75,8 +76,7 @@ const PROJECTS = [
 
 export default function SpecialProjectsScreen() {
   const router = useRouter();
-  const dims = useWindowDimensions();
-  const width = dims.width || 1200;
+  const width = useViewportWidth();
   const isDesktop = width >= 900;
 
   const openExternal = (href: string) => {
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   grid: { maxWidth: 1180, width: '100%', marginHorizontal: 'auto' as any, paddingHorizontal: space.lg, paddingVertical: space.xl, flexDirection: 'row', flexWrap: 'wrap', gap: 20, justifyContent: 'center' },
   gridMobile: { flexDirection: 'column' },
   card: { flexBasis: '48%' as any, flexGrow: 1, minWidth: 320, maxWidth: 560, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border },
-  cardMobile: { minHeight: 260 },
+  cardMobile: { minHeight: 260, minWidth: 0, width: '100%', maxWidth: '100%', flexBasis: 'auto' },
   cardImage: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5,6,15,0.5)' },
   cardInner: { padding: 26, gap: 8, flex: 1, justifyContent: 'space-between' },

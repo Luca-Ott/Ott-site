@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  useWindowDimensions,
   Platform,
   Image,
   type ImageSourcePropType,
@@ -34,6 +33,7 @@ import { SMARTTRUST_LOGO_URL, SMARTTRUST_PLATFORM_URL } from '../src/data/smartt
 import { RESETGUARD_PROJECT } from '../src/data/resetguard';
 import { colors, radii, space } from '../src/theme/tokens';
 import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL } from '../src/data/siteIdentity';
+import useViewportWidth from '../src/hooks/useViewportWidth';
 
 const newsItems = [
   { text: RESETGUARD_PROJECT.liveAnnouncement, href: RESETGUARD_PROJECT.route },
@@ -48,8 +48,7 @@ const newsItems = [
 
 export default function HomeScreen() {
   const router = useRouter();
-  const dims = useWindowDimensions();
-  const width = dims.width || (typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const width = useViewportWidth();
   const articles = getAllArticles().slice(0, 3);
 
   const isDesktop = width >= 900;
@@ -877,7 +876,7 @@ const styles = StyleSheet.create({
   projectsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20 },
   projectsGridMobile: { flexDirection: 'column' },
   projectCard: { flex: 1, minWidth: 280, minHeight: 280, borderRadius: radii.lg, overflow: 'hidden', position: 'relative', borderWidth: 1, borderColor: colors.border, ...(Platform.OS === 'web' ? { transition: 'transform 0.3s ease, box-shadow 0.3s ease' } as any : {}) },
-  projectCardMobile: { minHeight: 240 },
+  projectCardMobile: { minHeight: 240, minWidth: 0, width: '100%' },
   projectGradient: { ...StyleSheet.absoluteFillObject, opacity: 0.85 },
   projectImageCard: { backgroundColor: '#02040A' },
   // The wordmark sits at 40% of the artwork width; 125% centers it without cropping the text.
@@ -885,7 +884,7 @@ const styles = StyleSheet.create({
   projectOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(5, 6, 15, 0.55)' },
   projectImageOverlay: { backgroundColor: 'rgba(5, 6, 15, 0.2)' },
   projectInner: { padding: 24, flex: 1, justifyContent: 'space-between' },
-  projectTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
+  projectTop: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 },
   projectCategory: { color: 'rgba(255,255,255,0.85)', fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
   projectStatus: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(0,0,0,0.4)', borderRadius: radii.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)' },
   projectStatusDot: { width: 6, height: 6, borderRadius: 6, backgroundColor: '#22D3EE' },
@@ -896,7 +895,7 @@ const styles = StyleSheet.create({
   projectLogo: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectLogoPanel: { width: '100%', maxWidth: 244, height: 76, alignSelf: 'flex-start', marginVertical: 4 },
   projectLogoPanelImage: { width: '100%', height: '100%' },
-  projectBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
+  projectBrand: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 12, minHeight: 76, marginVertical: 4 },
   projectLogoIcon: { width: 56, height: 56 },
   projectTagline: { color: 'rgba(255,255,255,0.85)', fontSize: 14, lineHeight: 22, marginBottom: 16 },
   projectFooter: { flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start' },

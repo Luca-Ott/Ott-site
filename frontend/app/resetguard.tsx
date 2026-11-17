@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,6 +10,7 @@ import PageSEO, { breadcrumbsSchema } from '../src/components/PageSEO';
 import { RESETGUARD_PROJECT as project } from '../src/data/resetguard';
 import { SITE_NAME, SITE_URL } from '../src/data/siteIdentity';
 import { colors, radii, space } from '../src/theme/tokens';
+import useViewportWidth from '../src/hooks/useViewportWidth';
 
 const FEATURES = [
   { icon: 'shield-checkmark-outline', title: 'Secure access', body: 'Protect access to the app and its settings with a PIN and supported biometric authentication.' },
@@ -19,14 +20,7 @@ const FEATURES = [
 ] as const;
 
 export default function ResetGuardScreen() {
-  const [desktop, setDesktop] = useState(false);
-  useEffect(() => {
-    const viewport = window.matchMedia('(min-width: 900px)');
-    const updateLayout = () => setDesktop(viewport.matches);
-    updateLayout();
-    viewport.addEventListener('change', updateLayout);
-    return () => viewport.removeEventListener('change', updateLayout);
-  }, []);
+  const desktop = useViewportWidth() >= 900;
   const reservationRef = useRef<View>(null);
   const showReservation = () => {
     const element = reservationRef.current as unknown as HTMLElement | null;
