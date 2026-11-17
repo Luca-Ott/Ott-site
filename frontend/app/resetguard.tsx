@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, Text, Image, StyleSheet, useWindowDimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -19,8 +19,14 @@ const FEATURES = [
 ] as const;
 
 export default function ResetGuardScreen() {
-  const { width } = useWindowDimensions();
-  const desktop = width >= 900;
+  const [desktop, setDesktop] = useState(false);
+  useEffect(() => {
+    const viewport = window.matchMedia('(min-width: 900px)');
+    const updateLayout = () => setDesktop(viewport.matches);
+    updateLayout();
+    viewport.addEventListener('change', updateLayout);
+    return () => viewport.removeEventListener('change', updateLayout);
+  }, []);
   const reservationRef = useRef<View>(null);
   const showReservation = () => {
     const element = reservationRef.current as unknown as HTMLElement | null;
