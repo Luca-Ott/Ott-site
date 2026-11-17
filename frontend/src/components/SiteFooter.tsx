@@ -5,6 +5,7 @@ import NavigationLink from './NavigationLink';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radii, space } from '../theme/tokens';
 import { SITE_NAME } from '../data/siteIdentity';
+import { RESETGUARD_PROJECT } from '../data/resetguard';
 
 const LOGO_URL = 'https://assets.mywebsite-editor.com/user/e54dca75-a95e-43bb-ac7f-e04a22ca9584/402f4cab-f3db-457d-9e4f-21ffd3914a68';
 
@@ -58,6 +59,7 @@ export default function SiteFooter() {
             <FooterLink label="Custodiy" href="https://custodiy.com" />
             <FooterLink label="SmartTrust" href="/smarttrust" />
             <FooterLink label="Freety" href="/freety" />
+            <FooterLink label="ResetGuard — Coming soon" href={RESETGUARD_PROJECT.route} />
           </View>
         </View>
 

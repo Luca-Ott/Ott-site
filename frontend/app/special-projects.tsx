@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, useWindowDime
 import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Head from 'expo-router/head';
+import { RESETGUARD_PROJECT } from '../src/data/resetguard';
 
 import PageShell from '../src/components/PageShell';
 import GradientText from '../src/components/GradientText';
@@ -53,6 +53,16 @@ const PROJECTS = [
     external: false,
   },
   {
+    title: RESETGUARD_PROJECT.name,
+    category: `${RESETGUARD_PROJECT.category} · ANDROID & IOS`,
+    tagline: RESETGUARD_PROJECT.tagline,
+    status: RESETGUARD_PROJECT.status,
+    gradient: ['#071B4D', '#15498D', '#2330F1'],
+    iconLogo: RESETGUARD_PROJECT.logo,
+    route: RESETGUARD_PROJECT.route,
+    external: false,
+  },
+  {
     title: 'Cyber Security',
     category: 'ENTERPRISE · DEFENCE',
     tagline: 'Advanced protection programmes designed to defend businesses and individuals against next-generation, AI-driven threats.',
@@ -85,10 +95,10 @@ export default function SpecialProjectsScreen() {
   return (
     <PageShell>
       <PageSEO
-        title="Special Projects — NoMoreFakeNews, Custodiy, SmartTrust, Freety & Cyber"
-        description="Explore On Time Technology's flagship projects: NoMoreFakeNews, Custodiy, SmartTrust multi-asset trust governance, Freety commodity trading and Cyber Security R&D."
+        title="Special Projects — SmartTrust, ResetGuard & More"
+        description="Explore SmartTrust, NoMoreFakeNews, Custodiy, Freety, Cyber Security and ResetGuard, our upcoming Android and iOS security app."
         canonical="https://www.ott4future.com/special-projects"
-        keywords="special projects On Time Technology, NoMoreFakeNews, Custodiy, SmartTrust, multi-asset trust governance, custody technology, Freety, AI anti-disinformation, custodial wallet Ireland, tokenized commodities trading, cyber security R&D"
+        keywords="special projects On Time Technology, NoMoreFakeNews, Custodiy, SmartTrust, multi-asset trust governance, custody technology, Freety, ResetGuard, Android security app, iOS security app, AI anti-disinformation, custodial wallet Ireland, tokenized commodities trading, cyber security R&D"
         schema={[
           breadcrumbsSchema([
             { name: 'Home', url: 'https://www.ott4future.com/' },
@@ -121,13 +131,12 @@ export default function SpecialProjectsScreen() {
         </Text>
         <Text style={styles.subtitle}>
           Beyond client work, On Time Technology invests in long-horizon projects at the frontier of AI,
-          Web3 and global trust infrastructure. These are our flagship initiatives — working systems, not
-          slideware.
+          Web3 and global trust infrastructure. These are our flagship initiatives, from live platforms to products now in development.
         </Text>
       </View>
 
       <View style={[styles.grid, !isDesktop && styles.gridMobile]}>
-        {PROJECTS.map((p, idx) => (
+        {PROJECTS.map((p) => (
           <TouchableOpacity
             key={p.title}
             activeOpacity={0.9}
@@ -168,13 +177,18 @@ export default function SpecialProjectsScreen() {
                     </TouchableOpacity>
                   </Link>
                 ) : p.title !== 'NoMoreFakeNews' ? (
-                  <Text style={styles.cardTitle}>{p.title}</Text>
+                  <View style={styles.cardBrand}>
+                    {'iconLogo' in p && p.iconLogo ? <Image source={{ uri: p.iconLogo }} style={styles.cardIcon} resizeMode="contain" accessibilityLabel={`${p.title} app icon`} /> : null}
+                    <Text style={styles.cardTitle}>{p.title}</Text>
+                  </View>
                 ) : null}
                 {p.title !== 'NoMoreFakeNews' ? <Text style={styles.cardTagline}>{p.tagline}</Text> : null}
-                <View style={styles.cardFooter}>
-                <Text style={styles.cardLink}>{p.external ? 'Visit site' : 'Discover'}</Text>
-                  <Ionicons name={p.external ? 'open-outline' : 'arrow-forward'} size={16} color="#fff" />
-                </View>
+                <Link href={(p.external ? p.href : p.route)!} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener noreferrer' : undefined} asChild>
+                  <TouchableOpacity onPress={(event) => event.stopPropagation()} accessibilityLabel={`${p.external ? 'Visit' : 'Discover'} ${p.title}`} style={styles.cardFooter}>
+                    <Text style={styles.cardLink}>{p.external ? 'Visit site' : 'Discover'}</Text>
+                    <Ionicons name={p.external ? 'open-outline' : 'arrow-forward'} size={16} color="#fff" />
+                  </TouchableOpacity>
+                </Link>
               </View>
             </View>
           </TouchableOpacity>
@@ -230,6 +244,8 @@ const styles = StyleSheet.create({
   cardContentBottom: { marginTop: 'auto', paddingTop: 54 },
   cardLogoLink: { width: 245, maxWidth: '82%' as any, marginVertical: 8, alignSelf: 'flex-start' },
   cardLogo: { width: '100%', height: 68 },
+  cardBrand: { flexDirection: 'row', alignItems: 'center', gap: 12, flexWrap: 'wrap' },
+  cardIcon: { width: 52, height: 52, borderRadius: 13 },
   cardTitle: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -0.5, marginVertical: 8 },
   cardTagline: { color: 'rgba(255,255,255,0.92)', fontSize: 14.5, lineHeight: 22, marginBottom: 16 },
   cardFooter: { flexDirection: 'row', alignItems: 'center', gap: 8 },
